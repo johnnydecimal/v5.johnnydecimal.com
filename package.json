@@ -1,7 +1,7 @@
 {
   "name": "johnny_decimal_v5_2023",
   "type": "module",
-  "version": "5.0.1",
+  "version": "5",
   "private": true,
   "//": "The prebuild script copies 11.01 over src/pages/index.mdx so it also becomes the home page at the site root. We use `sed` to fix the path to the layout component, and it needs `shx` so that it works on Node over on Netlify.",
   "scripts": {
