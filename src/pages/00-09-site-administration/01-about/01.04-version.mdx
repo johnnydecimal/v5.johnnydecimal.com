@@ -14,9 +14,12 @@ category: 01 About
 pubDate: 2022-02-06
 ---
 
+import { version } from "@js/version/version.ts";
+
 # {frontmatter.title}
 
-This is version `5.0.0` of the site. It was released on <time datetime="2022-04-24T12:00:00.000">2022-04-24 12:00 (AEST)</time>.
+- Version: <code>{version.number}</code>.
+- Released: <time datetime={new Date().toISOString()}><code>{new Date().toString()}</code></time>.
 
 ## I re-wrote everything :-)
 
@@ -34,4 +37,4 @@ The version number will update accordingly. [Semantic versioning](https://semver
 
 - MAJOR, `5._._`: a total site re-write. I hope never to have to do this again.
 - MINOR, `_.0._`: content updates. This number will increase when I do a monthly release.
-- PATCH, `_._.0`: fixing errors: spelling mistakes, updating broken links. I'll make these changes as-needed.
+- PATCH, `_._.0`: fixing errors: spelling mistakes, updating broken links, other small tweaks. I'll make these changes as-needed.

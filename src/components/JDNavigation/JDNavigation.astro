@@ -51,9 +51,11 @@ pages.sort(jdSort);
   </div>
 
   <div class="version">
-    v{version.number}&nbsp;/&nbsp;<time
-      id="time-last-updated"
-      datetime={new Date().toISOString()}>{version.date}</time
+    <a href="/00-09-site-administration/01-about/01.04-version/"
+      >v{version.number}&nbsp;/&nbsp;<time
+        id="time-last-updated"
+        datetime={new Date().toISOString()}>{version.date}</time
+      ></a
     >
   </div>
 </nav>
