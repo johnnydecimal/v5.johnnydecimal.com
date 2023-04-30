@@ -1,0 +1,42 @@
+---
+import Layout from "./Layout.astro";
+import Location from "@components/Location/Location.astro";
+import BackNext from "@components/BackNext/BackNext.astro";
+
+export interface Props {
+  number: string;
+  title: string;
+  area: string;
+  category: string;
+  backNext?: boolean;
+}
+const {
+  number,
+  title,
+  area,
+  category,
+  backNextDisplay = true,
+} = Astro.props.frontmatter;
+---
+
+<Layout title={`${number} ${title}`}>
+  <div class="JDPage">
+    <Location number={number} title={title} area={area} category={category} />
+
+    <div class="jdcontent">
+      <slot />
+    </div>
+
+    <BackNext {backNextDisplay} />
+  </div>
+</Layout>
+
+<style lang="scss">
+  @use "/src/styles/johnny" as *;
+
+  .JDPage {
+    @include for-tablet-portrait-up {
+      padding-bottom: 4rem;
+    }
+  }
+</style>

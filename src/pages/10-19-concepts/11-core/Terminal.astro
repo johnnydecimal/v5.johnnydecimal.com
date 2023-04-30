@@ -1,0 +1,110 @@
+---
+---
+
+<div class="terminal-container">
+  <div class="title-bar">
+    <span class="title-bar-button title-bar-red-button"></span><span
+      class="title-bar-button title-bar-yellow-button"></span><span
+      class="title-bar-button title-bar-green-button"></span>
+  </div>
+  <div class="terminal-window">
+    <div class="command-container">
+      <span class="command prompt">~ $</span><span> cjd 12.03</span>
+    </div>
+    <div class="output-container">
+      <span class="output">12.03 Payroll for 2018 $</span>
+      <span class="blinking-cursor">█</span>
+    </div>
+  </div>
+</div>
+
+<style>
+  .terminal-container {
+    width: 40rem;
+  }
+
+  .title-bar {
+    background: rgb(240, 237, 235);
+    border-left: 1px solid darkslategray;
+    border-top: 1px solid darkslategray;
+    border-right: 1px solid darkslategray;
+    border-top-left-radius: 0.375rem;
+    border-top-right-radius: 0.375rem;
+    height: 3.5rem;
+  }
+
+  .title-bar-button {
+    display: inline-block;
+    width: 1.5rem;
+    height: 1.5rem;
+    margin-top: 1rem;
+    border-radius: 999px;
+  }
+
+  .title-bar-red-button {
+    background: rgb(237, 105, 95);
+    margin-left: 1rem;
+    margin-bottom: 0.75rem;
+  }
+  .title-bar-yellow-button {
+    background: rgb(245, 190, 80);
+    margin-left: 0.75rem;
+    margin-bottom: 0.75rem;
+  }
+  .title-bar-green-button {
+    background: rgb(99, 200, 86);
+    margin-left: 0.75rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .terminal-window {
+    padding: 1rem;
+    margin-bottom: 2rem;
+    color: rgb(250, 204, 21);
+    background-color: rgb(17, 24, 39);
+    border-bottom-left-radius: 0.375rem;
+    border-bottom-right-radius: 0.375rem;
+    font-family: $monospace;
+  }
+
+  .command-container {
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .command {
+    padding-left: 1rem;
+    white-space: pre-wrap;
+  }
+
+  .prompt {
+    font-weight: bold;
+  }
+
+  .output-container {
+    margin-bottom: 1rem;
+  }
+
+  .output {
+    padding-left: 1rem;
+    white-space: pre-wrap;
+    font-weight: bold;
+  }
+
+  .blinking-cursor {
+    animation: blink 1.5s steps(2) infinite;
+  }
+
+  @keyframes blink {
+    0% {
+      opacity: 0%;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .terminal-container {
+      width: 26rem;
+      font-size: 1.4rem;
+    }
+  }
+</style>

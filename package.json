@@ -1,0 +1,36 @@
+{
+  "name": "johnny_decimal_v5_2023",
+  "type": "module",
+  "version": "5.0.1",
+  "private": true,
+  "//": "The prebuild script copies 11.01 over src/pages/index.mdx so it also becomes the home page at the site root. We use `sed` to fix the path to the layout component, and it needs `shx` so that it works on Node over on Netlify.",
+  "scripts": {
+    "predev": "cp ./src/pages/10-19-concepts/11-core/11.01-introduction.mdx ./src/pages/index.mdx && shx sed -i 's/\\.\\.\\/\\.\\.\\/\\.\\.\\//\\.\\.\\//' src/pages/index.mdx > /dev/null",
+    "dev": "astro dev --host",
+    "start": "astro dev",
+    "prebuild": "cp ./src/pages/10-19-concepts/11-core/11.01-introduction.mdx ./src/pages/index.mdx && shx sed -i 's/\\.\\.\\/\\.\\.\\/\\.\\.\\//\\.\\.\\//' src/pages/index.mdx > /dev/null",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/image": "0.x",
+    "@astrojs/mdx": "0.x",
+    "@astrojs/rss": "^2.1.0",
+    "@astrojs/tailwind": "^3.x",
+    "@fontsource/fira-sans": "^4.5.10",
+    "@fontsource/ibm-plex-sans": "^4.5.13",
+    "@fontsource/ibm-plex-serif": "^4.5.12",
+    "@fontsource/playfair-display": "^4.5.13",
+    "@johnnydecimal/jdgetacidtypefromstring": "0.x",
+    "astro": "2.x",
+    "sharp": "0.x"
+  },
+  "devDependencies": {
+    "prettier": "^2.8.1",
+    "prettier-plugin-astro": "0.x",
+    "sass": "^1.58.3",
+    "scss": "^0.2.4",
+    "shx": "^0.3.4"
+  }
+}

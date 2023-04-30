@@ -1,0 +1,49 @@
+---
+/**
+ * The <Area> component will drop in to <JDCodeBlock>.
+ */
+
+interface Props {
+  number: string;
+  title: string;
+  comment?: string;
+}
+
+const { number, title, comment } = Astro.props;
+// console.log("<Area>", number, title, comment);
+---
+
+<div class="grid">
+  <div class="area number">{number}</div>
+  <div class="area gap"></div>
+  <div class="area title">
+    {title}
+  </div>
+  <div class="area comment">
+    {comment}
+  </div>
+</div>
+
+<style>
+  .grid {
+    /* number; gap; title; comment (optional) */
+    grid-template-columns: 5ch 1ch max-content max-content;
+    font-size: 0.8rem;
+  }
+
+  .area.comment {
+    margin-left: 1ch;
+  }
+
+  /* https://css-tricks.com/quick-whats-the-difference-between-flexbox-and-grid/ */
+  /* .grid::-webkit-scrollbar {
+    width: 0.5rem;
+    height: 0.5rem;
+  } */
+
+  @media screen and (min-width: 991.98px) {
+    .grid {
+      font-size: 1rem;
+    }
+  }
+</style>

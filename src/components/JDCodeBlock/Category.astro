@@ -1,0 +1,49 @@
+---
+/**
+ * The <Category> component will drop in to <JDCodeBlock>.
+ */
+
+interface Props {
+  number: string;
+  title: string;
+  comment?: string;
+}
+
+const { number, title, comment } = Astro.props;
+---
+
+<div class="grid">
+  <div class="category gap"></div>
+  <div class="category number">{number}</div>
+  <div class="category gap"></div>
+  <div class="category title">
+    {title}
+  </div>
+  <div class="category comment">
+    {comment}
+  </div>
+</div>
+
+<style>
+  .grid {
+    /* gap; number; gap; title; comment (optional) */
+    grid-template-columns: 3ch 2ch 1ch max-content max-content;
+    font-size: 0.8rem;
+  }
+
+  .category.comment {
+    margin-left: 1ch;
+  }
+
+  /* https://css-tricks.com/quick-whats-the-difference-between-flexbox-and-grid/ */
+  /* .grid::-webkit-scrollbar {
+    width: 0.5rem;
+    height: 0.5rem;
+  } */
+
+  @media screen and (min-width: 991.98px) {
+    .grid {
+      font-size: 1rem;
+    }
+  }
+</style>

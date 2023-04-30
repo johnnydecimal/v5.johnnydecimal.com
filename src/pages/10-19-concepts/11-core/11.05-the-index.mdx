@@ -1,0 +1,192 @@
+---
+# Choose the `JDPage` layout
+layout: ../../../layouts/JDPage.astro
+# The JD number: mandatory, used on JDPage
+number: "11.05"
+# The JD title: mandatory, used on JDPage
+title: The index
+# The area that this ID relates to: mandatory, used on JDPage
+area: 10-19 Concepts
+# The category that this ID relates to: mandatory, used on JDPage
+category: 11 Core
+
+# RSS
+pubDate: 2022-02-06
+---
+
+import JDBlock from "@components/JDBlock/JDBlock.astro";
+import Footnote from "@components/Footnote/Footnote.astro";
+import FootRef from "@components/Footnote/FootRef.astro";
+import Table from "./components/11.05-Table.astro";
+
+# The index
+
+In the simplest possible system, where all you store are files and you store them in a single file system, that file system can act as your index. You create new items by looking at your existing folders and using the next number.
+
+But as soon as you use your system elsewhere -- which you should -- this breaks down.
+
+Say you have category `17 Risk` and you use it to store:
+
+- Your **risk register,** which is a database.<FootRef n={1} />
+- Your **risk management plan,** which is a Word document.
+- Minutes of the latest **risk workshop,** which are an email thread.
+
+Now we have items across systems, and the problem should be obvious.
+
+<Table />
+
+When you want to store a a risk analysis spreadsheet and need to assign `17.04`, how do you know that it's the next available number?
+
+If you check your file system you'll think that `17.03` is available and now you've used a number twice.
+
+The index solves this, and provides many more benefits.
+
+## It's an index, not an inventory
+
+It's worth noting that the purpose of this index is _not_ to record the details of every item you save: it is only to record the IDs that you have assigned.
+
+Your index needs to record this level of information:
+
+<JDBlock
+  text={`10-19 My area
+   11 My category
+      11.01 My first ID
+      11.02 My second ID
+`}
+/>
+
+You don't need to track what's _in_ each of your Johnny.Decimal folders:
+
+<JDBlock
+  text={`10-19 My area
+   11 My category
+      11.01 My first ID
+Document.doc
+Picture.jpg
+Spreadsheet.xls
+      11.02 My second ID
+`}
+  classArray={[
+    ,
+    ,
+    ,
+    "strikethrough mimic-folder-content",
+    "strikethrough mimic-folder-content",
+    "strikethrough mimic-folder-content",
+    ,
+    ,
+  ]}
+/>
+
+---
+
+# How to keep your index
+
+The simplest way to keep an index is in a notes app. I've tried other solutions, but they were all too 'heavy'. Your system needs to be frictionless.
+
+I use [Bear](https://bear.app) but any app that allows you to quickly search your notes will work.
+
+[Simplenote](https://simplenote.com) is a good option for Windows or [most other platforms](https://github.com/Automattic/simplenote-electron/releases).
+
+There are two methods. I prefer the first.
+
+## 1: One note per ID
+
+To create a new Johnny.Decimal item, simply create a new note. Other than the title, which is the index entry, the note may be blank.
+
+You must do this _before_ you create a folder in your file system, or your email, or anywhere else. Creating the note _is_ creating the new ID.
+
+To create a new ID, search your notes for the relevant category. Your app should filter all notes to show only those that match. Identify the next available number and create a new note.
+
+### Example: Bear
+
+Using Bear's search to narrow our index to category `17`.
+
+<img srcset="/img/11.05-bear-filter-17.webp 2x" loading="lazy" />
+
+By including the `.` in our search, we (usually) filter out other notes that just include the text '17'.
+
+We can see that `17.04` is the next available number, so we create a note and then use that number wherever it is required.
+
+<img srcset="/img/11.05-bear-new-17.04.wepb 2x" loading="lazy" />
+
+## 2: One file with all of your IDs
+
+This style of index is more suitable when you might want to programatically query your system. It does work as a manual index but I found it more cumbersome.
+
+Use one note -- it's always `00.00` in my system, which of course needs its own index entry -- and record all of your numbers there.
+
+<img srcset="/img/11.05-bear-00.00-the-index.webp 2x" loading="lazy" />
+
+I format mine as shown. Either use a fixed-width font in your notes app, or make it a 'code block'.
+
+In [a future post](/90-99-behind-the-scenes/98-hidden-website-pages/98.11-in-a-future-post) I will expand on this index-as-single-file format.
+
+---
+
+# Searching for items
+
+When you're saving all sorts of items in your system, you won't always remember where they are. Did you save the workshop minutes in your email, or the shared file system?
+
+You might look in the file system, not find anything, and think you didn't save it. But you know you did!
+
+**The whole point of the Johnny.Decimal system is to remove this frustration.**
+
+Having a central index allows you to search for items by title, or filter your entire list by area or category. This lets you see, immediately, what you've saved.
+
+If your system also tells you where that item _is,_ then all the better. I record the location of each thing in its index note.
+
+<img srcset="/img/11.05-bear-17.03-location.webp 2x" loading="lazy" />
+
+## More index tips
+
+I do a lot more with my index but this will serve as an introduction. I'll write a [post in the future](/90-99-behind-the-scenes/98-hidden-website-pages/98.11-in-a-future-post) with more details.
+
+---
+
+# "This sounds like a lot of work..."
+
+A lot of people see the index as an unnecessary burden. I encourage you to try it out: it takes less time than you think it will, and you'll find ways that it will help you be even more organised.
+
+I believe that the effort and time is worth it.
+
+---
+
+# Non-note index techniques
+
+Given how simple the index is, there are any number of ways you can implement yours.
+
+Some of these are more relevant in shared scenarios. For example, if you collaborate on a project with colleagues.
+
+## Airtable (or any other database)
+
+You can use any database system you like. <a href="https://airtable.com/invite/r/wcs73zWf">Airtable</a><FootRef n={2} /> is a _great_ online database which I use for all sorts of things.
+
+I've created a template database which you can use as a starter. You can <a href="https://airtable.com/shr5vvlmaCV98G6z7">copy it from here</a>.
+
+## A spreadsheet
+
+Obvious enough -- and I don't think it's a great solution, to be honest -- but you could always store your index in a spreadsheet.
+
+## At work: SharePoint lists
+
+If you work for a large organisation, you may be able to ask your IT people to create you a <a href="https://support.office.com/en-us/article/create-a-list-in-sharepoint-0d397414-d95f-41eb-addd-5e6eff41b083?ui=en-US&rs=en-US&ad=US">list in SharePoint</a>. This can work very well, and has the advantage of being visible to your entire team.
+
+## Anything else? Let me know
+
+If you implemented your index another way, [let me know](/00-09-site-administration/02-send-and-receive/02.01-contact-me) and I'll post it here.
+
+---
+
+# I still have work to do...
+
+I still have to think about, and document, the best way to do this in a corporate environment.
+
+Check back here or [sign up to the mailing list](/00-09-site-administration/02-send-and-receive/02.02-mailing-list) for updates.
+
+<Footnote
+  footnotes={[
+    "I know yours is a spreadsheet. We need to talk.",
+    "That link earns me a $10 referral credit if you sign up. If you&rsquo;d rather not do that, that&rsquo;s cool: just go to <a href='https://airtable.com'>airtable.com</a>. You can copy the template database either way.",
+  ]}
+/>

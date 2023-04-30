@@ -1,0 +1,50 @@
+---
+interface Props {
+  number: string;
+  text: string;
+}
+
+const { number, text } = Astro.props;
+
+// The 'text' value is passed as-is, HTML and all, in to the component.
+---
+
+<div class="footnote">
+  <div><sup>{number}</sup></div>
+  <div class="text"><span set:html={text} /></div>
+</div>
+
+<style lang="scss">
+  @use "/src/styles/johnny" as *;
+
+  .footnote {
+    display: grid;
+    grid-template-columns: 1ch 1fr;
+    gap: 1ch;
+
+    @include footnote;
+
+    // color: $colour-700;
+    // background-color: $colour-50;
+    // border: 1px solid $colour-600;
+    // border-left: 5px double $colour-600;
+    // border-right: 5px double $colour-600;
+    // box-shadow: $box-shadow;
+    // font-family: $monospace;
+    // font-size: 1.2rem;
+    // line-height: 1.4;
+    // margin: $large 0;
+    // padding: $small;
+    // width: fit-content;
+
+    // @include for-tablet-portrait-up {
+    //   font-size: 1.4rem;
+    //   margin: $xl 0;
+    //   padding: $medium $small;
+    // }
+  }
+
+  sup {
+    font-style: normal;
+  }
+</style>

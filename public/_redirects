@@ -1,0 +1,21 @@
+# Netlify redirects
+
+# Pages from v4 of the site, 2020-2023
+
+/licence/                                 /00-09-site-administration/01-about/01.02-licence/
+/privacy/                                 /00-09-site-administration/01-about/01.03-privacy/
+/contact/                                 /00-09-site-administration/02-send-and-receive/02.01-contact-me/
+/concepts/                                /10-19-concepts/11-core/
+/concepts/areas-categories/               /10-19-concepts/11-core/11.02-areas-and-categories/
+/concepts/ids/                            /10-19-concepts/11-core/11.03-ids/
+/concepts/tracking-your-numbers/          /10-19-concepts/11-core/11.05-the-index/
+/concepts/saving-files/                   /10-19-concepts/11-core/11.06-saving-files/
+/concepts/keeping-notes/                  /10-19-concepts/11-core/11.07-keeping-notes/
+/concepts/managing-email/                 /10-19-concepts/12-advanced/12.01-managing-email/
+/concepts/exceptions-to-the-rules/        /10-19-concepts/12-advanced/12.02-exceptions-to-the-rules/
+/concepts/what-about-00-09/               /10-19-concepts/12-advanced/12.03-what-about-00-09/
+/concepts/working-at-the-terminal/        /10-19-concepts/12-advanced/12.04-working-at-the-command-line/
+/concepts/multiple-projects/              /10-19-concepts/13-multiple-projects/13.01-introduction/
+/concepts/developing-your-own-system/     /10-19-concepts/14-build-your-system/14.01-introduction/
+/blog/                                    /90-99-behind-the-scenes/98-hidden-website-pages/98.11-in-a-future-post/
+/blog/*                                   /90-99-behind-the-scenes/98-hidden-website-pages/98.11-in-a-future-post/

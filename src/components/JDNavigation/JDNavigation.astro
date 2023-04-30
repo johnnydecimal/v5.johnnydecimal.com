@@ -1,0 +1,120 @@
+---
+import jdSort from "@js/jdSort.js";
+import { version } from "@js/version/version";
+import JDNavItem from "./JDNavItem.astro";
+
+const allPages = await Astro.glob("../../pages/**/*.{md,mdx}");
+
+/**
+ * `allPages` is an array of pages. We want to specifically remove any of
+ * our `/test/` pages as they're non-standard and break the build.
+ */
+
+const pages = allPages.filter((page) => !page.file.includes("/test/"));
+// pages.forEach((page) => console.log(page.file));
+
+/* You need to sort on frontmatter.number, because of the way that Astro feeds
+   you the `index` pages. */
+pages.sort(jdSort);
+---
+
+<nav id="00.00">
+  <div class="index-brackets index-brackets-top">
+    <div>┌</div>
+    <div class="index-brackets-horizontal-line">
+      ─ Index
+      ─────────────────────────────────────────────────────────────────────────────────
+    </div>
+    <div>┐</div>
+  </div>
+  <div class="index-main">
+    <ol>
+      {
+        pages
+          .filter((page) => !page.frontmatter.exclude)
+          .map((page) => (
+            <JDNavItem
+              number={page.frontmatter.number}
+              title={page.frontmatter.title}
+              url={page.url}
+            />
+          ))
+      }
+    </ol>
+  </div>
+  <div class="index-brackets index-brackets-bottom">
+    <div>└</div>
+    <div class="index-brackets-horizontal-line">
+      ───────────────────────────────────────────────────────────────────────────────────
+    </div>
+    <div>┘</div>
+  </div>
+
+  <div class="version">
+    v{version.number}&nbsp;/&nbsp;<time
+      id="time-last-updated"
+      datetime={new Date().toISOString()}>{version.date}</time
+    >
+  </div>
+</nav>
+
+<style lang="scss">
+  @use "/src/styles/johnny.scss" as *;
+
+  nav {
+    grid-area: nav;
+
+    font-family: $monospace;
+
+    border-top: 1px dashed $colour-800;
+    padding: $medium $small;
+
+    @include for-tablet-landscape-up {
+      max-width: 40ch;
+
+      margin: 0 auto $large 0;
+      padding: 0;
+
+      border-top: none;
+    }
+
+    @include for-print {
+      display: none;
+    }
+
+    & ol {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    & div.version {
+      color: $colour-700;
+      font-family: $monospace;
+      font-size: 1.2rem;
+      text-align: center;
+    }
+  }
+
+  .index-main {
+    margin: 0 auto;
+    padding: 0 2ch;
+    width: fit-content;
+  }
+
+  .index-brackets {
+    display: grid;
+    grid-auto-flow: column;
+    white-space: nowrap;
+    color: $colour-700;
+  }
+  .index-brackets-horizontal-line {
+    overflow: hidden;
+  }
+  .index-brackets-top {
+    margin-bottom: $small;
+  }
+  .index-brackets-bottom {
+    margin-top: $small;
+  }
+</style>

@@ -1,0 +1,91 @@
+---
+# Choose the `JDPage` layout
+layout: ../../../layouts/JDPage.astro
+# The JD number: mandatory, used on JDPage
+number: "12.01"
+# The JD title: mandatory, used on JDPage
+title: Managing email
+# The area that this ID relates to: mandatory, used on JDPage
+area: 10-19 Concepts
+# The category that this ID relates to: mandatory, used on JDPage
+category: 12 Advanced concepts
+
+# RSS
+pubDate: 2022-02-06
+---
+
+import EmailSubject_before from "./components/12.01-EmailSubject-before.astro";
+import EmailSubject_after from "./components/12.01-EmailSubject-after.astro";
+
+# {frontmatter.title}
+
+Your inbox looks something like this. It's a shambles.
+
+<img srcset="/img/12.01-outlook-crop2-disorganised.webp 2x" />
+
+The problem is that processing every email takes time. You need to [context switch](https://duckduckgo.com/?q=context+switching&ia=web) for every thread.
+
+What was it about? _Who sent it?_ Is that person important? _What else do I know about this topic?_ Do I have any actions? _What do I do with the email now?_
+
+## I can fix your email
+
+My inbox looks something like this.
+
+<img srcset="/img/12.01-outlook-crop-jdfolders.webp 2x" />
+
+Items are organised in to Johnny.Decimal folders. Rather than my default view being an 'inbox' whose contents are dictated by others, mine is an organised view of my unread messages **by Johnny.Decimal ID**.
+
+Using custom Outlook views and rules my email is made manageable.
+
+Messages in existing conversations get sorted in to their folders. The unsorted 'inbox' becomes a handful of messages a day rather than dozens.
+
+I name those folders. They make sense to _me_, not to the sender.
+
+I decide when I look at emails related to a particular topic. If I don't want to see them, they're easy to hide.
+
+<img srcset="/img/12.01-outlook-collapsed-jdfolders.webp 2x" />
+
+This allows me to focus. I'm in control.
+
+---
+
+# Make your Subject: work for you
+
+There must be some sort of medical condition to describe the terrible dyslexia that overcomes people when they type email subjects. Here's a real example from an old job:
+
+<EmailSubject-before />
+
+Talk about the time it takes to context switch! What is my brain supposed to do with that?
+
+## Put the Johnny.Decimal number in the subject line
+
+This might sound mad, but it works.
+
+Just put the relevant number in the subject line, and here's the special sauce: put it in **[square brackets]**. So my subject line becomes:
+
+<EmailSubject-after />
+
+## Why?
+
+The brackets around the numbers in the subject help your email's search function pinpoint exactly what you want. The text `72.02` might appear in a spreadsheet, or in someone's phone number. The text `[72.02]` almost certainly does not.
+
+For example, you want to find that email related to the additional cabling. You either:
+
+- know that `72.02` is the number you need, or
+- use [your index](/10-19-concepts/11-core/11.05-the-index) to look up the Johnny.Decimal number for 'structured cabling'.
+
+If the email isn't already in a folder labelled `72.02`, just search for `[72.02]`.
+
+This has never failed me. **People ask me about an email and when I find it five seconds later, they say to me, "wow … how did you do that?"**
+
+## "But I write useful Subject: lines!"
+
+That might be the case. _You_ do. But nobody else does.
+
+With this system you can **add your own tag to someone else's email.** And because it's plain text in the subject line, it'll follow the email around and return to you. In my experience, nobody notices it's there.
+
+## Help other people
+
+If I've sorted my email in to folders, why would I need to search for a number?
+
+I might not need to, but I've used these numbers-in-subject countless times when reminding my boss to approve my timesheet. Sure, he can search for my name and 'timesheet'. But searching for `[14.11]` is quicker and unambiguous.

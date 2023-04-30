@@ -1,0 +1,125 @@
+---
+import Area from "./Area.astro";
+import Category from "./Category.astro";
+import ID from "./ID.astro";
+
+import { jdGetAcidTypeFromString } from "@johnnydecimal/jdgetacidtypefromstring";
+
+interface Props {
+  jdCodeBlock: string;
+}
+const { jdCodeBlock } = Astro.props;
+
+// Trim jdCodeBlock
+// Split jdCodeBlock up in to lines
+const temp_a = jdCodeBlock.split("\n").filter((jdLine) => jdLine.trim() !== "");
+const jdCodeBlockTrimmed = temp_a.map((jdLine) => jdLine.trim());
+
+// We need to:
+// Create an array that we'll map() over, below; but it should be set up
+// so it's ready just to feed in to components, no other computation required
+// below the fold.
+
+interface JdLineObject {
+  jdAcidType: "area" | "category" | "id" | false;
+  jdNumber: string;
+  jdTitle: string;
+  jdComment?: string;
+}
+const jdParsedArray: JdLineObject[] = [];
+
+// For each line of jdCodeBlock
+jdCodeBlockTrimmed.forEach((jdLine) => {
+  // Figure out what ACID it is
+  const jdLineAcid = jdGetAcidTypeFromString(jdLine);
+
+  // Pull off the acid, numbers, title, and comments
+  let jdNumber: string, jdTitle: string, jdComment: string;
+  let jdLineObject;
+  if (jdLineAcid) {
+    const jdLineArray = jdLine.split(" ");
+    jdNumber = jdLineArray[0];
+    jdLineArray.shift();
+
+    // Is there a comment?
+    const commentPosition = jdLineArray.findIndex((jdLine) => jdLine === "/*");
+
+    if (commentPosition < 0) {
+      jdTitle = jdLineArray.join(" ");
+    } else {
+      jdTitle = jdLineArray.slice(0, commentPosition).join(" ");
+      jdComment = jdLineArray.slice(commentPosition).join(" ");
+    }
+
+    // Put them on an object
+    jdLineObject = {
+      jdAcidType: jdLineAcid.jdAcidType,
+      jdNumber,
+      jdTitle,
+      jdComment,
+    };
+    jdParsedArray.push(jdLineObject);
+  } else {
+    // !jdLineAcid, do nothing.
+  }
+});
+
+// Load up an array of objects that we'll map() over
+---
+
+<div class="jd-code-block-container">
+  {
+    jdParsedArray.map((jdLineObject) => {
+      switch (jdLineObject.jdAcidType) {
+        case "area":
+          return (
+            <Area
+              number={jdLineObject.jdNumber}
+              title={jdLineObject.jdTitle}
+              comment={jdLineObject.jdComment}
+            />
+          );
+        case "category":
+          return (
+            <Category
+              number={jdLineObject.jdNumber}
+              title={jdLineObject.jdTitle}
+              comment={jdLineObject.jdComment}
+            />
+          );
+        case "id":
+          return (
+            <ID
+              number={jdLineObject.jdNumber}
+              title={jdLineObject.jdTitle}
+              comment={jdLineObject.jdComment}
+            />
+          );
+        default:
+          break;
+      }
+    })
+  }
+</div>
+
+<style>
+  hr {
+    margin: 10px 0;
+  }
+
+  .jd-code-block-container {
+    /* Development -- shouldn't be needed in prod? */
+    max-width: 60ch;
+    background-color: antiquewhite;
+
+    /* Prod */
+    font-family: "Berkeley Mono", Monaco, "Cascadia Mono", "Segoe UI Mono",
+      "Roboto Mono", "Oxygen Mono", "Ubuntu Monospace", "Source Code Pro",
+      "Fira Mono", "Droid Sans Mono", "Courier New", monospace;
+    overflow-x: scroll;
+    min-width: 100px;
+    max-width: 100%;
+  }
+
+  /* pre code::-webkit-scrollbar makes it skinnier */
+</style>

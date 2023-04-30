@@ -1,0 +1,51 @@
+---
+/**
+ * The <ID> component will drop in to <JDCodeBlock>.
+ */
+
+interface Props {
+  number: string;
+  title: string;
+  comment?: string;
+}
+
+const { number, title, comment } = Astro.props;
+---
+
+<div class="grid">
+  <div class="id gap"></div>
+  <div class="id number">{number}</div>
+  <div class="id gap"></div>
+  <div class="id title">
+    {title}
+  </div>
+  <div class="id comment">
+    {comment}
+  </div>
+</div>
+
+<style>
+  .grid {
+    /* gap; number; gap; title; comment (optional) */
+    /* initial gap is smaller on mobile, larger on iPad+ */
+    grid-template-columns: 3ch 5ch 1ch max-content max-content;
+    font-size: 0.8rem;
+  }
+
+  .id.comment {
+    margin-left: 1ch;
+  }
+
+  /* https://css-tricks.com/quick-whats-the-difference-between-flexbox-and-grid/ */
+  /* .grid::-webkit-scrollbar {
+    width: 0.5rem;
+    height: 0.5rem;
+  } */
+
+  @media screen and (min-width: 991.98px) {
+    .grid {
+      grid-template-columns: 6ch 5ch 1ch max-content max-content;
+      font-size: 1rem;
+    }
+  }
+</style>

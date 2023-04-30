@@ -1,0 +1,190 @@
+/* -- global.css -----------------------------------------------------------
+ * 
+ * For site-wide stuff that isn't very interesting. All JD styling is in
+ * johnny.scss.
+ *
+ */
+
+/* == Register Berkeley Mono =================================================
+ *
+ * You import @fontsource definitions as CSS later.
+ *
+ * https://kld.dev/this-is-not-a-google-font/ convinced you to switch
+ * font-display: fallback; (from :swap;).
+ *
+ */
+@font-face {
+  font-family: "Berkeley Mono";
+  src: local("Berkeley Mono"), local("BerkeleyMono"),
+    url("/fonts/BerkeleyMono/BerkeleyMono-Regular.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+  font-display: fallback;
+}
+@font-face {
+  font-family: "Berkeley Mono";
+  src: local("Berkeley Mono"), local("BerkeleyMono"),
+    url("/fonts/BerkeleyMono/BerkeleyMono-Bold.woff2") format("woff2");
+  font-weight: bold;
+  font-style: normal;
+  font-display: fallback;
+}
+@font-face {
+  font-family: "Berkeley Mono";
+  src: local("Berkeley Mono"), local("BerkeleyMono"),
+    url("/fonts/BerkeleyMono/BerkeleyMono-Italic.woff2") format("woff2");
+  font-weight: normal;
+  font-style: italic;
+  font-display: fallback;
+}
+@font-face {
+  font-family: "Berkeley Mono";
+  src: local("Berkeley Mono"), local("BerkeleyMono"),
+    url("/fonts/BerkeleyMono/BerkeleyMono-BoldItalic.woff2") format("woff2");
+  font-weight: bold;
+  font-style: italic;
+  font-display: fallback;
+}
+
+/* IBM's supplied CSS, plus font-display: fallback.
+Don't forget to modify the path if you update.
+*/
+@font-face {
+  font-family: "IBM Plex Serif";
+  font-style: normal;
+  font-weight: 400;
+  font-display: fallback;
+  src: local("IBM Plex Serif"), local("IBMPlexSerif"),
+    url("/fonts/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Regular-Latin1.woff2")
+      format("woff2");
+  unicode-range: U+0000, U+000D, U+0020-007E, U+00A0-00A3, U+00A4-00FF, U+0131,
+    U+0152-0153, U+02C6, U+02DA, U+02DC, U+2013-2014, U+2018-201A, U+201C-201E,
+    U+2020-2022, U+2026, U+2030, U+2039-203A, U+2044, U+2074, U+20AC, U+2122,
+    U+2212, U+FB01-FB02;
+}
+@font-face {
+  font-family: "IBM Plex Serif";
+  font-style: italic;
+  font-weight: 400;
+  font-display: fallback;
+  src: local("IBM Plex Serif Italic"), local("IBMPlexSerif-Italic"),
+    url("/fonts/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Italic-Latin1.woff2")
+      format("woff2");
+  unicode-range: U+0000, U+000D, U+0020-007E, U+00A0-00A3, U+00A4-00FF, U+0131,
+    U+0152-0153, U+02C6, U+02DA, U+02DC, U+2013-2014, U+2018-201A, U+201C-201E,
+    U+2020-2022, U+2026, U+2030, U+2039-203A, U+2044, U+2074, U+20AC, U+2122,
+    U+2212, U+FB01-FB02;
+}
+@font-face {
+  font-family: "IBM Plex Serif";
+  font-style: normal;
+  font-weight: 700;
+  font-display: fallback;
+  src: local("IBM Plex Serif Bold"), local("IBMPlexSerif-Bold"),
+    url("/fonts/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Bold-Latin1.woff2")
+      format("woff2");
+  unicode-range: U+0000, U+000D, U+0020-007E, U+00A0-00A3, U+00A4-00FF, U+0131,
+    U+0152-0153, U+02C6, U+02DA, U+02DC, U+2013-2014, U+2018-201A, U+201C-201E,
+    U+2020-2022, U+2026, U+2030, U+2039-203A, U+2044, U+2074, U+20AC, U+2122,
+    U+2212, U+FB01-FB02;
+}
+@font-face {
+  font-family: "IBM Plex Serif";
+  font-style: italic;
+  font-weight: 500;
+  font-display: fallback;
+  src: local("IBM Plex Serif Medium Italic"), local("IBMPlexSerif-MediumItalic"),
+    url("/fonts/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-MediumItalic-Latin1.woff2")
+      format("woff2");
+  unicode-range: U+0000, U+000D, U+0020-007E, U+00A0-00A3, U+00A4-00FF, U+0131,
+    U+0152-0153, U+02C6, U+02DA, U+02DC, U+2013-2014, U+2018-201A, U+201C-201E,
+    U+2020-2022, U+2026, U+2030, U+2039-203A, U+2044, U+2074, U+20AC, U+2122,
+    U+2212, U+FB01-FB02;
+}
+@font-face {
+  font-family: "IBM Plex Serif";
+  font-style: italic;
+  font-weight: 700;
+  font-display: fallback;
+  src: local("IBM Plex Serif Bold Italic"), local("IBMPlexSerif-BoldItalic"),
+    url("/fonts/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-BoldItalic-Latin1.woff2")
+      format("woff2");
+  unicode-range: U+0000, U+000D, U+0020-007E, U+00A0-00A3, U+00A4-00FF, U+0131,
+    U+0152-0153, U+02C6, U+02DA, U+02DC, U+2013-2014, U+2018-201A, U+201C-201E,
+    U+2020-2022, U+2026, U+2030, U+2039-203A, U+2044, U+2074, U+20AC, U+2122,
+    U+2212, U+FB01-FB02;
+}
+
+/* == Josh Comeau's CSS resets ============================================= */
+
+/*
+  1. Use a more-intuitive box-sizing model.
+*/
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/*
+  2. Remove default margin
+*/
+* {
+  margin: 0;
+}
+
+/*
+  3. Allow percentage-based heights in the application
+
+  JN: nah turning these off, they cause weirdness with the background tint.
+  html,
+  body {
+    height: 100%;
+  }
+*/
+
+/*
+  Typographic tweaks!
+  4. Add accessible line-height -- changed to 1.2 to minimise FOUT in
+     <JDNavigation />. Will bump up in the layout component.
+  5. Improve text rendering
+*/
+body {
+  line-height: 1.2;
+  -webkit-font-smoothing: antialiased;
+}
+
+/*
+  6. Improve media defaults
+*/
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+/*
+  7. Remove built-in form typography styles
+*/
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+/*
+  8. Avoid text overflows
+*/
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
+}

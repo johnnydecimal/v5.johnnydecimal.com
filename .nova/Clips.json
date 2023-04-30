@@ -1,0 +1,9 @@
+{
+  "clips" : [
+    {
+      "content" : "# == JDPage frontmatter: snippet `jd_jdpage_front` ==\n# Choose the `JDPage` layout\nlayout: ..\/..\/..\/layouts\/JDPage.astro\n# The JD number: mandatory, used on JDPage\nnumber: ${:number}\n# The JD title: mandatory, used on JDPage\ntitle: ${:title}\n# The area that this ID relates to: mandatory, used on JDPage\narea: ${:area}\n# The category that this ID relates to: mandatory, used on JDPage\ncategory: ${:category}\n# What is this thing?\nacid: ${:acid}\n# How should it sort? (See \/doco\/frontmatter.sort.md)\nsort: ${:sort}",
+      "name" : "JD page frontmatter",
+      "trigger" : "jd_jdpage_front"
+    }
+  ]
+}

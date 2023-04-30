@@ -1,0 +1,673 @@
+---
+/**
+ * ::CODE STINK ALERT::
+ *
+ * It took me ages to wrap my head around this thing, and this code is
+ * horrendous. Please don't read it and please, please don't repurpose it.
+ *
+ * Also it only makes sense with the accompanying Excel file of patterns.
+ *
+ * ::CODE STINK ALERT ENDS::
+ *
+ * TODO: just tidy this up a bit, it doesn't need to be *this* bad.
+ *
+ * # JDNavItem
+ *
+ * Each time JDNavItem is called, it is creating a `wyabItem` for a specific
+ * page, `creatingWyabForThisPage`.
+ *
+ * ('wyab' = where-you-are-bar, the boxes-drawn-with-typeface-lines in the
+ *  navigation area. I spent *way* too much time on this.)
+ *
+ * So if Astro is generating the page for `34 Category`, that's
+ * `creatingWyabForThisPage`. For every `wyabItem` on that page, this sub will
+ * be called once.
+ */
+
+interface Props {
+  number: string; // For display
+  title: string; // For display
+  url: string; // Comes in as a simple string
+}
+const { number, title, url } = Astro.props;
+
+/**
+ * # Is the item in scope?
+ *
+ * We only consider drawing where-you-are-bar if the wyabIteb aka navItem is
+ * 'in scope' of the page being created.
+ *
+ * If it *is* in scope then we have to figure out how it looks. But if it
+ * isn't even in scope, there's nothing to draw.
+ *
+ * These rules are complex and are documented in the Excel file in {your JD
+ * structure somewhere}.
+ *
+ * TODO: when you JD this stuff, put its location here.
+ */
+
+/**
+ * First let's generate some stuff that each of the functions uses.
+ */
+const creatingWyabForThisPage = new URL(Astro.request.url).pathname.split("/");
+
+/**
+ * Tidy up the creatingWyabForThisPage array.
+ *
+ * First element is blank due to leading zero; remove.
+ *
+ * The last element isn't blank when we're running in dev mode, but is when
+ * we do a build. Detect if that's the case and remove it.
+ *
+ * Update: config setting `trailingSlash: "always"` changes/fixes this.
+ */
+creatingWyabForThisPage.shift();
+if (creatingWyabForThisPage[creatingWyabForThisPage.length - 1] === "") {
+  creatingWyabForThisPage.pop();
+}
+/**
+ * Special case: if we're creating `/`, we're on the home page. Pretend it's
+ * 11.01 Home page.
+ */
+if (creatingWyabForThisPage.length === 0) {
+  creatingWyabForThisPage.push("10-19-concepts");
+  creatingWyabForThisPage.push("11-core");
+  creatingWyabForThisPage.push("11.01-introduction");
+}
+
+// Do the same for the URL of the wyabItem.
+const wyabItem = url.split("/");
+wyabItem.shift();
+
+// Figure out what type of items we're creating.
+type JDItemType = "area" | "category" | "id" | "!!BROKEN!!";
+
+// The length of these arrays tells us the type of page we're creating.
+let creatingThisTypeOfPage: JDItemType = "!!BROKEN!!";
+switch (creatingWyabForThisPage.length) {
+  case 1:
+    creatingThisTypeOfPage = "area";
+    break;
+  case 2:
+    creatingThisTypeOfPage = "category";
+    break;
+  case 3:
+    creatingThisTypeOfPage = "id";
+    break;
+  default:
+    break;
+}
+let wyabItemType: JDItemType = "!!BROKEN!!";
+switch (wyabItem.length) {
+  case 1:
+    wyabItemType = "area";
+    break;
+  case 2:
+    wyabItemType = "category";
+    break;
+  case 3:
+    wyabItemType = "id";
+    break;
+  default:
+    break;
+}
+
+const isThisWyabItemInScopeOfThePageWeAreCreating = (): boolean => {
+  /**
+   * Ref. Excel: if wyabItem is an area, it's in scope as long as the areas 
+     are the same.
+   */
+  if (wyabItemType === "area") {
+    return creatingWyabForThisPage[0] === wyabItem[0];
+  }
+
+  /**
+   * If we're creating a wyab item for a category...
+   */
+  if (wyabItemType === "category") {
+    /* If creatingWyabFor{Area}, a category can't be in scope. */
+    if (creatingThisTypeOfPage === "area") {
+      return false;
+    }
+    /**
+     * Otherwise the rules are the same: the category number for the page we're
+     * creating needs to be >= the category number of the wyab item, AND
+     * they need to be in the same area.
+     *
+     * - Creating page 16, wyab is for 14. 16 >= 14 AND in same area, pass.
+     * - Creating page 12.11, wyab is for 14. 12 !>= 14, fail.
+     */
+
+    /* Test for area first. */
+    if (creatingWyabForThisPage[0] !== wyabItem[0]) {
+      return false;
+    }
+
+    /**
+     * The category number for the page we're creating needs to be >= the
+     * category number of the wyab item. We've just ruled out areas not
+     * matching, so at this point all wyabItems have a category at [1].
+     */
+    return creatingWyabForThisPage[1] >= wyabItem[1];
+  }
+
+  /**
+   * By now we must be creating a wyab item for an ID...
+   */
+  if (wyabItemType === "id") {
+    /* As above, creating for an area page is an easy fail. */
+    if (creatingThisTypeOfPage === "area") {
+      return false;
+    }
+  }
+
+  /**
+   * And again, the areas must match no matter what.
+   */
+  if (creatingWyabForThisPage[0] !== wyabItem[0]) {
+    return false;
+  }
+
+  /**
+   * If we're creating a category page, an ID wyab is in scope if the category
+   * number for the page is > the wyab item.
+   */
+  if (creatingThisTypeOfPage === "category") {
+    return creatingWyabForThisPage[1] > wyabItem[1];
+  }
+
+  /**
+   * And finally if we're creating an ID page, an ID wyab is in scope if the
+   * ID number of the page we're creating is >= the ID number of the wyab item.
+   */
+  if (creatingThisTypeOfPage === "id") {
+    return creatingWyabForThisPage[2] >= wyabItem[2];
+  }
+
+  /**
+   * We shouldn't be able to get here.
+   */
+  console.log("");
+  console.log("‼️‼️‼️‼️ JDNavItem.astro is broken.");
+  console.log("🆚 JDNavItem.astro/wyabItem:", wyabItem);
+  console.log(
+    "🆚 JDNavItem.astro/creatingWyabForThisPage:",
+    creatingWyabForThisPage
+  );
+  console.log(
+    "🆚 JDNavItem.astro/creatingThisTypeOfPage:",
+    creatingThisTypeOfPage
+  );
+  throw new Error("JDNavItem.astro: can't get there from here.");
+};
+
+const isInScope = isThisWyabItemInScopeOfThePageWeAreCreating();
+
+/**
+ * # Is the item the page we're on, i.e. the active item?
+ *
+ * We draw different wyab if the item is the currently active item.
+ * This should be easier: do the two URLs match?
+ */
+
+const isThisWyabItemAlsoThePageWeAreCreating = (): boolean => {
+  return JSON.stringify(creatingWyabForThisPage) === JSON.stringify(wyabItem);
+};
+
+const isActiveItem = isThisWyabItemAlsoThePageWeAreCreating();
+
+/**
+ * Is this item a direct parent of the page we're on?
+ *
+ * So 10-19 and 11 are direct parents of 11.02, and so is 11.01 so that we
+ * match criteria P10. But 10.01 isn't, it's just an ancestor.
+ */
+
+const isThisWyabItemTheParentOfThePageWeAreCreating = () => {
+  /**
+   * If we're generating a page for an area, an area wyab isn't its own parent.
+   */
+  if (creatingThisTypeOfPage === "area") {
+    return false;
+  }
+
+  /**
+   * If we're generating a page for a category, only its area is its parent.
+   */
+  if (creatingThisTypeOfPage === "category") {
+    if (wyabItemType === "area") {
+      return creatingWyabForThisPage[0] === wyabItem[0];
+    }
+  }
+
+  /**
+   * And if we're generating a page for an ID, its category and its area are
+   * its parent, as is any ID in the same category that's above it (P10). So
+   * it's like an older sister vs. a parent, but whatever.
+   */
+  if (creatingThisTypeOfPage === "id") {
+    if (wyabItemType === "category") {
+      return creatingWyabForThisPage[1] === wyabItem[1];
+    }
+    if (wyabItemType === "area") {
+      return creatingWyabForThisPage[0] === wyabItem[0];
+    }
+    if (wyabItemType === "id") {
+      return (
+        creatingWyabForThisPage[1] === wyabItem[1] &&
+        creatingWyabForThisPage[2].substring(3, 5) > wyabItem[2].substring(3, 5)
+      );
+    }
+  }
+};
+
+const isParentItem = isThisWyabItemTheParentOfThePageWeAreCreating();
+
+// TODO: we're creating a link for the page we're on. No need.
+---
+
+<li>
+  {
+    // P1
+    wyabItemType === "area" && !isInScope && (
+      <>
+        <a class="area area-notInScope-P1-grid" href={url}>
+          <div class="area-number">{number}</div>
+          <div />
+          <div class="area-title">{title}</div>
+        </a>
+      </>
+    )
+  }
+
+  {
+    // P3
+    wyabItemType === "category" && !isInScope && (
+      <a class="category category-notInScope-P3-grid" href={url}>
+        <div />
+        <div>{number}</div>
+        <div />
+        <div>{title}</div>
+      </a>
+    )
+  }
+
+  {
+    // P4
+    wyabItemType === "id" && !isInScope && (
+      <a class="id id-notInScope-P4-grid" href={url}>
+        <div />
+        <div>{number}</div>
+        <div />
+        <div>{title}</div>
+      </a>
+    )
+  }
+
+  {
+    // P2
+    wyabItemType === "area" && isInScope && isActiveItem && (
+      <>
+        <a class="area area-inScope-active-P2-grid" href={url}>
+          <div>{number}</div>
+          <div />
+          <div>{title}</div>
+        </a>
+      </>
+    )
+  }
+
+  {
+    // P5
+    wyabItemType === "area" && isInScope && !isActiveItem && (
+      <>
+        <a class="area area-inScope-notActive-P5-grid" href={url}>
+          <div class="area-inScope-notActive-P5-number">
+            {number}
+            <br />
+            &#x2502;
+            <br />
+            &#x2502;
+            <br />
+            &#x2502;
+            <br />
+            &#x2502;
+          </div>
+          <div />
+          <div>{title}</div>
+        </a>
+      </>
+    )
+  }
+
+  {
+    // P6
+    wyabItemType === "category" &&
+      isInScope &&
+      !isActiveItem &&
+      !isParentItem && (
+        <a
+          class="category category-inScope-notActive-notParent-P6-grid"
+          href={url}
+        >
+          <div class="category-inScope-notActive-notParent-P6-lines">
+            &#x2502;
+            <br />
+            &#x2502;
+            <br />
+            &#x2502;
+            <br />
+            &#x2502;
+          </div>
+          <div />
+          <div>{number}</div>
+          <div />
+          <div>{title}</div>
+        </a>
+      )
+  }
+
+  {
+    // P7
+    wyabItemType === "id" && isInScope && !isActiveItem && !isParentItem && (
+      <a class="id id-inScope-notActive-notParent-P7-grid" href={url}>
+        <div class="id-inScope-notActive-notParent-P7-lines">
+          &#x2502;
+          <br />
+          &#x2502;
+          <br />
+          &#x2502;
+          <br />
+          &#x2502;
+        </div>
+        <div />
+        <div>{number}</div>
+        <div />
+        <div>{title}</div>
+      </a>
+    )
+  }
+
+  {
+    // P8
+    wyabItemType === "category" && isInScope && isActiveItem && (
+      <a class="category category-inScope-active-P8-grid" href={url}>
+        <div class="category-inScope-active-P8-lines">
+          &#x2514;&#x2524;
+          <br />
+          &nbsp;&#x2502;
+          <br />
+          &nbsp;&#x2502;
+          <br />
+          &nbsp;&#x2502;
+        </div>
+        <div />
+        <div>{number}</div>
+        <div />
+        <div>{title}</div>
+      </a>
+    )
+  }
+  {
+    // P8
+    wyabItemType === "category" &&
+      isInScope &&
+      !isActiveItem &&
+      isParentItem && (
+        <a class="category category-inScope-active-P8-grid" href={url}>
+          <div class="category-inScope-active-P8-lines">
+            &#x2514;&#x2524;
+            <br />
+            &nbsp;&#x2502;
+            <br />
+            &nbsp;&#x2502;
+            <br />
+            &nbsp;&#x2502;
+          </div>
+          <div />
+          <div>{number}</div>
+          <div />
+          <div>{title}</div>
+        </a>
+      )
+  }
+
+  {
+    // P10
+    wyabItemType === "id" && isInScope && !isActiveItem && isParentItem && (
+      <a class="id id-inScope-notActive-isParent-P10-grid" href={url}>
+        <div />
+        <div class="id-inScope-notActive-isParent-P10-lines">
+          &#x2502;
+          <br />
+          &#x2502;
+          <br />
+          &#x2502;
+          <br />
+          &#x2502;
+          <br />
+          &#x2502;
+          <br />
+        </div>
+        <div />
+        <div>{number}</div>
+        <div />
+        <div>{title}</div>
+      </a>
+    )
+  }
+
+  {
+    // P11
+    wyabItemType === "id" && isInScope && isActiveItem && (
+      <a class="id id-inScope-active-P11-grid" href={url}>
+        <div />
+        <div class="id-inScope-active-P11-lines">
+          &#x2514;&#x2500;&#x2500;&#x2524;
+          <br />
+          &nbsp;&nbsp;&nbsp;&#x2502;
+          <br />
+          &nbsp;&nbsp;&nbsp;&#x2502;
+          <br />
+          &nbsp;&nbsp;&nbsp;&#x2502;
+          <br />
+          &nbsp;&nbsp;&nbsp;&#x2502;
+          <br />
+        </div>
+        <div />
+        <div>{number}</div>
+        <div />
+        <div>{title}</div>
+      </a>
+    )
+  }
+</li>
+
+<style lang="scss">
+  @use "/src/styles/johnny" as *;
+
+  .active {
+    color: $colour-500;
+  }
+
+  a:hover,
+  a:focus {
+    /* outline: 1px solid $colour-500; */
+    /* border-left: 2px solid $colour-500; */
+    /* margin-left: -2px; */
+    background-color: $colour-500;
+    color: $colour-100;
+  }
+
+  a:hover div {
+    background-color: $colour-500;
+    color: $colour-100;
+  }
+
+  /* a:visited:hover div {
+    background-color: rgb(52, 82, 4);
+    color: $colour-100;;;
+  } */
+
+  /* a {
+    border-left: 2px solid transparent;
+    padding-left: 2px;
+    margin-left: -2px;
+  } */
+
+  /* li {
+    list-style: none;
+  } */
+
+  li > .area {
+    margin-top: 1rem;
+  }
+
+  li > .category > div:last-child {
+    text-decoration: underline;
+  }
+
+  li:has(a.area) {
+    font-weight: bold;
+  }
+
+  li:has(a.area):first-child {
+    border-top: 0;
+  }
+
+  li:first-child > a {
+    margin-top: 0;
+  }
+
+  li a {
+    color: $colour-700;
+  }
+
+  .area-notInScope-P1-grid {
+    display: grid;
+    /* Numbers, gap, title */
+    grid-template-columns: 5ch 1ch auto;
+  }
+
+  .category-notInScope-P3-grid {
+    display: grid;
+    /* Gap, numbers, gap, title */
+    grid-template-columns: 3ch 2ch 1ch auto;
+  }
+
+  .id-notInScope-P4-grid {
+    display: grid;
+    /* Gap, numbers, gap, title */
+    grid-template-columns: 6ch 5ch 1ch auto;
+  }
+
+  .area-inScope-active-P2-grid {
+    display: grid;
+    /* Numbers, gap, title */
+    grid-template-columns: 5ch 1ch auto;
+    color: $colour-500;
+  }
+
+  .area-inScope-notActive-P5-grid {
+    display: grid;
+    /* Numbers, gap, title */
+    grid-template-columns: 5ch 1ch auto;
+    color: $colour-500;
+  }
+
+  .area-inScope-notActive-P5-number {
+    height: 0;
+    min-height: 100%;
+    overflow: hidden;
+  }
+
+  .category-inScope-notActive-notParent-P6-grid {
+    display: grid;
+    /* Lines, gap, numbers, gap, title */
+    grid-template-columns: 1ch 2ch 2ch 1ch auto;
+  }
+
+  .category-inScope-notActive-notParent-P6-lines {
+    height: 0;
+    min-height: 100%;
+    overflow: hidden;
+    color: $colour-500;
+  }
+
+  .id-inScope-notActive-notParent-P7-grid {
+    display: grid;
+    /* Lines, gap, numbers, gap, title */
+    grid-template-columns: 1ch 5ch 5ch 1ch auto;
+  }
+
+  .id-inScope-notActive-notParent-P7-lines {
+    height: 0;
+    min-height: 100%;
+    overflow: hidden;
+    color: $colour-500;
+  }
+
+  .category-inScope-active-P8-grid {
+    display: grid;
+    /* Lines, gap, numbers, gap, title */
+    grid-template-columns: 2ch 1ch 2ch 1ch auto;
+    color: $colour-500;
+
+    & div:last-child {
+      text-decoration: underline;
+    }
+  }
+
+  .category-inScope-active-P8-lines {
+    height: 0;
+    min-height: 100%;
+    overflow: hidden;
+  }
+
+  .id-inScope-notActive-isParent-P10-grid {
+    display: grid;
+    /* Gap, lines, gap, number, gap, title */
+    grid-template-columns: 1ch 1ch 4ch 5ch 1ch auto;
+  }
+
+  .id-inScope-notActive-isParent-P10-lines {
+    height: 0;
+    min-height: 100%;
+    overflow: hidden;
+  }
+  .id-inScope-notActive-isParent-P10-grid {
+    display: grid;
+    /* Gap, lines, gap, number, gap, title */
+    grid-template-columns: 1ch 1ch 4ch 5ch 1ch auto;
+  }
+
+  .id-inScope-notActive-isParent-P10-lines {
+    height: 0;
+    min-height: 100%;
+    overflow: hidden;
+    color: $colour-500;
+  }
+
+  .id-inScope-active-P11-grid {
+    display: grid;
+    /* Gap, lines, gap, number, gap, title */
+    grid-template-columns: 1ch 4ch 1ch 5ch 1ch auto;
+    color: $colour-500;
+    font-weight: bold;
+    background-color: $colour-500;
+    color: $colour-50;
+
+    // outline: 1px solid $colour-500;
+
+    // background-color: $colour-100;
+    // border-right: 2px solid $colour-500;
+    // border-left: 2px solid $colour-500;
+    // margin-left: -2px;
+  }
+
+  .id-inScope-active-P11-lines {
+    height: 0;
+    min-height: 100%;
+    overflow: hidden;
+  }
+</style>

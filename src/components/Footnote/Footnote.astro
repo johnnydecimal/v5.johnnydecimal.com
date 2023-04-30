@@ -1,0 +1,22 @@
+---
+const { footnotes } = Astro.props;
+// <sup>{n + 1}</sup>
+---
+
+<div id="footnotes">
+  <hr />
+  <ol>
+    {
+      footnotes.map((footnote: string, n: number) => (
+        <li class="footnote" id={`footnote-${n + 1}`}>
+          <p>
+            <span set:html={footnote} />
+            <a class="footback" href={`#footref-${n + 1}`}>
+              &#8617;&#xfe0e;
+            </a>
+          </p>
+        </li>
+      ))
+    }
+  </ol>
+</div>

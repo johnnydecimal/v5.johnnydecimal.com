@@ -1,0 +1,50 @@
+---
+# Choose the `JDPage` layout
+layout: ../../../layouts/JDPage.astro
+# The JD number: mandatory, used on JDPage
+number: "01.03"
+# The JD title: mandatory, used on JDPage
+title: Privacy
+# The area that this ID relates to: mandatory, used on JDPage
+area: 00-09 Site administration
+# The category that this ID relates to: mandatory, used on JDPage
+category: 01 About
+
+# RSS
+pubDate: 2022-02-06
+---
+
+import Footnote from "@components/Footnote/Footnote.astro";
+import FootRef from "@components/Footnote/FootRef.astro";
+
+# {frontmatter.title}
+
+I'm just a nerd building a site for a thing that I personally find useful. So when I say that "I take your privacy seriously", it's not just some spiel. It's me, Johnny Noble, talking to you, my honoured guest.
+
+## Web trackers & cookies
+
+I hate trackers more than you do. This site will **never** contain **any** third-party 'web trackers', i.e. code that attempts to uniquely identify you and follow you around the web.
+
+This site has no need for cookies, and does not use them.
+
+It uses no external fonts, e.g. Google Fonts, or any other system that might provide a subtle way to track you.
+
+While JavaScript is used heavily in the production of this site, the as-published version that you are reading contains none.
+
+## Server analytics
+
+As this site is hosted on [Netlify](https://netlify.com), they know how many people are visiting it. As the web host it's basically impossible for them _not_ to know.
+
+I subscribe to [Netlify Analytics](https://www.netlify.com/products/analytics/) which gives me a very high level view of how many people are visiting the site, and which country they're in.
+
+## Your email address
+
+If you choose to [give me your email address](/00-09-site-administration/02-send-and-receive/02.02-mailing-list), I will treat it with the utmost respect. I'll never spam you, or give it to anyone else.<FootRef n={1} />
+
+In 2019 I moved the mailing list from Mailchimp, whose business model had started to make me uncomfortable (and oh boy has it got worse since then) to [Buttondown](https://buttondown.email). It's run by one guy who I trust to do the right thing. I've turned off all analytics features, so I don't know who opens, clicks, or forwards my emails.
+
+<Footnote
+  footnotes={[
+    "Someone wrote me once and said &lsquo;well <span style='font-style: italic;'>actually</span> you <span style='font-style: italic;'>are</span> giving it to someone else, you&rsquo;re giving it to Buttondown&rsquo;. Don&rsquo;t be like that guy; you all know what I mean.",
+  ]}
+/>

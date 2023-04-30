@@ -1,0 +1,26 @@
+---
+---
+
+<div class="BracketsHorizontalBottom">
+  <div>&#x2514;</div>
+  <div class="line-and-label">
+    ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  </div>
+  <div>&#x2518;</div>
+</div>
+
+<style lang="scss">
+  @use "/src/styles/johnny" as *;
+
+  .BracketsHorizontalBottom {
+    display: grid;
+    grid-template-columns: 1ch 1fr 1ch;
+    white-space: nowrap;
+    margin-top: $small;
+    font-family: $monospace;
+    color: $colour-700;
+  }
+  .line-and-label {
+    overflow: hidden;
+  }
+</style>

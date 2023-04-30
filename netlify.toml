@@ -1,0 +1,5 @@
+# [[redirects]]
+	# from = "/"
+	# to = "/10-19-Concepts/11-Core/11.01-Home-page/"
+	# status = 301
+	# force = true

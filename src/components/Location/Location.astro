@@ -1,0 +1,69 @@
+---
+import BracketsHorizontalTop from "@components/BracketsHorizontal/BracketsHorizontalTop.astro";
+import BracketsHorizontalBottom from "@components/BracketsHorizontal/BracketsHorizontalBottom.astro";
+import { jdGetAcidTypeFromString } from "@johnnydecimal/jdgetacidtypefromstring";
+
+export interface Props {
+  number: string;
+  title: string;
+  area: string;
+  category: string;
+}
+const { number, title, area, category } = Astro.props;
+
+/**
+ * Create a link to this page's area.
+ */
+const areaUrl = "/" + area.replaceAll(" ", "-").toLowerCase();
+
+/**
+ * Create a link to this page's category, if it has one. (Areas don't.)
+ */
+let categoryUrl;
+if (category) {
+  categoryUrl = areaUrl + "/" + category.replaceAll(" ", "-").toLowerCase();
+}
+
+/**
+ * We only want to show an ID in the 'location' box if it's actually an ID,
+ * i.e. not if it's an AC.
+ *
+ * Current jdGetAcid... expects "10-19 A title", so fudge that for now.
+ * TODO: Fix.
+ */
+let numberAcidType = jdGetAcidTypeFromString(number + " FIX THIS");
+---
+
+<div class="Location">
+  <BracketsHorizontalTop label="Location" />
+
+  <div class="locationbox-acid-details-grid">
+    <div>Area&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</div><div>{area}</div>
+    <div>Category :</div><div>{category ? category : "-"}</div>
+    <div>ID&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</div><div>
+      {numberAcidType.jdAcidType === "id" ? number : "-"}
+    </div>
+  </div>
+
+  <BracketsHorizontalBottom />
+</div>
+
+<style lang="scss">
+  @use "/src/styles/johnny" as *;
+
+  .Location {
+    font-family: $monospace;
+    padding: $medium $small;
+    color: $colour-700;
+
+    @include for-tablet-landscape-up {
+      padding: 0;
+    }
+  }
+
+  .locationbox-acid-details-grid {
+    display: grid;
+    grid-template-columns: 11ch 1fr;
+    margin-left: 2ch;
+  }
+</style>

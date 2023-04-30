@@ -1,0 +1,46 @@
+{
+  import.meta.env.DEV ? (
+    <div style="padding: 5px; background: greenyellow;">{Astro.self.name}</div>
+  ) : null
+}
+<div class="jd-box">
+  <pre><span class="bold">The 12 numbers</span>    <span class="bold">The 13 numbers</span></pre>
+  <pre>    12.34  12.35      13.03  13.04</pre>
+
+  <pre>&nbsp;</pre>
+
+  <pre><span class="bold">The 21 numbers</span>    <span class="bold">The 22 numbers</span></pre>
+  <pre>    21.01  21.02      22.38  22.39</pre>
+
+  <pre>&nbsp;</pre>
+
+  <pre><span class="bold">The 23 numbers</span>    <span class="bold">The 31 numbers</span></pre>
+  <pre>    23.21  23.22      31.70  31.71</pre>
+  <pre>    23.23  23.24</pre>
+
+  <pre>&nbsp;</pre>
+
+  <pre><span class="bold">The 32 numbers</span></pre>
+  <pre>    32.55  32.56</pre>
+</div>
+
+<style lang="scss">
+  @use "/src/styles/johnny" as *;
+
+  .jd-box {
+    margin: 0 0 4rem 0;
+    padding: 1.5rem 1rem;
+
+    // Using px not rem here 'cos rem doesn't work
+    & pre {
+      font-size: 12px;
+      @include for-tablet-portrait-up {
+        font-size: 16px;
+      }
+    }
+
+    @include for-tablet-portrait-up {
+      padding: 1.5rem 2rem;
+    }
+  }
+</style>

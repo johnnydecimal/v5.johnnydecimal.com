@@ -1,0 +1,170 @@
+---
+import BracketsHorizontalTop from "@components/BracketsHorizontal/BracketsHorizontalTop.astro";
+import BracketsHorizontalBottom from "@components/BracketsHorizontal/BracketsHorizontalBottom.astro";
+
+// Instead of importing this, let's generate it
+import { pages } from "./pages.js";
+
+// Not doing this now as I want to just get the site published, but here's how we get the list of pages. Build this in to a proper function.
+// const pages = await Astro.glob("../../pages/**/*.mdx");
+// console.log(
+//   pages.map((page) => {
+//     return `{ pathname: "${page.url}", title: "${page.frontmatter.title}" },`;
+//   })
+// );
+
+// create an array
+// of objects like { pathname: "/00-09/01/...", title: "About"}
+// with no trailing slashes
+// by mapping over each `page`
+
+// ============================================================================
+
+/**
+ * This doesn't change with the re-doing of pages.js
+ */
+const pathname = Astro.url.pathname;
+
+/**
+ * Hack because Netlify builds with a trailing slash and locally does not. Yet.
+ * You need to fix that to align them.
+ *
+ * TODO: that.
+ *
+ * Until then, if import.meta.env.PROD then we're in Netlify, otherwise not.
+ */
+let pageIndex;
+if (import.meta.env.PROD) {
+  pageIndex = pages.findIndex((page) => page.pathname + "/" === pathname);
+} else {
+  pageIndex = pages.findIndex((page) => page.pathname === pathname);
+}
+// Hack ends.
+
+let backPath, backTitle, nextPath, nextTitle;
+
+if (pageIndex > 1) {
+  backPath = pages[pageIndex - 1].pathname;
+  backTitle = pages[pageIndex - 1].title;
+}
+
+if (pageIndex < pages.length - 1) {
+  nextPath = pages[pageIndex + 1].pathname;
+  nextTitle = pages[pageIndex + 1].title;
+}
+
+interface Props {
+  backNextDisplay: boolean;
+}
+
+const { backNextDisplay } = Astro.props;
+
+/* We've introduced a BackNext to the home page, which is at `/`.
+   Create a special override case for it for now.
+   TODO this all needs a re-think.
+ */
+if (pathname === "/") {
+  backPath = undefined;
+  nextPath = "/10-19-concepts/11-core/11.02-areas-and-categories";
+  nextTitle = "Areas and categories";
+}
+---
+
+{
+  backNextDisplay ? (
+    <div class="BackNext">
+      <BracketsHorizontalTop label="◁/▶" />
+      <div class="back-next-grid">
+        {backPath ? (
+          <>
+            <div class="back-arrow">
+              <a href={backPath}>&#x25C1;&nbsp;</a>
+            </div>
+            <div class="back">
+              <a href={backPath}> {backTitle}</a>
+            </div>
+          </>
+        ) : (
+          <>
+            <div />
+            <div />
+          </>
+        )}
+        <div class="spacer">•</div>
+        {nextPath ? (
+          <>
+            <div class="next">
+              <a href={nextPath}>{nextTitle}</a>
+            </div>
+            <div class="next-arrow">
+              <a href={nextPath}>&nbsp;&#x25B6;</a>
+            </div>
+          </>
+        ) : (
+          <>
+            <div />
+            <div />
+          </>
+        )}
+      </div>
+      <BracketsHorizontalBottom />
+    </div>
+  ) : null
+}
+
+<style lang="scss">
+  @use "/src/styles/johnny" as *;
+
+  // @include troubleshooting;
+
+  a:hover {
+    background-color: $colour-500;
+    color: $colour-100;
+  }
+
+  .BackNext {
+    margin: 0 auto;
+    padding: $medium $small;
+
+    @include for-tablet-landscape-up() {
+      margin: $xl auto;
+      padding: 0;
+    }
+
+    @include for-print() {
+      display: none;
+    }
+  }
+
+  .back-next-grid {
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-columns: 2ch 1fr 2ch 1fr 2ch;
+
+    font-family: $monospace;
+
+    margin: 0;
+
+    @include for-tablet-landscape-up {
+      margin: 0 2ch;
+    }
+  }
+
+  .back,
+  .back-arrow {
+    justify-self: start;
+    align-self: center;
+  }
+
+  .next,
+  .next-arrow {
+    justify-self: end;
+    text-align: right;
+    align-self: center;
+  }
+
+  .spacer {
+    text-align: center;
+    align-self: center;
+  }
+</style>

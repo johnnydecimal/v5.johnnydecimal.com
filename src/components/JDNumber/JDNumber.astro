@@ -1,0 +1,30 @@
+---
+interface Props {
+  margin: string;
+  padding: string;
+  size: string;
+  text: string;
+}
+
+const { margin, padding, size, text } = Astro.props;
+---
+
+<div class="JDNumber">
+  <code class="inner">{text}</code>
+</div>
+
+<style lang="scss" define:vars={{ margin, padding, size }}>
+  @use "/src/styles/johnny" as *;
+
+  .JDNumber {
+    display: inline-block;
+    font-size: var(--size);
+    margin: var(--margin);
+    white-space: nowrap;
+  }
+
+  // Using code inherits the basic box styling.
+  code.inner {
+    padding: var(--padding);
+  }
+</style>

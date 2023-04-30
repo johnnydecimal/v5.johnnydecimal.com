@@ -1,0 +1,403 @@
+/* == johnny.scss =============================================================
+ * 
+ * All of the site-wide JD styling is here.
+ *
+ * Individual components hold their own styles.
+ *
+ */
+
+/* == SCSS mixins =============================================================
+ *
+ * Need to be at the top because you use them in this file.
+ *
+ */
+@mixin for-phone-only {
+  @media (max-width: 599px) {
+    @content;
+  }
+}
+@mixin for-tablet-portrait-up {
+  @media (min-width: 600px) {
+    @content;
+  }
+}
+@mixin for-tablet-landscape-up {
+  @media (min-width: 900px) {
+    @content;
+  }
+}
+@mixin for-desktop-up {
+  @media (min-width: 1200px) {
+    @content;
+  }
+}
+@mixin for-big-desktop-up {
+  @media (min-width: 1800px) {
+    @content;
+  }
+}
+
+@mixin for-print {
+  @media print {
+    @content;
+  }
+}
+
+@mixin footnote {
+  color: $colour-700;
+  background-color: $colour-50;
+  border: 1px solid $colour-500;
+  border-radius: 2px;
+  box-shadow: $box-shadow;
+  font-family: $monospace;
+  font-size: 1.2rem;
+  line-height: 1.4;
+  margin: $large 0;
+  padding: $small;
+  font-style: italic;
+  width: fit-content;
+
+  @include for-tablet-portrait-up {
+    font-size: 1.4rem;
+    margin: $xl 0;
+    max-width: 80%;
+    padding: $medium $small;
+  }
+}
+
+@mixin troubleshooting {
+  * {
+    outline: 1px dashed hotpink;
+  }
+}
+
+// == Variables ===============================================================
+$tiny: 0.5rem;
+$small: 1rem;
+$medium: 1.6rem;
+$large: 2.56rem;
+$xl: 4rem;
+
+$site-width: 1050px;
+
+$monospace: "Berkeley Mono", Monaco, "Cascadia Mono", "Segoe UI Mono",
+  "Roboto Mono", "Oxygen Mono", "Ubuntu Monospace", "Source Code Pro",
+  "Fira Mono", "Droid Sans Mono", "Courier New", monospace;
+
+$colour-900: hsl(19, 100%, 5%);
+$colour-800: hsl(19, 100%, 7%);
+$colour-700: hsl(19, 100%, 19%);
+$colour-790: hsl(19, 21%, 65%);
+$colour-600: hsl(19, 100%, 35%);
+// also in layout as meta:theme-color, hard-coded
+$colour-500: hsl(19, 100%, 47%);
+$colour-400: hsl(19, 100%, 61%);
+$colour-300: hsl(19, 100%, 72%);
+$colour-200: hsl(19, 100%, 88%);
+$colour-100: hsl(20, 60%, 98%);
+$colour-50: hsl(24, 38%, 99%);
+
+$highlight-800: hsl(190, 43%, 19%);
+$highlight-600: hsl(190, 43%, 49%);
+$highlight-500: hsl(190, 43%, 59%);
+$highlight-400: hsl(190, 43%, 69%);
+$highlight-300: hsl(190, 43%, 79%);
+$highlight-200: hsl(190, 43%, 89%);
+$highlight-100: hsl(190, 23%, 96%);
+
+// prettier-ignore
+$box-shadow: 0 2.8px 2.2px rgba(20, 7, 0, 0.024),
+             0 6.7px 5.3px rgba(20, 7, 0, 0.028),
+             0 12.5px 10px rgba(20, 7, 0, 0.02),
+             0 18.3px 14.9px rgba(20, 7, 0, 0.01);
+
+// == Plain old CSS that will inherit everywhere ==============================
+html {
+  background-color: $colour-50;
+  /* height: -webkit-fill-available; */
+
+  /* https://www.aleksandrhovhannisyan.com/blog/62-5-percent-font-size-trick/ */
+  font-size: 62.5%;
+
+  @media (prefers-color-scheme: dark) {
+    filter: invert(1) hue-rotate(180deg);
+  }
+}
+body {
+  color: $colour-800;
+  background-color: $colour-50;
+
+  margin: 0 auto;
+
+  /* https://www.aleksandrhovhannisyan.com/blog/62-5-percent-font-size-trick/ */
+  font-size: 1.6rem;
+}
+a {
+  color: inherit;
+  text-decoration: inherit;
+}
+
+/* == .jdcontent ==============================================================
+   This was in a <style is:global> in JDPage but we've brought it here so that
+   everything is together.
+*/
+.jdcontent {
+  margin: 0 $medium;
+  font-family: "IBM Plex Serif";
+
+  // Headers
+  & h1,
+  & h2,
+  & h3 {
+    color: $colour-700;
+    font-family: "IBM Plex Serif";
+    font-weight: 700;
+    margin-top: $xl;
+    margin-bottom: $medium;
+
+    &:first-child {
+      margin-top: $small;
+
+      @include for-tablet-portrait-up() {
+        margin-top: $large;
+      }
+    }
+
+    // # `this` will now be the correct size
+    & code {
+      font-size: inherit;
+    }
+  }
+  & h1 {
+    font-size: 3.6rem;
+    line-height: 1.25;
+    border-bottom: 4px solid $colour-700;
+  }
+  & h2 {
+    font-size: 3.2rem;
+    border-bottom: 3px solid $colour-700;
+  }
+  & h3 {
+    font-size: 2.6rem;
+    border-bottom: 2px solid $colour-700;
+  }
+  & h4 {
+    border: 0;
+    color: $colour-700;
+    font-size: 2.2rem;
+    margin-top: $large;
+  }
+
+  // Body text
+  & p {
+    margin: 1.75rem 0;
+    font-size: 1.8rem;
+    line-height: 1.8;
+  }
+
+  & strong {
+    color: $colour-700;
+  }
+
+  & blockquote > p {
+    color: $highlight-800;
+    border: 1px solid $highlight-400;
+    border-left: 7px solid $highlight-400;
+    background-color: $highlight-100;
+    margin: $large $medium;
+    padding: $medium;
+    font-style: italic;
+    font-size: 1.5rem;
+    font-weight: 500; // imported just for this, so remove import if this changes
+    width: fit-content;
+
+    & code {
+      font-size: inherit;
+    }
+
+    @include for-tablet-portrait-up() {
+      margin: $large;
+      padding: $medium $large;
+      font-size: 1.6rem;
+    }
+  }
+
+  & sup {
+    font-size: 1rem;
+    font-family: $monospace;
+  }
+
+  & ol {
+    list-style-type: decimal;
+    padding-left: $large;
+  }
+
+  & ul {
+    list-style-type: disc;
+    padding-left: $large;
+  }
+
+  & li {
+    font-size: 1.8rem;
+    line-height: 1.8;
+
+    // Nested lists
+    & ul {
+      margin-left: $large;
+    }
+  }
+
+  & a {
+    text-decoration-line: underline;
+    color: $colour-600;
+
+    &:hover {
+      background-color: $colour-500;
+      color: $colour-100;
+    }
+    &:visited {
+      text-decoration-line: none;
+      color: $colour-700;
+    }
+    &:visited:hover {
+      background-color: $colour-600;
+      color: $colour-100;
+    }
+  }
+
+  & hr {
+    border: 0;
+    border-top: 1px solid lightgray;
+    box-shadow: $box-shadow;
+    margin: 3rem auto;
+  }
+
+  // Fixed-width, inline
+  & code {
+    background-color: $colour-100;
+    border: 1px dotted $colour-700;
+    border-bottom: 2px solid $colour-500;
+    border-radius: 2px;
+    color: $colour-700;
+    font-family: $monospace;
+    font-size: 1.8rem;
+    padding-inline: 0.5rem;
+  }
+
+  // Images
+  & img,
+  video {
+    border: 1px solid $colour-300;
+    border-radius: 2px;
+    box-shadow: $box-shadow;
+    margin: $large 0 $xl 0;
+    padding: $tiny;
+    background-color: white;
+
+    @include for-tablet-portrait-up() {
+      padding: $small;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      filter: brightness(0.7) contrast(1.2);
+    }
+
+    &.no-invert {
+      @media (prefers-color-scheme: dark) {
+        filter: brightness(0.7) contrast(1.2) invert(1) hue-rotate(180deg);
+      }
+    }
+  }
+
+  // Footnotes
+  & div#footnotes > ol > li {
+    font-size: 1.4rem;
+    & p {
+      font-size: inherit;
+      margin: $small 0;
+      & span > code {
+        font-size: inherit;
+      }
+      & a.footback {
+        color: $colour-500;
+        font-size: 1.2rem;
+        padding-inline: 2px;
+
+        &:visited {
+          color: $colour-500;
+        }
+        &:hover {
+          background-color: $colour-500;
+          color: $colour-50;
+        }
+        &:visited:hover {
+          background-color: $colour-500;
+          color: $colour-50;
+        }
+      }
+    }
+  }
+
+  // <ends> .jdcontent
+}
+
+/* == .jdbox ==
+   A nice box to contain a bunch of non-standard JD numbers.
+
+   Do *not* use this for standard systems. You built <JDBlock /> for that.
+
+   We need to neaten this up. So we always have div.jdbox, and then within there
+   you're using <pre> tags 
+*/
+.jd-box {
+  /* The font-size needs to be smaller in some cases (where the box ends
+     up being wide), but they're rare so handle them by exception.
+    
+     Don't center this by default. Do that in the component if you want it.
+  */
+  box-shadow: $box-shadow;
+  border: 2px solid $colour-500;
+  border-radius: 2px;
+  color: $colour-800;
+  line-height: 1.6;
+  // padding: 1.5rem 2rem;
+  padding: $small;
+  width: fit-content;
+
+  @include for-tablet-portrait-up() {
+    padding: $medium $large;
+  }
+
+  & pre {
+    // If you set this directly on the <pre>, it also inherits the rem! But
+    // if you don't, it doesn't. Voodoo of some sort.
+    font-family: $monospace;
+  }
+
+  /* == Used in Areas[x] to format the 'tables' ===============================*/
+  .border-bottom-dotted {
+    border-bottom: 1px dotted $colour-700;
+  }
+  .border-bottom-solid {
+    border-bottom: 1px solid $colour-700;
+  }
+  .bold {
+    font-weight: bold;
+  }
+}
+
+/* == One-offs ============================================================= */
+.jdcontent {
+  & .large-number {
+    & code {
+      font-size: 1.8rem;
+      line-height: 3.2;
+      padding: $small $medium;
+      margin-right: $medium;
+
+      @include for-tablet-portrait-up() {
+        font-size: 2.4rem;
+      }
+    }
+  }
+}

@@ -1,0 +1,32 @@
+---
+const { label } = Astro.props;
+---
+
+<div class="BracketsHorizontalTop">
+  <div>&#x250C;</div>
+  <div class="line-and-label">
+    ─ {label}
+    ───────────────────────────────────────────────────────────────────────────────────────────
+  </div>
+  <div>&#x2510;</div>
+</div>
+
+<style lang="scss">
+  @use "/src/styles/johnny" as *;
+
+  .exp {
+    font-family: $monospace;
+  }
+
+  .BracketsHorizontalTop {
+    display: grid;
+    grid-template-columns: 1ch 1fr 1ch;
+    white-space: nowrap;
+    margin-bottom: $small;
+    font-family: $monospace;
+    color: $colour-700;
+  }
+  .line-and-label {
+    overflow: hidden;
+  }
+</style>

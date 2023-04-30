@@ -1,0 +1,50 @@
+---
+---
+
+<div class="Footer">
+  <div>Johnny•Decimal</div><div class="divider">&nbsp;/&nbsp;</div>A system to
+  organise projects<div class="divider">&nbsp;/&nbsp;</div><a
+    href="/00-09-site-administration/01-about/01.02-licence">&copy; 2023</a
+  >
+</div>
+
+<style lang="scss">
+  @use "/src/styles/johnny" as *;
+
+  .Footer {
+    display: grid;
+    grid-auto-flow: row;
+    justify-content: center;
+    color: $colour-700;
+
+    @include for-tablet-portrait-up() {
+      grid-auto-flow: column;
+      grid-auto-columns: max-content;
+    }
+
+    border-bottom: 2px solid $colour-500;
+    font-family: $monospace;
+    font-size: 1.2rem;
+    text-align: center;
+    padding: $medium 0;
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .divider {
+      display: none;
+      @include for-tablet-portrait-up() {
+        display: block;
+      }
+    }
+
+    * {
+      margin: $tiny 0;
+      @include for-tablet-portrait-up() {
+        margin: 0;
+      }
+    }
+  }
+</style>
