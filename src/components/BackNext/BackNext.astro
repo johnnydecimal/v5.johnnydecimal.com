@@ -43,7 +43,7 @@ if (import.meta.env.PROD) {
 
 let backPath, backTitle, nextPath, nextTitle;
 
-if (pageIndex > 1) {
+if (pageIndex >= 1) {
   backPath = pages[pageIndex - 1].pathname;
   backTitle = pages[pageIndex - 1].title;
 }
