@@ -290,6 +290,7 @@ a {
     border: 1px solid $colour-300;
     border-radius: 2px;
     box-shadow: $box-shadow;
+    box-sizing: border-box; // stops the image shrinking when you specify a size
     margin: $large 0 $xl 0;
     padding: $tiny;
     background-color: white;
