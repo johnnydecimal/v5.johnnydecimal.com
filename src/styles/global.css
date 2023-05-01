@@ -10,7 +10,7 @@
  * You import @fontsource definitions as CSS later.
  *
  * https://kld.dev/this-is-not-a-google-font/ convinced you to switch
- * font-display: swap; (from :swap;).
+ * font-display: fallback; (from :swap;).
  *
  */
 @font-face {
@@ -19,7 +19,7 @@
     url("/fonts/BerkeleyMono/BerkeleyMono-Regular.woff2") format("woff2");
   font-weight: normal;
   font-style: normal;
-  font-display: swap;
+  font-display: fallback;
 }
 @font-face {
   font-family: "Berkeley Mono";
@@ -27,7 +27,7 @@
     url("/fonts/BerkeleyMono/BerkeleyMono-Bold.woff2") format("woff2");
   font-weight: bold;
   font-style: normal;
-  font-display: swap;
+  font-display: fallback;
 }
 @font-face {
   font-family: "Berkeley Mono";
@@ -35,7 +35,7 @@
     url("/fonts/BerkeleyMono/BerkeleyMono-Italic.woff2") format("woff2");
   font-weight: normal;
   font-style: italic;
-  font-display: swap;
+  font-display: fallback;
 }
 @font-face {
   font-family: "Berkeley Mono";
@@ -43,7 +43,7 @@
     url("/fonts/BerkeleyMono/BerkeleyMono-BoldItalic.woff2") format("woff2");
   font-weight: bold;
   font-style: italic;
-  font-display: swap;
+  font-display: fallback;
 }
 
 /* IBM's supplied CSS, plus font-display: fallback.
@@ -53,7 +53,7 @@ Don't forget to modify the path if you update.
   font-family: "IBM Plex Serif";
   font-style: normal;
   font-weight: 400;
-  font-display: swap;
+  font-display: fallback;
   src: local("IBM Plex Serif"), local("IBMPlexSerif"),
     url("/fonts/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Regular-Latin1.woff2")
       format("woff2");
@@ -66,7 +66,7 @@ Don't forget to modify the path if you update.
   font-family: "IBM Plex Serif";
   font-style: italic;
   font-weight: 400;
-  font-display: swap;
+  font-display: fallback;
   src: local("IBM Plex Serif Italic"), local("IBMPlexSerif-Italic"),
     url("/fonts/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Italic-Latin1.woff2")
       format("woff2");
@@ -79,7 +79,7 @@ Don't forget to modify the path if you update.
   font-family: "IBM Plex Serif";
   font-style: normal;
   font-weight: 700;
-  font-display: swap;
+  font-display: fallback;
   src: local("IBM Plex Serif Bold"), local("IBMPlexSerif-Bold"),
     url("/fonts/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Bold-Latin1.woff2")
       format("woff2");
@@ -92,7 +92,7 @@ Don't forget to modify the path if you update.
   font-family: "IBM Plex Serif";
   font-style: italic;
   font-weight: 500;
-  font-display: swap;
+  font-display: fallback;
   src: local("IBM Plex Serif Medium Italic"), local("IBMPlexSerif-MediumItalic"),
     url("/fonts/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-MediumItalic-Latin1.woff2")
       format("woff2");
@@ -105,7 +105,7 @@ Don't forget to modify the path if you update.
   font-family: "IBM Plex Serif";
   font-style: italic;
   font-weight: 700;
-  font-display: swap;
+  font-display: fallback;
   src: local("IBM Plex Serif Bold Italic"), local("IBMPlexSerif-BoldItalic"),
     url("/fonts/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-BoldItalic-Latin1.woff2")
       format("woff2");
