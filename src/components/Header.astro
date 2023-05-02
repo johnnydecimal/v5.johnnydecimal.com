@@ -97,8 +97,7 @@
       <a href="/">Johnny•Decimal</a>
     </h1>
 
-    {import.meta.env.DEV ? <div class="dev-indicator">▒ DEV ▒</div> : null}
-    <div></div>
+    {import.meta.env.DEV ? <div class="dev-indicator">D</div> : <div />}
   </div>
 </header>
 
@@ -163,7 +162,7 @@
     background-color: greenyellow;
     color: $colour-500;
     font-weight: bold;
-    place-self: center;
+    place-self: end;
     padding: 0.5rem 1rem;
     border: 1px solid $colour-500;
   }
