@@ -290,6 +290,7 @@ a {
     border: 1px solid $colour-300;
     border-radius: 2px;
     box-shadow: $box-shadow;
+    box-sizing: border-box; // stops the image shrinking when you specify a size
     margin: $large 0 $xl 0;
     padding: $tiny;
     background-color: white;
@@ -390,12 +391,13 @@ a {
 .jdcontent {
   & .large-number {
     & code {
-      font-size: 1.8rem;
+      font-size: 1.6rem;
       line-height: 3.2;
-      padding: $small $medium;
-      margin-right: $medium;
+      padding: $small;
+      margin-right: $small;
 
       @include for-tablet-portrait-up() {
+        margin-right: $medium;
         font-size: 2.4rem;
       }
     }
