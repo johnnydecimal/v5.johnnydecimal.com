@@ -114,7 +114,7 @@ declare module 'astro:content' {
 		"site": {
 "00-09-site-administration/01-about/01.01-colophon.mdx": {
   id: "00-09-site-administration/01-about/01.01-colophon.mdx",
-  slug: "00-09-site-administration/01-about/0101-colophon",
+  slug: "01.01",
   body: string,
   collection: "site",
   data: InferEntrySchema<"site">
@@ -430,27 +430,6 @@ declare module 'astro:content' {
 "index.mdx": {
   id: "index.mdx",
   slug: "index",
-  body: string,
-  collection: "site",
-  data: InferEntrySchema<"site">
-} & { render(): Render[".mdx"] },
-"test/blank.mdx": {
-  id: "test/blank.mdx",
-  slug: "test/blank",
-  body: string,
-  collection: "site",
-  data: InferEntrySchema<"site">
-} & { render(): Render[".mdx"] },
-"test/style-guide.mdx": {
-  id: "test/style-guide.mdx",
-  slug: "test/style-guide",
-  body: string,
-  collection: "site",
-  data: InferEntrySchema<"site">
-} & { render(): Render[".mdx"] },
-"test/test-page.mdx": {
-  id: "test/test-page.mdx",
-  slug: "test/test-page",
   body: string,
   collection: "site",
   data: InferEntrySchema<"site">
