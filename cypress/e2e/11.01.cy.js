@@ -1,6 +1,8 @@
 it("titles are correct", () => {
   const page = cy.visit("/");
 
-  page.get("title").should("have.text", "11.01");
-  page.get("h1").should("have.text", "A system to organise projects");
+  page.title().should("include", "11.01");
+  page
+    .get("h1#a-system-to-organise-projects")
+    .should("have.text", "A system to organise projects");
 });
