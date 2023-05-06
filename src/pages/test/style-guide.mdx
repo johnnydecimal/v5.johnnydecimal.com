@@ -1,0 +1,211 @@
+---
+layout: ../../layouts/JDPage.astro
+
+# We need to fudge some values
+number: 09.00
+title: Style guide
+category: 09 Test
+area: 00-09 Test
+---
+
+import JDFootnote from "@components/JDFootnote/JDFootnote.astro";
+import JDBlock from "@components/JDBlock/JDBlock.astro";
+import FootRef from "@components/Footnote/FootRef.astro";
+import Footnote from "@components/Footnote/Footnote.astro";
+
+# Font checker
+
+<p style="font-size: 32px">The quick brown fox jumped over the lazy dog. </p>
+<p>
+  <a href="https://fonts.google.com/specimen/IBM+Plex+Serif?preview.text=The%20quick%20brown%20fox%20jumped%20over%20the%20lazy%20dog&preview.text_type=custom">
+    Google Fonts
+  </a>
+</p>
+
+<p>
+  <code style="font-size: 32px">0Iiy</code>
+</p>
+
+# H1 header
+
+With some text after it.
+
+Headers have `font-family` at weight `700`. They have margin which is different depending whether they're `:first-child`.
+
+They have a custom `line-height` and of course the border in lieu of underlines. We like that big fat border.
+
+## H2 header
+
+These sentences are in `div.jdcontent p` which has some `margin` applied top/bottom to space it out, `font-size` and `line-height`.
+
+Note that `font-size` is `18`, the site default being `16`.
+
+### H3 header
+
+Words usually follow.
+
+---
+
+# New & improved footnotes
+
+This section is near the top so that you can test jumping around.<FootRef n={1} />
+
+Here's `<FootRef n={2} />`:
+
+I write some words and then I make a footnote.<FootRef n={2} />
+
+And here's
+
+`<Footnote footnotes={[ "one", "two" ]} />`
+
+---
+
+# All the styles
+
+(Which was preceded by a horizontal break.)
+
+_Italics are underscores in MDX. This is all italics at weight 400._
+
+**Bold is double stars. This is bold at 700.**
+
+We tend not to do _**bold in italics but if we did, it would look like this.**_ That's also at 700.
+
+---
+
+This text is in Markdown backticks: `backticks`. That renders in `div.jdcontent p code`, which is Astro default behaviour.
+
+We style that using `.jdcontent code` and that's where it gets the borders, colour, and a touch of `padding-inline`.
+
+### `div.jdcontent`
+
+Minimal styling. We give it some `margin` and set the `font-family`.
+
+### Superscript
+
+We can <sup>1</sup> use the `<sup>` tag and get superscript. You're controlling the size and font, and the browser is doing the rest.
+
+### Lists
+
+This is an ordered list:
+
+1. First item, which is really long so it's going to overflow a couple of lines. How does it look? Don't forget to check it on mobile as well, it might be different.
+2. Second
+3. Third
+
+And this is unordered:
+
+- Last item, which isn't last, but we're unordered! It's chaos I tell you, chaos. When will it end?!!2on1!
+- Middle
+- First? Welp!
+
+You've tweaked the `list-style` properties, and removed some padding.
+
+### Links
+
+Links! [This is a link](#) and it should have funky hover effects. [This is a link](http://localhost:3000) that you have visited.
+
+### Images
+
+Don't bother importing images using the `![]()` syntax. You can't control for 2x.
+
+Instead just use a trusty `<img>` tag, and specify the image in `srcset` with ` 2x` at the end.
+
+<img
+  alt="Test"
+  src="/img/11.01-finder-sample-company-expanded.png"
+  srcset="/img/11.01-finder-sample-company-expanded.png 2x"
+/>
+
+They get a border, some padding, and a shadow. They're left-aligned.
+
+You should probably be serving 1x images as `src` but you're not.
+
+### Footnotes
+
+We reference a footnote<sup>1</sup> with a regular `<sup>`, then pass `number` and `text` to `<JDFootnote />`.
+
+The browser's styles take care of the superscript, and we make the font smaller.
+
+<JDFootnote
+  number="1"
+  text="Like this one. It flows nicely on to multiple lines, which is always nice."
+/>
+
+If we do a blockquote using `>` in an `.mdx` file, we get this:
+
+> This is a blockquote.
+
+---
+
+# `JDBlock`
+
+`<JDBlock />` is a component that renders out a block of stuff that is usually a JD structure.
+
+<JDBlock
+  text={`I
+am
+JDBlock`}
+/>
+
+<JDBlock
+  text={`
+10-19 Area
+   11 Category
+   11.01 highlight
+   11.02 highlight, underline
+`}
+  classArray={[, , "highlight", "highlight highlight-underline"]}
+/>
+
+The text in there ends up in a `.jdBlock > pre`.
+
+You have a VSCode snippet that inserts a demo block: `jdblock`.
+
+Applying class `highlight` does exactly that.
+
+---
+
+# One-offs
+
+`11.01` and `11.03` contain large JD numbers. And of course, wrap them in `<p>` not `<div>`!
+
+`<p class="large-number">AC.ID</p>`:
+
+<p class="large-number">`AC.ID`</p>
+
+The CSS for this is in section 'one-offs' in johnny.scss.
+
+---
+
+# Components
+
+Not going to duplicate them here. They're on:
+
+- [11.02 Areas and categories](/10-19-concepts/11-core/11.02-areas-and-categories)
+
+---
+
+# Colours
+
+Here are all of the colours.
+
+The header there is one of them. It's `$colour-800;`.
+
+The body text here is another. This is `$offblack`.
+
+The page background is `$offwhite`.
+
+But the background of our little code insets there is `$colour-100;`. Their border is obviously `$jd-highlight-colour`.
+
+Don't forget that `box-shadow` has its own values, that you need to consolidate. But do that once you've got the rest of the scheme down.
+
+And of course [links have a colour, both unvisited (this one)](#), and [visited links like this one](https://daringfireball.net).
+
+Don't forget the sidebar's links and WYAB.
+
+<Footnote
+  footnotes={[
+    "Because if the text there is at the bottom, you don't get much of an effect.",
+    "Not so interesting, this footnote.",
+  ]}
+/>
