@@ -1,23 +1,39 @@
 ---
 import { getCollection } from "astro:content";
-
-import jdSort from "@js/jdSort.js";
-import { version } from "@js/version/version";
 import JDNavItem from "./JDNavItem.astro";
-
-// const allPages = await Astro.glob("../../pages/**/*.{md,mdx}");
+import { version } from "@js/version/version";
+import jdSort from "@js/jdSort.js";
 
 /**
- * `allPages` is an array of pages. We want to specifically remove any of
- * our `/test/` pages as they're non-standard and break the build.
+ * All you need for the navbar is each page's:
+ * - Number (for sorting and display)
+ * - Title (for display)
+ * - Slug (for linking)
+ *
+ * So we extract those, sort them by JD number, and map them on to
+ * <JDNavItem>.
  */
 
-const pages = allPages.filter((page) => !page.file.includes("/test/"));
-// pages.forEach((page) => console.log(page.file));
+const pages = await getCollection("site");
 
-/* You need to sort on frontmatter.number, because of the way that Astro feeds
-   you the `index` pages. */
-pages.sort(jdSort);
+interface NavItem {
+  number: string;
+  title: string;
+  slug: string;
+}
+
+let pagesForNav: Array<NavItem> = [];
+
+pages.map((page) => {
+  pagesForNav.push({
+    number: page.data.number,
+    title: page.data.title,
+    slug: "/" + page.slug.replace(/(\/\d\d)(\d\d)/, "$1.$2"),
+  });
+});
+
+pagesForNav.sort(jdSort);
+console.log("🆚 JDNavigation.astro/pagesForNav :", pagesForNav);
 ---
 
 <nav id="00.00">
@@ -32,15 +48,9 @@ pages.sort(jdSort);
   <div class="index-main">
     <ol>
       {
-        pages
-          .filter((page) => !page.frontmatter.exclude)
-          .map((page) => (
-            <JDNavItem
-              number={page.frontmatter.number}
-              title={page.frontmatter.title}
-              url={page.url}
-            />
-          ))
+        pagesForNav.map((page) => (
+          <JDNavItem number={page.number} title={page.title} slug={page.slug} />
+        ))
       }
     </ol>
   </div>

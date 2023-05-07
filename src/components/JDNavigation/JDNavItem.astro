@@ -27,9 +27,13 @@
 interface Props {
   number: string; // For display
   title: string; // For display
-  url: string; // Comes in as a simple string
+  slug: string; // Comes in as a simple string
 }
-const { number, title, url } = Astro.props;
+const { number, title, slug } = Astro.props;
+
+console.log("🆚 JDNavItem.astro/number:", number);
+console.log("🆚 JDNavItem.astro/title:", title);
+console.log("🆚 JDNavItem.astro/slug:", slug);
 
 /**
  * # Is the item in scope?
@@ -76,7 +80,7 @@ if (creatingWyabForThisPage.length === 0) {
 }
 
 // Do the same for the URL of the wyabItem.
-const wyabItem = url.split("/");
+const wyabItem = slug.split("/");
 wyabItem.shift();
 
 // Figure out what type of items we're creating.
@@ -271,7 +275,7 @@ const isParentItem = isThisWyabItemTheParentOfThePageWeAreCreating();
     // P1
     wyabItemType === "area" && !isInScope && (
       <>
-        <a class="area area-notInScope-P1-grid" href={url}>
+        <a class="area area-notInScope-P1-grid" href={slug}>
           <div class="area-number">{number}</div>
           <div />
           <div class="area-title">{title}</div>
@@ -283,7 +287,7 @@ const isParentItem = isThisWyabItemTheParentOfThePageWeAreCreating();
   {
     // P3
     wyabItemType === "category" && !isInScope && (
-      <a class="category category-notInScope-P3-grid" href={url}>
+      <a class="category category-notInScope-P3-grid" href={slug}>
         <div />
         <div>{number}</div>
         <div />
@@ -295,7 +299,7 @@ const isParentItem = isThisWyabItemTheParentOfThePageWeAreCreating();
   {
     // P4
     wyabItemType === "id" && !isInScope && (
-      <a class="id id-notInScope-P4-grid" href={url}>
+      <a class="id id-notInScope-P4-grid" href={slug}>
         <div />
         <div>{number}</div>
         <div />
@@ -308,7 +312,7 @@ const isParentItem = isThisWyabItemTheParentOfThePageWeAreCreating();
     // P2
     wyabItemType === "area" && isInScope && isActiveItem && (
       <>
-        <a class="area area-inScope-active-P2-grid" href={url}>
+        <a class="area area-inScope-active-P2-grid" href={slug}>
           <div>{number}</div>
           <div />
           <div>{title}</div>
@@ -321,7 +325,7 @@ const isParentItem = isThisWyabItemTheParentOfThePageWeAreCreating();
     // P5
     wyabItemType === "area" && isInScope && !isActiveItem && (
       <>
-        <a class="area area-inScope-notActive-P5-grid" href={url}>
+        <a class="area area-inScope-notActive-P5-grid" href={slug}>
           <div class="area-inScope-notActive-P5-number">
             {number}
             <br />
@@ -348,7 +352,7 @@ const isParentItem = isThisWyabItemTheParentOfThePageWeAreCreating();
       !isParentItem && (
         <a
           class="category category-inScope-notActive-notParent-P6-grid"
-          href={url}
+          href={slug}
         >
           <div class="category-inScope-notActive-notParent-P6-lines">
             &#x2502;
@@ -370,7 +374,7 @@ const isParentItem = isThisWyabItemTheParentOfThePageWeAreCreating();
   {
     // P7
     wyabItemType === "id" && isInScope && !isActiveItem && !isParentItem && (
-      <a class="id id-inScope-notActive-notParent-P7-grid" href={url}>
+      <a class="id id-inScope-notActive-notParent-P7-grid" href={slug}>
         <div class="id-inScope-notActive-notParent-P7-lines">
           &#x2502;
           <br />
@@ -391,7 +395,7 @@ const isParentItem = isThisWyabItemTheParentOfThePageWeAreCreating();
   {
     // P8
     wyabItemType === "category" && isInScope && isActiveItem && (
-      <a class="category category-inScope-active-P8-grid" href={url}>
+      <a class="category category-inScope-active-P8-grid" href={slug}>
         <div class="category-inScope-active-P8-lines">
           &#x2514;&#x2524;
           <br />
@@ -414,7 +418,7 @@ const isParentItem = isThisWyabItemTheParentOfThePageWeAreCreating();
       isInScope &&
       !isActiveItem &&
       isParentItem && (
-        <a class="category category-inScope-active-P8-grid" href={url}>
+        <a class="category category-inScope-active-P8-grid" href={slug}>
           <div class="category-inScope-active-P8-lines">
             &#x2514;&#x2524;
             <br />
@@ -435,7 +439,7 @@ const isParentItem = isThisWyabItemTheParentOfThePageWeAreCreating();
   {
     // P10
     wyabItemType === "id" && isInScope && !isActiveItem && isParentItem && (
-      <a class="id id-inScope-notActive-isParent-P10-grid" href={url}>
+      <a class="id id-inScope-notActive-isParent-P10-grid" href={slug}>
         <div />
         <div class="id-inScope-notActive-isParent-P10-lines">
           &#x2502;
@@ -460,7 +464,7 @@ const isParentItem = isThisWyabItemTheParentOfThePageWeAreCreating();
   {
     // P11
     wyabItemType === "id" && isInScope && isActiveItem && (
-      <a class="id id-inScope-active-P11-grid" href={url}>
+      <a class="id id-inScope-active-P11-grid" href={slug}>
         <div />
         <div class="id-inScope-active-P11-lines">
           &#x2514;&#x2500;&#x2500;&#x2524;

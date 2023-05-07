@@ -4,7 +4,6 @@ import JDPage from "../layouts/JDPage.astro";
 
 export async function getStaticPaths() {
   const pages = await getCollection("site");
-  console.log("🆚 [...slug].astro/pages:", pages);
 
   /**
    * getStaticPaths returns a slug with periods removed:
