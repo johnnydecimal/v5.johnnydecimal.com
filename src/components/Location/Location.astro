@@ -1,15 +1,14 @@
 ---
+interface Props {
+  number: string;
+  area: string;
+  category?: string;
+}
+const { number, area, category } = Astro.props;
+
 import BracketsHorizontalTop from "@components/BracketsHorizontal/BracketsHorizontalTop.astro";
 import BracketsHorizontalBottom from "@components/BracketsHorizontal/BracketsHorizontalBottom.astro";
 import { jdGetAcidTypeFromString } from "@johnnydecimal/jdgetacidtypefromstring";
-
-export interface Props {
-  number: string;
-  title: string;
-  area: string;
-  category: string;
-}
-const { number, title, area, category } = Astro.props;
 
 /**
  * Create a link to this page's area.

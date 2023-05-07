@@ -24,3 +24,6 @@ pnpm-debug.log*
 
 # astro
 .astro
+
+# working tree
+_original
