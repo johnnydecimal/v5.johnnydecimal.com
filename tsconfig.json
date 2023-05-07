@@ -5,8 +5,7 @@
       "@components/*": ["src/components/*"],
       "@layouts/*": ["src/layouts/*"],
       "@js/*": ["src/js/*"]
-    },
-    "types": ["@astrojs/image/client"]
+    }
   },
   "extends": "astro/tsconfigs/strict"
 }
