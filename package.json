@@ -26,8 +26,10 @@
   },
   "devDependencies": {
     "cypress": "^12.11.0",
+    "markdown-it": "^13.0.1",
     "prettier": "^2.8.1",
     "prettier-plugin-astro": "0.x",
+    "sanitize-html": "^2.10.0",
     "sass": "^1.58.3",
     "scss": "^0.2.4",
     "shx": "^0.3.4"
