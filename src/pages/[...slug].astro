@@ -4,13 +4,24 @@ import JDPage from "../layouts/JDPage.astro";
 
 export async function getStaticPaths() {
   const pages = await getCollection("site");
+  console.log("🆚 [...slug].astro/pages:", pages);
+
+  /**
+   * getStaticPaths returns a slug with periods removed:
+   * 00-09-site-administration/01-about/0101-colophon
+   *
+   * We need to put 'em back!
+   *
+   * The pattern is an easy regex match, so we do it inline.
+   */
+
   return pages.map((page) => ({
-    params: { slug: page.slug },
+    params: { slug: page.slug.replace(/(\/\d\d)(\d\d)/, "$1.$2") },
     props: page,
   }));
 }
-type Props = CollectionEntry<"site">;
 
+type Props = CollectionEntry<"site">;
 const page = Astro.props;
 const { Content } = await page.render();
 
