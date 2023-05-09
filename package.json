@@ -14,7 +14,7 @@
   "dependencies": {
     "@astrojs/image": "0.x",
     "@astrojs/mdx": "0.x",
-    "@astrojs/rss": "^2.1.0",
+    "@astrojs/rss": "^2.4.1",
     "@astrojs/tailwind": "^3.x",
     "@fontsource/fira-sans": "^4.5.10",
     "@fontsource/ibm-plex-sans": "^4.5.13",
@@ -27,10 +27,10 @@
   "devDependencies": {
     "cypress": "^12.11.0",
     "markdown-it": "^13.0.1",
-    "prettier": "^2.8.1",
+    "prettier": "^2.8.8",
     "prettier-plugin-astro": "0.x",
     "sanitize-html": "^2.10.0",
-    "sass": "^1.58.3",
+    "sass": "^1.62.1",
     "scss": "^0.2.4",
     "shx": "^0.3.4"
   }
