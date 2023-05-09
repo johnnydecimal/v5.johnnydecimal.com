@@ -1,7 +1,7 @@
 ---
 import { getCollection } from "astro:content";
 import JDNavItem from "./JDNavItem.astro";
-import { version } from "@js/version/version";
+import version from "@js/version/version";
 import jdSort from "@js/jdSort.js";
 
 /**
@@ -28,7 +28,18 @@ pages.map((page) => {
   pagesForNav.push({
     number: page.data.number,
     title: page.data.title,
-    slug: "/" + page.slug.replace(/(\/\d\d)(\d\d)/, "$1.$2"),
+    /**
+     * We modify slug in two ways:
+     * - Give it a trailing slash; the behaviour can differ between local dev
+     *   and Netlify deployment, and this normalises them.
+     * - Astro's slug generator removes the period. I think it thinks it's
+     *   removing a file extension. The result is that this:
+     *   - `00-09-site-administration/01-about/01.01-colophon`
+     *   - becomes this:
+     *   - `00-09-site-administration/01-about/0101-colophon`
+     *   - So we pop the period back in there with a bit of regex wizardry.
+     */
+    slug: page.slug.replace(/(\/\d\d)(\d\d)/, "$1.$2") + "/",
   });
 });
 

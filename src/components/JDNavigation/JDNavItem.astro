@@ -1,27 +1,28 @@
 ---
 /**
- * ::CODE STINK ALERT::
+ * <JDNavigation> calls this component iteratively:
+ * - For each page on the site, as it generates that page,
+ *   - it calls this component multiple times by mapping over an array
+ *     of page objects,
+ *   - which have already been sorted so they're in JD-order
+ *     - e.g. 10-19 > 10 > 10.00 > 10.01 > 11 > 20-29 > 20 > 20.00
+ *   - because it puts the rendered result of this component in to an
+ *     <ol>,
+ *   - which is why everything we return here is wrapped in a <li>.
  *
- * It took me ages to wrap my head around this thing, and this code is
- * horrendous. Please don't read it and please, please don't repurpose it.
+ * In this way it builds up the navigation bar for each page that it renders.
  *
- * Also it only makes sense with the accompanying Excel file of patterns.
+ * This component has to figure out what it's rendering and where it 'fits'
+ * in the navigation scheme. This is because we render the ASCII-line-art
+ * parts here, and they vary depending on what we're rendering.
  *
- * ::CODE STINK ALERT ENDS::
- *
- * TODO: just tidy this up a bit, it doesn't need to be *this* bad.
- *
- * # JDNavItem
- *
- * Each time JDNavItem is called, it is creating a `wyabItem` for a specific
- * page, `creatingWyabForThisPage`.
- *
- * ('wyab' = where-you-are-bar, the boxes-drawn-with-typeface-lines in the
- *  navigation area. I spent *way* too much time on this.)
- *
- * So if Astro is generating the page for `34 Category`, that's
- * `creatingWyabForThisPage`. For every `wyabItem` on that page, this sub will
- * be called once.
+ * The following terms are used on this page. It took me ages to wrap my head
+ * around how this worked, and they helped.
+ * - WYAB = where-you-are-bar: the thing we're building
+ * - creatingWyabForThisPage: the page we're creating the WYAB for. So if
+ *   Astro is generating `/00-09-site-administration`, that's this value.
+ * - wyabItem: the particular link that is being generated. So if Astro is
+ *   generating the link to `/00-09-site-administration`, that's this value.
  */
 
 interface Props {
@@ -31,44 +32,25 @@ interface Props {
 }
 const { number, title, slug } = Astro.props;
 
+console.log("🆚 JDNavItem.astro/=====================================");
 console.log("🆚 JDNavItem.astro/number:", number);
 console.log("🆚 JDNavItem.astro/title:", title);
 console.log("🆚 JDNavItem.astro/slug:", slug);
 
-/**
- * # Is the item in scope?
- *
- * We only consider drawing where-you-are-bar if the wyabIteb aka navItem is
- * 'in scope' of the page being created.
- *
- * If it *is* in scope then we have to figure out how it looks. But if it
- * isn't even in scope, there's nothing to draw.
- *
- * These rules are complex and are documented in the Excel file in {your JD
- * structure somewhere}.
- *
- * TODO: when you JD this stuff, put its location here.
- */
+// TODO: document the Excel file as ASCII here
 
 /**
- * First let's generate some stuff that each of the functions uses.
+ * So, which page are we generating this item for? We get this by calling
+ * Astro's API.
  */
-const creatingWyabForThisPage = new URL(Astro.request.url).pathname.split("/");
+const creatingWyabForThisPage: string[] = Astro.url.pathname.split("/");
 
 /**
- * Tidy up the creatingWyabForThisPage array.
- *
- * First element is blank due to leading zero; remove.
- *
- * The last element isn't blank when we're running in dev mode, but is when
- * we do a build. Detect if that's the case and remove it.
- *
- * Update: config setting `trailingSlash: "always"` changes/fixes this.
+ * Astro.url.pathname has a leading '/', so the first element of the array we
+ * just created is always blank. Remove it.
  */
 creatingWyabForThisPage.shift();
-if (creatingWyabForThisPage[creatingWyabForThisPage.length - 1] === "") {
-  creatingWyabForThisPage.pop();
-}
+
 /**
  * Special case: if we're creating `/`, we're on the home page. Pretend it's
  * 11.01 Home page.
