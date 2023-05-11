@@ -5,7 +5,30 @@ import version from "@js/version/version";
 import jdSort from "@js/jdSort.js";
 
 /**
- * All you need for the navbar is each page's:
+ * # JDNavigation
+ *
+ * This component creates the JD navigation block.
+ *
+ * It is called once per site page when Astro builds the site.
+ *
+ * It needs to return a list of every page on the site, formatted as the JD
+ * nav block. So we use `getCollection` to get those pages, do a little
+ * manipulation on the result, and `map()` over the final array.
+ *
+ * Each `map()` calls <JDNavItem> which returns the actual item to be
+ * rendered. This is more complex than you'd think because each line looks
+ * different depending on where it is in the hierarchy and which page we're
+ * on.
+ */
+
+/**
+ * Get all `sitePages` so we can pull out a list of pages which become the
+ * navigation bar. We'll pass this down to <JDNavItem> shortly.
+ */
+const sitePages = await getCollection("site");
+
+/**
+ * <JDNavItem> only needs a small subset of the information in `sitePages`.
  * - Number (for sorting and display)
  * - Title (for display)
  * - Slug (for linking)
@@ -13,19 +36,16 @@ import jdSort from "@js/jdSort.js";
  * So we extract those, sort them by JD number, and map them on to
  * <JDNavItem>.
  */
-
-const pages = await getCollection("site");
-
 interface NavItem {
   number: string;
   title: string;
   slug: string;
 }
 
-let pagesForNav: Array<NavItem> = [];
+let sitePagesForNav: Array<NavItem> = [];
 
-pages.map((page) => {
-  pagesForNav.push({
+sitePages.map((page) => {
+  sitePagesForNav.push({
     number: page.data.number,
     title: page.data.title,
     /**
@@ -43,8 +63,8 @@ pages.map((page) => {
   });
 });
 
-pagesForNav.sort(jdSort);
-console.log("🆚 JDNavigation.astro/pagesForNav :", pagesForNav);
+sitePagesForNav.sort(jdSort);
+// console.log("🆚 JDNavigation.astro/pagesForNav :", pagesForNav);
 ---
 
 <nav id="00.00">
@@ -59,7 +79,7 @@ console.log("🆚 JDNavigation.astro/pagesForNav :", pagesForNav);
   <div class="index-main">
     <ol>
       {
-        pagesForNav.map((page) => (
+        sitePagesForNav.map((page) => (
           <JDNavItem number={page.number} title={page.title} slug={page.slug} />
         ))
       }
