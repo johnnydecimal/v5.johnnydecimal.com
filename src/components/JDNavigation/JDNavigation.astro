@@ -24,8 +24,14 @@ import jdSort from "@js/jdSort.js";
 /**
  * Get all `sitePages` so we can pull out a list of pages which become the
  * navigation bar. We'll pass this down to <JDNavItem> shortly.
+ *
+ * We use a filter to exclude the root / page at
+ * - content/site/index.mdx
+ * because this same page is also 11.01, and we don't need it twice.
  */
-const sitePages = await getCollection("site");
+const sitePages = await getCollection("site", ({ slug }) => {
+  return slug !== "index";
+});
 
 /**
  * <JDNavItem> only needs a small subset of the information in `sitePages`.
