@@ -1,0 +1,46 @@
+---
+---
+
+<div id="SavingFiles4">
+  <img
+    srcset="/img/11.06-finder-bad-subfolders.png 2x"
+    alt="Finder window showing folders incorrectly created in the folder 32.01 Launch campaign"
+    loading="lazy"
+  />
+  <div>
+    <p>
+      <em>
+        "Surely you don't have to create separate Johnny.Decimal numbers and
+        folders for each of those things?",
+      </em>{" "}
+      you're thinking.
+    </p>
+    <p>
+      Well <strong>of course you do.</strong>
+    </p>
+  </div>
+</div>
+
+<style lang="scss">
+  @use "/src/styles/johnny" as *;
+
+  #SavingFiles4 {
+    display: grid;
+    grid-auto-flow: row;
+
+    // These look better with less of a gap
+    img {
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+    p:first-child {
+      margin-top: 0;
+    }
+
+    @include for-tablet-portrait-up() {
+      grid-auto-flow: column;
+      grid-template-columns: max-content auto;
+      gap: $large;
+    }
+  }
+</style>
