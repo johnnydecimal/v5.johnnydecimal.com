@@ -1,0 +1,19 @@
+<div id="terminal-video">
+  <video autoplay controls muted width="531">
+    <source
+      src="/img/12.04-terminal-tab-completion-compressed.mp4"
+      type="video/mp4"
+    />
+  </video>
+</div>
+
+<style lang="scss">
+  @use "/src/styles/johnny" as *;
+
+  div#terminal-video {
+    // Flip it back
+    @media (prefers-color-scheme: dark) {
+      filter: invert(1) hue-rotate(180deg);
+    }
+  }
+</style>

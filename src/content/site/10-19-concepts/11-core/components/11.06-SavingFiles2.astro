@@ -1,0 +1,53 @@
+---
+---
+
+<div id="SavingFiles2">
+  <img
+    srcset="/img/11.06-finder-bad-doc-in-10-19.png 2x"
+    alt="Finder window showing file incorrectly stored in the folder 10-19 Finance"
+    loading="lazy"
+  />
+  <div>
+    <p>
+      A very important note: <strong
+        >you may not store things anywhere other than in a folder with a full
+        Johnny.Decimal number.
+      </strong>
+    </p>
+    <p>
+      That means you're not allowed to just dump a file in the<br /><code
+        >10-19 Finance</code
+      > folder...
+    </p>
+  </div>
+</div>
+
+<style lang="scss">
+  @use "/src/styles/johnny" as *;
+
+  #SavingFiles2 {
+    display: grid;
+    grid-auto-flow: row;
+    // These look better with less of a gap
+    img {
+      margin-top: 0;
+    }
+    p:first-child {
+      margin-top: 0;
+    }
+
+    @include for-tablet-portrait-up() {
+      grid-auto-flow: column;
+      grid-template-columns: max-content auto;
+      gap: $large;
+
+      // These look better with less of a gap
+      img {
+        margin-top: 0;
+      }
+      p:first-child {
+        margin-top: 0;
+      }
+    }
+  }
+</style>

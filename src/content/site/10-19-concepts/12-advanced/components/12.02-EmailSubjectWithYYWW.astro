@@ -1,0 +1,42 @@
+---
+import "../../../../styles/johnny.scss";
+---
+
+{
+  import.meta.env.DEV ? (
+    <div style="padding: 5px; background: greenyellow;">{Astro.self.name}</div>
+  ) : null
+}
+
+<div class="jd-box grid">
+  <pre><strong>Subject:</strong></pre>
+  <pre>Timesheets and expenses [14.01.2319]</pre>
+</div>
+
+<style lang="scss">
+  @use "/src/styles/johnny" as *;
+
+  // Need this here for this one weird case; don't worry about it
+  .jd-box {
+    font-family: $monospace;
+    font-size: 1.4rem;
+
+    @include for-tablet-portrait-up() {
+      font-size: 1.6rem;
+    }
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: 8ch auto;
+    gap: 1ch;
+  }
+
+  pre {
+    white-space: pre-wrap;
+  }
+
+  span {
+    font-weight: bold;
+  }
+</style>

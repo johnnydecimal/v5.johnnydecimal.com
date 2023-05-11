@@ -1,0 +1,25 @@
+---
+---
+
+{
+  import.meta.env.DEV ? (
+    <div style="padding: 5px; background: greenyellow;">{Astro.self.name}</div>
+  ) : null
+}
+<div class="jd-box">
+  <pre>Administration
+Finance
+Marketing</pre>
+</div>
+
+<style lang="scss">
+  @use "/src/styles/johnny" as *;
+
+  .jd-box {
+    margin: 0 0 4rem 0;
+    padding: 1.5rem 2rem;
+
+    @include for-tablet-portrait-up {
+    }
+  }
+</style>
