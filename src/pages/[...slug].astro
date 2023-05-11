@@ -14,10 +14,23 @@ export async function getStaticPaths() {
    * The pattern is an easy regex match, so we do it inline.
    */
 
-  return pages.map((page) => ({
-    params: { slug: page.slug.replace(/(\/\d\d)(\d\d)/, "$1.$2") },
-    props: page,
-  }));
+  console.log("🆚 [...slug].astro/yo");
+  console.log(pages.map((page) => page.slug));
+
+  return pages.map((page) => {
+    let modifiedSlug;
+    if (page.slug === "index") {
+      console.log("🆚 [...slug].astro/page.slug is index!");
+      // modifiedSlug is already undefined; do nothing
+    } else {
+      modifiedSlug = page.slug.replace(/(\/\d\d)(\d\d)/, "$1.$2");
+    }
+
+    return {
+      params: { slug: modifiedSlug },
+      props: page,
+    };
+  });
 }
 
 type Props = CollectionEntry<"site">;
