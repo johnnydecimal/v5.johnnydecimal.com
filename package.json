@@ -24,8 +24,5 @@
     "prettier-plugin-astro": "0.x",
     "scss": "^0.2.4",
     "shx": "^0.3.4"
-  },
-  "optionalDependencies": {
-    "@esbuild/linux-x64": "0.17.x"
   }
 }
