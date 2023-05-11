@@ -33,7 +33,7 @@
     width: fit-content;
     margin: 0 0 4rem 0;
 
-    @include for-tablet-portrait-up {
+    @include for-tablet-portrait-up() {
       display: grid;
       grid-template-columns: auto 1fr;
     }
@@ -41,7 +41,7 @@
 
   .text {
     display: none;
-    @include for-tablet-portrait-up {
+    @include for-tablet-portrait-up() {
       display: block;
       font-size: 1.6rem;
       font-style: italic;
@@ -50,8 +50,8 @@
     }
   }
 
-  p.margin {
-    @include for-tablet-portrait-up {
+  .text > p.margin {
+    @include for-tablet-portrait-up() {
       margin-top: 0;
     }
   }
