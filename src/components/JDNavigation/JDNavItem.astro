@@ -98,9 +98,11 @@ const { number, title, slug } = Astro.props;
 /**
  * Manipulate the slug (of the page we're going to link to).
  *
- * It comes in without a leading but with a trailing slash, which we pop off.
+ * It comes in with a leading and trailing slash, which we pop off for these
+ * purposes.
  */
 const navItemBeingGenerated: string[] = slug.split("/");
+navItemBeingGenerated.shift();
 navItemBeingGenerated.pop();
 /**
  * Now we have an array:
