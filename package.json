@@ -1,5 +1,5 @@
 {
-  "name": "johnny_decimal_v5_2023",
+  "name": "v5.johnnydecimal.com",
   "type": "module",
   "version": "5",
   "private": true,
@@ -12,20 +12,20 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/image": "^0.16.8",
-    "@astrojs/mdx": "0.x",
-    "@astrojs/rss": "^2.4.1",
-    "@fontsource/ibm-plex-serif": "^4.5.12",
-    "@johnnydecimal/jdgetacidtypefromstring": "0.x",
-    "astro": "2.x"
+    "@astrojs/image": "~0.16.8",
+    "@astrojs/mdx": "~0.19.1",
+    "@astrojs/rss": "~2.4.1",
+    "@fontsource/ibm-plex-serif": "~4.5.12",
+    "@johnnydecimal/jdgetacidtypefromstring": "~0.0.4",
+    "astro": "~2.4.5"
   },
   "devDependencies": {
-    "prettier": "^2.8.8",
-    "prettier-plugin-astro": "0.x",
-    "scss": "^0.2.4",
-    "shx": "^0.3.4"
+    "prettier": "~2.8.8",
+    "prettier-plugin-astro": "~0.8.1",
+    "scss": "~0.2.4",
+    "shx": "~0.3.4"
   },
   "optionalDependencies": {
-    "@esbuild/linux-x64": "0.17.x"
+    "@esbuild/linux-x64": "~0.17.x"
   }
 }
