@@ -29,11 +29,11 @@ import jdSort from "@js/jdSort.js";
  * - content/site/index.mdx
  * because this same page is also 11.01, and we don't need it twice.
  *
- * We also exclude pages where `!data.excludeFromNav`, which is typically
+ * We also exclude pages where `!data.excludeFromNavAndRss`, which is typically
  * our hidden pages at `90-99 Behind the scenes`.
  */
 const sitePages = await getCollection("site", ({ slug, data }) => {
-  return slug !== "index" && !data.excludeFromNav;
+  return slug !== "index" && !data.excludeFromNavAndRss;
 });
 
 /**

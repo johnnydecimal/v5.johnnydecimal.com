@@ -23,7 +23,7 @@ const site = defineCollection({
     backNextDisplay: z.boolean().optional(),
 
     // Prevent rendering in the navbar with `true`
-    excludeFromNav: z.boolean().optional(),
+    excludeFromNavAndRss: z.boolean().optional(),
   }),
 });
 
