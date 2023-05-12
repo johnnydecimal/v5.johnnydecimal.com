@@ -1,5 +1,8 @@
 import rss from "@astrojs/rss";
 import { getCollection } from "astro:content";
+import sanitizeHtml from "sanitize-html";
+import MarkdownIt from "markdown-it";
+const parser = new MarkdownIt();
 
 export async function get(context) {
   /**
@@ -9,18 +12,34 @@ export async function get(context) {
     return slug !== "index" && !data.excludeFromNavAndRss;
   });
 
+  // console.log(
+  //   "🆚 rss.xml.js/sitePages[0]:",
+  //   sitePages[0].body.replace("+", "soup")
+  // );
+
+  /*
+  console.log(
+    "🆚 rss.xml.js/sanitizeHtml(parser.render(page.body)),:",
+    sanitizeHtml(
+      parser
+        .render(sitePages[18].body)
+        .replaceAll(/<p>import.*?<\/p>/gs, "")
+        .replace(/<h1>{frontmatter.title}<\/h1>\n/, "")
+      // .replaceAll(
+      //   /<.* \/>/g,
+      //   "<blockquote>On the website there is a component here: it might render an image, a graphic, a table, or something else. The RSS feed doesn't have these yet. I'm sorry - it's something I'll get round to but it's not trivial.</blockquote>\n"
+      // )
+    )
+  );
+  */
+
   return rss({
     title: "Johnny.Decimal",
     description: "A system to organise projects - full site feed",
     site: context.site,
     items: sitePages.map((page) => {
-      // console.log("🆚 rss.xml.js/page:", page);
-      console.log(
-        "🆚 rss.xml.js/page:",
-        page.slug.replace(/(\/\d\d)(\d\d)/, "$1.$2")
-      );
       return {
-        title: page.data.title,
+        title: `${page.data.number} ${page.data.title}`,
         pubDate: page.data.pubDate,
         // description: page.data.description,
         // customData: page.data.customData,
@@ -30,7 +49,15 @@ export async function get(context) {
          * to regex the decimal back in to our slug as Astro has removed it.
          */
         link: `/${page.slug.replace(/(\/\d\d)(\d\d)/, "$1.$2")}/`,
+        content: sanitizeHtml(parser.render(page.body))
+          // Remove all import statements, which are in <p>s
+          .replaceAll(/<p>import.*?<\/p>/gs, "")
+          // Remove the un-rendered title
+          .replace(/<h1>{frontmatter.title}<\/h1>\n/, ""),
+        // Remove all un-rendered components, i.e. <Component />
+        // .replaceAll(/<.* \/>/g, ""),
       };
     }),
+    // stylesheet: "/rss/styles.xsl",
   });
 }
