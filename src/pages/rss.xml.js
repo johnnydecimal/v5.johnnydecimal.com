@@ -12,11 +12,23 @@ export async function get(context) {
     return slug !== "index" && !data.excludeFromNavAndRss;
   });
 
-  // console.log(
-  //   "🆚 rss.xml.js/sitePages[0]:",
-  //   sitePages[0].body.replace("+", "soup")
-  // );
+  /* 
+  console.log(
+    "🆚 rss.xml.js/sitePages[18]:",
+    sanitizeHtml(
+      parser.render(
+        sitePages[18].body
+          .replaceAll(
+            /<.* \/>/g,
+            "> On the website there is a component here: it might render an image, a graphic, a table, or something else. The RSS feed doesn't have these yet. I'm sorry - it's something I'll get round to but it's not trivial."
+          )
+          .replaceAll(/import.*;/g, "")
+      )
+    )
+  );
+  */
 
+  /*
   console.log(
     "🆚 rss.xml.js/sanitizeHtml(parser.render(page.body)),:",
     sanitizeHtml(
@@ -30,6 +42,7 @@ export async function get(context) {
         )
     )
   );
+  */
 
   return rss({
     title: "Johnny.Decimal",
@@ -47,16 +60,16 @@ export async function get(context) {
          * to regex the decimal back in to our slug as Astro has removed it.
          */
         link: `/${page.slug.replace(/(\/\d\d)(\d\d)/, "$1.$2")}/`,
-        content: sanitizeHtml(parser.render(page.body))
-          // Remove all import statements, which are in <p>s
-          .replaceAll(/<p>import.*?<\/p>/gs, "")
-          // Remove the un-rendered title
-          .replace(/<h1>{frontmatter.title}<\/h1>\n/, "")
-          // Remove all un-rendered components, i.e. <Component />
-          .replaceAll(
-            /<.* \/>/g,
-            "<blockquote>On the website there is a component here: it might render an image, a graphic, a table, or something else. The RSS feed doesn't have these yet. I'm sorry - it's something I'll get round to but it's not trivial.</blockquote>\n"
-          ),
+        content: sanitizeHtml(
+          parser.render(
+            page.body
+              .replaceAll(
+                /<.* \/>/g,
+                "> On the website there is a component here: it might render an image, a graphic, a table, or something else. The RSS feed doesn't have these yet. I'm sorry - it's something I'll get round to but it's not trivial."
+              )
+              .replaceAll(/import.*;/g, "")
+          )
+        ),
       };
     }),
     // stylesheet: "/rss/styles.xsl",
