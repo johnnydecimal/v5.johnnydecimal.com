@@ -2,14 +2,6 @@
 import type { CollectionEntry } from "astro:content";
 type Props = CollectionEntry<"site">["data"];
 const { title, number, area, category, backNextDisplay } = Astro.props;
-console.log(
-  "🆚 JDPage.astro/title, number, area, category, backNextDisplay:",
-  title,
-  number,
-  area,
-  category,
-  backNextDisplay
-);
 
 import Layout from "./Layout.astro";
 import Location from "@components/Location/Location.astro";
