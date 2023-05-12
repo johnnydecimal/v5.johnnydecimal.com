@@ -9,7 +9,8 @@ const site = defineCollection({
     area: z.string(),
     category: z.string().optional(),
     pubDate: z.date(),
-    backNextDisplay: z.boolean(),
+    backNextDisplay: z.boolean().optional(),
+    excludeFromNav: z.boolean().optional(),
   }),
 });
 
