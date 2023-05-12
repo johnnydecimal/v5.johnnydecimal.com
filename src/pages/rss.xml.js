@@ -12,21 +12,23 @@ export async function get(context) {
     return slug !== "index" && !data.excludeFromNavAndRss;
   });
 
-  /* 
   console.log(
     "🆚 rss.xml.js/sitePages[18]:",
     sanitizeHtml(
       parser.render(
         sitePages[18].body
+          // Replace # {frontmatter.title}
+          .replace("# {frontmatter.title}", "")
+          // Replace all component imports
+          .replaceAll(/import.*;/g, "")
+          // Replace all <Components />
           .replaceAll(
             /<.* \/>/g,
-            "> On the website there is a component here: it might render an image, a graphic, a table, or something else. The RSS feed doesn't have these yet. I'm sorry - it's something I'll get round to but it's not trivial."
+            "> See [the note at 02.03 RSS feed](https://johnnydecimal.com/00-09-site-administration/02-send-and-receive/02.03-rss-feed/) regarding the display of additional components in this feed."
           )
-          .replaceAll(/import.*;/g, "")
       )
     )
   );
-  */
 
   /*
   console.log(
@@ -68,6 +70,7 @@ export async function get(context) {
                 "> On the website there is a component here: it might render an image, a graphic, a table, or something else. The RSS feed doesn't have these yet. I'm sorry - it's something I'll get round to but it's not trivial."
               )
               .replaceAll(/import.*;/g, "")
+              .replaceAll("")
           )
         ),
       };
