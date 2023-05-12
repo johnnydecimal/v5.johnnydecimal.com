@@ -1,27 +1,36 @@
-import rss, { pagesGlobToRssItems } from "@astrojs/rss";
+import rss from "@astrojs/rss";
+import { getCollection } from "astro:content";
 
 export async function get(context) {
+  /**
+   * As at `JDNavigation`, only get what we need to get.
+   */
+  const sitePages = await getCollection("site", ({ slug, data }) => {
+    return slug !== "index" && !data.excludeFromNavAndRss;
+  });
+
   return rss({
-    // `<title>` field in output xml
-    title: "Johnny.Decimal - site feed",
-    // `<description>` field in output xml
-    description: "A system to organise projects.",
-    // Pull in your project "site" from the endpoint context
-    // https://docs.astro.build/en/reference/api-reference/#contextsite
+    title: "Johnny.Decimal",
+    description: "A system to organise projects - full site feed",
     site: context.site,
-    // Array of `<item>`s in output xml
-    // See "Generating items" section for examples using content collections and glob imports
-    items: [
-      {
-        title: "Johnny.Decimal RSS feed under maintenance",
-        link: "https://johnnydecimal.com/00-09-site-administration/02-send-and-receive/02.03-rss-feed",
-        pubDate: "2023-05-07",
-        content:
-          "<h1>Johnny.Decimal RSS feed under maintenance</h1><p>The Johnny.Decimal site has been rebuilt and the RSS feed isn't quite ready yet.</p><p>I want the feed to be a full-featured, full-content replica of the site. I'm almost there - follow along at <a href='https://johnnydecimal.com/00-09-site-administration/02-send-and-receive/02.03-rss-feed'>02.03 RSS feed</a>, or just hang tight. I'm hoping to have it done this week.</p><p>&mdash; j.<br />2023-05-07</p>",
-      },
-    ],
-    // (optional) inject custom xml
-    customData: `<language>en-au</language>`,
-    // stylesheet: "/rss/styles.xsl",
+    items: sitePages.map((page) => {
+      // console.log("🆚 rss.xml.js/page:", page);
+      console.log(
+        "🆚 rss.xml.js/page:",
+        page.slug.replace(/(\/\d\d)(\d\d)/, "$1.$2")
+      );
+      return {
+        title: page.data.title,
+        pubDate: page.data.pubDate,
+        // description: page.data.description,
+        // customData: page.data.customData,
+
+        /**
+         * Create our link from `post.slug`. Again as at `JDNavigation` we need
+         * to regex the decimal back in to our slug as Astro has removed it.
+         */
+        link: `/${page.slug.replace(/(\/\d\d)(\d\d)/, "$1.$2")}/`,
+      };
+    }),
   });
 }
