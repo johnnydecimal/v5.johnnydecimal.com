@@ -14,9 +14,7 @@ export default defineConfig({
   site: "https://johnnydecimal.com",
   integrations: [
     mdx(),
-    image({
-      serviceEntryPoint: "@astrojs/image/sharp",
-    }),
     // tailwind(),
   ],
+  trailingSlash: "always",
 });

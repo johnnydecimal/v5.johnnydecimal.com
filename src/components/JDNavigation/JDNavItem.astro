@@ -1,130 +1,143 @@
 ---
 /**
- * ::CODE STINK ALERT::
+ * `JDNavigation` calls this component iteratively:
+ * - For each page on the site, as `JDNavigation` generates that page,
+ *   - it calls `JDNavItem` multiple times by mapping over an array
+ *     of page objects,
+ *   - which have already been sorted so they're in JD-order
+ *     - e.g. 10-19 > 10 > 10.00 > 10.01 > 11 > 20-29 > 20 > 20.00
+ *   - because it puts the rendered result of this component in to an
+ *     <ol>,
+ *   - which is why everything we return here is wrapped in a <li>.
  *
- * It took me ages to wrap my head around this thing, and this code is
- * horrendous. Please don't read it and please, please don't repurpose it.
+ * In this way it builds up the navigation bar for each page that it renders.
  *
- * Also it only makes sense with the accompanying Excel file of patterns.
+ * This component has to figure out what it's rendering and where it 'fits'
+ * in the navigation scheme. This is because we render the ASCII-line-art
+ * parts here, and they vary depending on what we're rendering.
  *
- * ::CODE STINK ALERT ENDS::
- *
- * TODO: just tidy this up a bit, it doesn't need to be *this* bad.
- *
- * # JDNavItem
- *
- * Each time JDNavItem is called, it is creating a `wyabItem` for a specific
- * page, `creatingWyabForThisPage`.
- *
- * ('wyab' = where-you-are-bar, the boxes-drawn-with-typeface-lines in the
- *  navigation area. I spent *way* too much time on this.)
- *
- * So if Astro is generating the page for `34 Category`, that's
- * `creatingWyabForThisPage`. For every `wyabItem` on that page, this sub will
- * be called once.
+ * The following terms are used on this page. It took me ages to wrap my head
+ * around how this worked, and they helped.
+ * - creatingNavForThisPage: the page we're creating the NavItem for. So if
+ *   Astro is generating *the page* `/00-09-site-administration`, that's this.
+ * - navItemBeingGenerated: the particular link that is being generated. So
+ *   if Astro is generating *the link to* `/00-09-site-administration`,
+ *   that's this value.
  */
 
-interface Props {
-  number: string; // For display
-  title: string; // For display
-  url: string; // Comes in as a simple string
-}
-const { number, title, url } = Astro.props;
+// TODO: document the Excel file as ASCII here
 
 /**
- * # Is the item in scope?
+ * So, which page are we generating this item for? We get this by calling
+ * Astro's API.
+ */
+const creatingNavForThisPage: string[] = Astro.url.pathname.split("/");
+/**
+ * Astro.url.pathname has a leading '/', so the first element of the array we
+ * just created is always blank. Remove it.
  *
- * We only consider drawing where-you-are-bar if the wyabIteb aka navItem is
- * 'in scope' of the page being created.
- *
- * If it *is* in scope then we have to figure out how it looks. But if it
- * isn't even in scope, there's nothing to draw.
- *
- * These rules are complex and are documented in the Excel file in {your JD
- * structure somewhere}.
- *
- * TODO: when you JD this stuff, put its location here.
+ * We've also set `trailingSlash: true` so the last element is also blank.
+ */
+creatingNavForThisPage.shift();
+creatingNavForThisPage.pop();
+/**
+ * Now we have an array:
+ * [0]: the area slug: `00-09-site-administration`
+ * [1]? the category slug: `01-about`
+ * [2]? the id slug: `01.01-colophon`
  */
 
 /**
- * First let's generate some stuff that each of the functions uses.
- */
-const creatingWyabForThisPage = new URL(Astro.request.url).pathname.split("/");
-
-/**
- * Tidy up the creatingWyabForThisPage array.
- *
- * First element is blank due to leading zero; remove.
- *
- * The last element isn't blank when we're running in dev mode, but is when
- * we do a build. Detect if that's the case and remove it.
- *
- * Update: config setting `trailingSlash: "always"` changes/fixes this.
- */
-creatingWyabForThisPage.shift();
-if (creatingWyabForThisPage[creatingWyabForThisPage.length - 1] === "") {
-  creatingWyabForThisPage.pop();
-}
-/**
+ * TODO check this one when the home route is working
  * Special case: if we're creating `/`, we're on the home page. Pretend it's
  * 11.01 Home page.
  */
-if (creatingWyabForThisPage.length === 0) {
-  creatingWyabForThisPage.push("10-19-concepts");
-  creatingWyabForThisPage.push("11-core");
-  creatingWyabForThisPage.push("11.01-introduction");
+if (creatingNavForThisPage.length === 0) {
+  creatingNavForThisPage.push("10-19-concepts");
+  creatingNavForThisPage.push("11-core");
+  creatingNavForThisPage.push("11.01-introduction");
 }
 
-// Do the same for the URL of the wyabItem.
-const wyabItem = url.split("/");
-wyabItem.shift();
+/**
+ * The length of creatingNavForThisPage tells us what *type* of page we're
+ * creating for.
+ */
+const pageTypeLookup: { [index: number]: string } = {
+  1: "area",
+  2: "category",
+  3: "id",
+};
 
-// Figure out what type of items we're creating.
-type JDItemType = "area" | "category" | "id" | "!!BROKEN!!";
-
-// The length of these arrays tells us the type of page we're creating.
-let creatingThisTypeOfPage: JDItemType = "!!BROKEN!!";
-switch (creatingWyabForThisPage.length) {
-  case 1:
-    creatingThisTypeOfPage = "area";
-    break;
-  case 2:
-    creatingThisTypeOfPage = "category";
-    break;
-  case 3:
-    creatingThisTypeOfPage = "id";
-    break;
-  default:
-    break;
-}
-let wyabItemType: JDItemType = "!!BROKEN!!";
-switch (wyabItem.length) {
-  case 1:
-    wyabItemType = "area";
-    break;
-  case 2:
-    wyabItemType = "category";
-    break;
-  case 3:
-    wyabItemType = "id";
-    break;
-  default:
-    break;
+/**
+ * `creatingNavForThisPage.length` must be 1, 2, or 3.
+ */
+if (creatingNavForThisPage.length < 1 || creatingNavForThisPage.length > 3) {
+  throw new Error(
+    `🆘 JDNavItem.astro/checking for length of creatingNavForThisPage failed: must be 1, 2, or 3: is ${creatingNavForThisPage.length}`
+  );
 }
 
-const isThisWyabItemInScopeOfThePageWeAreCreating = (): boolean => {
+const creatingThisTypeOfPage: string =
+  pageTypeLookup[creatingNavForThisPage.length];
+
+/**
+ * ============================================================================
+ * Each time this component is called it's passed these properties. They're
+ * generated by JDNavigation and are a list of all site pages, sorted by JD.
+ *
+ * These values are used to create the <li>. Remember that each run of this
+ * component returns one link, which is one of the rows of the JD nav block.
+ */
+interface Props {
+  number: string; // For display
+  title: string; // For display
+  slug: string; // Comes in as a simple string
+}
+const { number, title, slug } = Astro.props;
+
+/**
+ * Manipulate the slug (of the page we're going to link to).
+ *
+ * It comes in with a leading and trailing slash, which we pop off for these
+ * purposes.
+ */
+const navItemBeingGenerated: string[] = slug.split("/");
+navItemBeingGenerated.shift();
+navItemBeingGenerated.pop();
+/**
+ * Now we have an array:
+ * [0]: the area slug: `00-09-site-administration`
+ * [1]? the category slug: `01-about`
+ * [2]? the id slug: `01.01-colophon`
+ */
+
+/**
+ * `navItemBeingGenerated.length` must be 1, 2, or 3.
+ */
+if (navItemBeingGenerated.length < 1 || navItemBeingGenerated.length > 3) {
+  throw new Error(
+    `🆘 JDNavItem.astro/checking for length of navItemBeingGenerated failed: must be 1, 2, or 3: is ${creatingNavForThisPage.length}`
+  );
+}
+
+const navItemType: string = pageTypeLookup[navItemBeingGenerated.length];
+
+/**
+ * ============================================================================
+ */
+const isThisNavItemInScopeOfThePageWeAreCreating = (): boolean => {
   /**
-   * Ref. Excel: if wyabItem is an area, it's in scope as long as the areas 
+   * Ref. Excel: if navItemBeingGenerated is an area, it's in scope as long as the areas 
      are the same.
    */
-  if (wyabItemType === "area") {
-    return creatingWyabForThisPage[0] === wyabItem[0];
+  if (navItemType === "area") {
+    return creatingNavForThisPage[0] === navItemBeingGenerated[0];
   }
 
   /**
    * If we're creating a wyab item for a category...
    */
-  if (wyabItemType === "category") {
+  if (navItemType === "category") {
     /* If creatingWyabFor{Area}, a category can't be in scope. */
     if (creatingThisTypeOfPage === "area") {
       return false;
@@ -139,22 +152,22 @@ const isThisWyabItemInScopeOfThePageWeAreCreating = (): boolean => {
      */
 
     /* Test for area first. */
-    if (creatingWyabForThisPage[0] !== wyabItem[0]) {
+    if (creatingNavForThisPage[0] !== navItemBeingGenerated[0]) {
       return false;
     }
 
     /**
      * The category number for the page we're creating needs to be >= the
      * category number of the wyab item. We've just ruled out areas not
-     * matching, so at this point all wyabItems have a category at [1].
+     * matching, so at this point all navItemBeingGenerated have a category at [1].
      */
-    return creatingWyabForThisPage[1] >= wyabItem[1];
+    return creatingNavForThisPage[1] >= navItemBeingGenerated[1];
   }
 
   /**
    * By now we must be creating a wyab item for an ID...
    */
-  if (wyabItemType === "id") {
+  if (navItemType === "id") {
     /* As above, creating for an area page is an easy fail. */
     if (creatingThisTypeOfPage === "area") {
       return false;
@@ -164,7 +177,7 @@ const isThisWyabItemInScopeOfThePageWeAreCreating = (): boolean => {
   /**
    * And again, the areas must match no matter what.
    */
-  if (creatingWyabForThisPage[0] !== wyabItem[0]) {
+  if (creatingNavForThisPage[0] !== navItemBeingGenerated[0]) {
     return false;
   }
 
@@ -173,7 +186,7 @@ const isThisWyabItemInScopeOfThePageWeAreCreating = (): boolean => {
    * number for the page is > the wyab item.
    */
   if (creatingThisTypeOfPage === "category") {
-    return creatingWyabForThisPage[1] > wyabItem[1];
+    return creatingNavForThisPage[1] > navItemBeingGenerated[1];
   }
 
   /**
@@ -181,7 +194,7 @@ const isThisWyabItemInScopeOfThePageWeAreCreating = (): boolean => {
    * ID number of the page we're creating is >= the ID number of the wyab item.
    */
   if (creatingThisTypeOfPage === "id") {
-    return creatingWyabForThisPage[2] >= wyabItem[2];
+    return creatingNavForThisPage[2] >= navItemBeingGenerated[2];
   }
 
   /**
@@ -189,10 +202,13 @@ const isThisWyabItemInScopeOfThePageWeAreCreating = (): boolean => {
    */
   console.log("");
   console.log("‼️‼️‼️‼️ JDNavItem.astro is broken.");
-  console.log("🆚 JDNavItem.astro/wyabItem:", wyabItem);
   console.log(
-    "🆚 JDNavItem.astro/creatingWyabForThisPage:",
-    creatingWyabForThisPage
+    "🆚 JDNavItem.astro/navItemBeingGenerated:",
+    navItemBeingGenerated
+  );
+  console.log(
+    "🆚 JDNavItem.astro/creatingNavForThisPage:",
+    creatingNavForThisPage
   );
   console.log(
     "🆚 JDNavItem.astro/creatingThisTypeOfPage:",
@@ -201,7 +217,7 @@ const isThisWyabItemInScopeOfThePageWeAreCreating = (): boolean => {
   throw new Error("JDNavItem.astro: can't get there from here.");
 };
 
-const isInScope = isThisWyabItemInScopeOfThePageWeAreCreating();
+const isInScope = isThisNavItemInScopeOfThePageWeAreCreating();
 
 /**
  * # Is the item the page we're on, i.e. the active item?
@@ -210,11 +226,14 @@ const isInScope = isThisWyabItemInScopeOfThePageWeAreCreating();
  * This should be easier: do the two URLs match?
  */
 
-const isThisWyabItemAlsoThePageWeAreCreating = (): boolean => {
-  return JSON.stringify(creatingWyabForThisPage) === JSON.stringify(wyabItem);
+const isThisNavItemAlsoThePageWeAreCreating = (): boolean => {
+  return (
+    JSON.stringify(creatingNavForThisPage) ===
+    JSON.stringify(navItemBeingGenerated)
+  );
 };
 
-const isActiveItem = isThisWyabItemAlsoThePageWeAreCreating();
+const isActiveItem = isThisNavItemAlsoThePageWeAreCreating();
 
 /**
  * Is this item a direct parent of the page we're on?
@@ -223,7 +242,7 @@ const isActiveItem = isThisWyabItemAlsoThePageWeAreCreating();
  * match criteria P10. But 10.01 isn't, it's just an ancestor.
  */
 
-const isThisWyabItemTheParentOfThePageWeAreCreating = () => {
+const isThisNavItemTheParentOfThePageWeAreCreating = () => {
   /**
    * If we're generating a page for an area, an area wyab isn't its own parent.
    */
@@ -235,8 +254,8 @@ const isThisWyabItemTheParentOfThePageWeAreCreating = () => {
    * If we're generating a page for a category, only its area is its parent.
    */
   if (creatingThisTypeOfPage === "category") {
-    if (wyabItemType === "area") {
-      return creatingWyabForThisPage[0] === wyabItem[0];
+    if (navItemType === "area") {
+      return creatingNavForThisPage[0] === navItemBeingGenerated[0];
     }
   }
 
@@ -246,22 +265,23 @@ const isThisWyabItemTheParentOfThePageWeAreCreating = () => {
    * it's like an older sister vs. a parent, but whatever.
    */
   if (creatingThisTypeOfPage === "id") {
-    if (wyabItemType === "category") {
-      return creatingWyabForThisPage[1] === wyabItem[1];
+    if (navItemType === "category") {
+      return creatingNavForThisPage[1] === navItemBeingGenerated[1];
     }
-    if (wyabItemType === "area") {
-      return creatingWyabForThisPage[0] === wyabItem[0];
+    if (navItemType === "area") {
+      return creatingNavForThisPage[0] === navItemBeingGenerated[0];
     }
-    if (wyabItemType === "id") {
+    if (navItemType === "id") {
       return (
-        creatingWyabForThisPage[1] === wyabItem[1] &&
-        creatingWyabForThisPage[2].substring(3, 5) > wyabItem[2].substring(3, 5)
+        creatingNavForThisPage[1] === navItemBeingGenerated[1] &&
+        creatingNavForThisPage[2].substring(3, 5) >
+          navItemBeingGenerated[2].substring(3, 5)
       );
     }
   }
 };
 
-const isParentItem = isThisWyabItemTheParentOfThePageWeAreCreating();
+const isParentItem = isThisNavItemTheParentOfThePageWeAreCreating();
 
 // TODO: we're creating a link for the page we're on. No need.
 ---
@@ -269,9 +289,9 @@ const isParentItem = isThisWyabItemTheParentOfThePageWeAreCreating();
 <li>
   {
     // P1
-    wyabItemType === "area" && !isInScope && (
+    navItemType === "area" && !isInScope && (
       <>
-        <a class="area area-notInScope-P1-grid" href={url}>
+        <a class="area area-notInScope-P1-grid" href={slug}>
           <div class="area-number">{number}</div>
           <div />
           <div class="area-title">{title}</div>
@@ -282,8 +302,8 @@ const isParentItem = isThisWyabItemTheParentOfThePageWeAreCreating();
 
   {
     // P3
-    wyabItemType === "category" && !isInScope && (
-      <a class="category category-notInScope-P3-grid" href={url}>
+    navItemType === "category" && !isInScope && (
+      <a class="category category-notInScope-P3-grid" href={slug}>
         <div />
         <div>{number}</div>
         <div />
@@ -294,8 +314,8 @@ const isParentItem = isThisWyabItemTheParentOfThePageWeAreCreating();
 
   {
     // P4
-    wyabItemType === "id" && !isInScope && (
-      <a class="id id-notInScope-P4-grid" href={url}>
+    navItemType === "id" && !isInScope && (
+      <a class="id id-notInScope-P4-grid" href={slug}>
         <div />
         <div>{number}</div>
         <div />
@@ -306,9 +326,9 @@ const isParentItem = isThisWyabItemTheParentOfThePageWeAreCreating();
 
   {
     // P2
-    wyabItemType === "area" && isInScope && isActiveItem && (
+    navItemType === "area" && isInScope && isActiveItem && (
       <>
-        <a class="area area-inScope-active-P2-grid" href={url}>
+        <a class="area area-inScope-active-P2-grid" href={slug}>
           <div>{number}</div>
           <div />
           <div>{title}</div>
@@ -319,9 +339,9 @@ const isParentItem = isThisWyabItemTheParentOfThePageWeAreCreating();
 
   {
     // P5
-    wyabItemType === "area" && isInScope && !isActiveItem && (
+    navItemType === "area" && isInScope && !isActiveItem && (
       <>
-        <a class="area area-inScope-notActive-P5-grid" href={url}>
+        <a class="area area-inScope-notActive-P5-grid" href={slug}>
           <div class="area-inScope-notActive-P5-number">
             {number}
             <br />
@@ -342,13 +362,13 @@ const isParentItem = isThisWyabItemTheParentOfThePageWeAreCreating();
 
   {
     // P6
-    wyabItemType === "category" &&
+    navItemType === "category" &&
       isInScope &&
       !isActiveItem &&
       !isParentItem && (
         <a
           class="category category-inScope-notActive-notParent-P6-grid"
-          href={url}
+          href={slug}
         >
           <div class="category-inScope-notActive-notParent-P6-lines">
             &#x2502;
@@ -369,8 +389,8 @@ const isParentItem = isThisWyabItemTheParentOfThePageWeAreCreating();
 
   {
     // P7
-    wyabItemType === "id" && isInScope && !isActiveItem && !isParentItem && (
-      <a class="id id-inScope-notActive-notParent-P7-grid" href={url}>
+    navItemType === "id" && isInScope && !isActiveItem && !isParentItem && (
+      <a class="id id-inScope-notActive-notParent-P7-grid" href={slug}>
         <div class="id-inScope-notActive-notParent-P7-lines">
           &#x2502;
           <br />
@@ -390,8 +410,8 @@ const isParentItem = isThisWyabItemTheParentOfThePageWeAreCreating();
 
   {
     // P8
-    wyabItemType === "category" && isInScope && isActiveItem && (
-      <a class="category category-inScope-active-P8-grid" href={url}>
+    navItemType === "category" && isInScope && isActiveItem && (
+      <a class="category category-inScope-active-P8-grid" href={slug}>
         <div class="category-inScope-active-P8-lines">
           &#x2514;&#x2524;
           <br />
@@ -410,11 +430,11 @@ const isParentItem = isThisWyabItemTheParentOfThePageWeAreCreating();
   }
   {
     // P8
-    wyabItemType === "category" &&
+    navItemType === "category" &&
       isInScope &&
       !isActiveItem &&
       isParentItem && (
-        <a class="category category-inScope-active-P8-grid" href={url}>
+        <a class="category category-inScope-active-P8-grid" href={slug}>
           <div class="category-inScope-active-P8-lines">
             &#x2514;&#x2524;
             <br />
@@ -434,8 +454,8 @@ const isParentItem = isThisWyabItemTheParentOfThePageWeAreCreating();
 
   {
     // P10
-    wyabItemType === "id" && isInScope && !isActiveItem && isParentItem && (
-      <a class="id id-inScope-notActive-isParent-P10-grid" href={url}>
+    navItemType === "id" && isInScope && !isActiveItem && isParentItem && (
+      <a class="id id-inScope-notActive-isParent-P10-grid" href={slug}>
         <div />
         <div class="id-inScope-notActive-isParent-P10-lines">
           &#x2502;
@@ -459,8 +479,8 @@ const isParentItem = isThisWyabItemTheParentOfThePageWeAreCreating();
 
   {
     // P11
-    wyabItemType === "id" && isInScope && isActiveItem && (
-      <a class="id id-inScope-active-P11-grid" href={url}>
+    navItemType === "id" && isInScope && isActiveItem && (
+      <a class="id id-inScope-active-P11-grid" href={slug}>
         <div />
         <div class="id-inScope-active-P11-lines">
           &#x2514;&#x2500;&#x2500;&#x2524;

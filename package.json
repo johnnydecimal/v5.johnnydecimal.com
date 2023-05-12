@@ -1,38 +1,31 @@
 {
-  "name": "johnny_decimal_v5_2023",
+  "name": "v5.johnnydecimal.com",
   "type": "module",
   "version": "5",
   "private": true,
   "//": "The prebuild script copies 11.01 over src/pages/index.mdx so it also becomes the home page at the site root. We use `sed` to fix the path to the layout component, and it needs `shx` so that it works on Node over on Netlify.",
   "scripts": {
-    "predev": "cp ./src/pages/10-19-concepts/11-core/11.01-introduction.mdx ./src/pages/index.mdx && shx sed -i 's/\\.\\.\\/\\.\\.\\/\\.\\.\\//\\.\\.\\//' src/pages/index.mdx > /dev/null",
     "dev": "astro dev --host",
     "start": "astro dev",
-    "prebuild": "cp ./src/pages/10-19-concepts/11-core/11.01-introduction.mdx ./src/pages/index.mdx && shx sed -i 's/\\.\\.\\/\\.\\.\\/\\.\\.\\//\\.\\.\\//' src/pages/index.mdx > /dev/null",
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/image": "0.x",
-    "@astrojs/mdx": "0.x",
-    "@astrojs/rss": "^2.1.0",
-    "@astrojs/tailwind": "^3.x",
-    "@fontsource/fira-sans": "^4.5.10",
-    "@fontsource/ibm-plex-sans": "^4.5.13",
-    "@fontsource/ibm-plex-serif": "^4.5.12",
-    "@fontsource/playfair-display": "^4.5.13",
-    "@johnnydecimal/jdgetacidtypefromstring": "0.x",
-    "astro": "2.x",
-    "sharp": "0.x"
+    "@astrojs/image": "~0.16.8",
+    "@astrojs/mdx": "~0.19.1",
+    "@astrojs/rss": "~2.4.1",
+    "@fontsource/ibm-plex-serif": "~4.5.12",
+    "@johnnydecimal/jdgetacidtypefromstring": "~0.0.4",
+    "astro": "~2.4.5"
   },
   "devDependencies": {
-    "markdown-it": "^13.0.1",
-    "prettier": "^2.8.1",
-    "prettier-plugin-astro": "0.x",
-    "sanitize-html": "^2.10.0",
-    "sass": "^1.58.3",
-    "scss": "^0.2.4",
-    "shx": "^0.3.4"
+    "prettier": "~2.8.8",
+    "prettier-plugin-astro": "~0.8.1",
+    "scss": "~0.2.4",
+    "shx": "~0.3.4"
+  },
+  "optionalDependencies": {
+    "@esbuild/linux-x64": "~0.17.x"
   }
 }

@@ -22,6 +22,8 @@ pnpm-debug.log*
 # Local Netlify folder
 .netlify
 
-# astro files
+# astro
 .astro
+
+# working tree
 _original
