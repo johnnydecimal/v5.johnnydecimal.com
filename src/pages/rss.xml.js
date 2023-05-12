@@ -25,10 +25,10 @@ export async function get(context) {
         .render(sitePages[18].body)
         .replaceAll(/<p>import.*?<\/p>/gs, "")
         .replace(/<h1>{frontmatter.title}<\/h1>\n/, "")
-      // .replaceAll(
-      //   /<.* \/>/g,
-      //   "<blockquote>On the website there is a component here: it might render an image, a graphic, a table, or something else. The RSS feed doesn't have these yet. I'm sorry - it's something I'll get round to but it's not trivial.</blockquote>\n"
-      // )
+      .replaceAll(
+        /<.* \/>/g,
+        "<blockquote>On the website there is a component here: it might render an image, a graphic, a table, or something else. The RSS feed doesn't have these yet. I'm sorry - it's something I'll get round to but it's not trivial.</blockquote>\n"
+      )
     )
   );
   */
@@ -53,9 +53,12 @@ export async function get(context) {
           // Remove all import statements, which are in <p>s
           .replaceAll(/<p>import.*?<\/p>/gs, "")
           // Remove the un-rendered title
-          .replace(/<h1>{frontmatter.title}<\/h1>\n/, ""),
-        // Remove all un-rendered components, i.e. <Component />
-        // .replaceAll(/<.* \/>/g, ""),
+          .replace(/<h1>{frontmatter.title}<\/h1>\n/, "")
+          // Remove all un-rendered components, i.e. <Component />
+          .replaceAll(
+            /<.* \/>/g,
+            "<blockquote>On the website there is a component here: it might render an image, a graphic, a table, or something else. The RSS feed doesn't have these yet. I'm sorry - it's something I'll get round to but it's not trivial.</blockquote>\n"
+          ),
       };
     }),
     // stylesheet: "/rss/styles.xsl",
