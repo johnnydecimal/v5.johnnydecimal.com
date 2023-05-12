@@ -7,30 +7,33 @@ import jdSort from "@js/jdSort.js";
 /**
  * # JDNavigation
  *
- * This component creates the JD navigation block.
+ * This component creates the JD site navigation block.
  *
- * It is called once per site page when Astro builds the site.
+ * It is called once by each site page. It is the overall wrapper and is
+ * responsible for the ┌──┐ containing brackets top and bottom.
  *
- * It needs to return a list of every page on the site, formatted as the JD
- * nav block. So we use `getCollection` to get those pages, do a little
- * manipulation on the result, and `map()` over the final array.
+ * It then generates a list of all site pages using `getCollection` and, after
+ * a bit of filtering, sorting, and other tweaking, renders `JDNavItem` with
+ * each of these pages.
  *
- * Each `map()` calls <JDNavItem> which returns the actual item to be
- * rendered. This is more complex than you'd think because each line looks
- * different depending on where it is in the hierarchy and which page we're
- * on.
+ * `JDNavItem` is responsible for generating each line of the navblock. This
+ * component wraps everything in an `<ol>`, and JDNavItem wraps each of its
+ * returns in a `<li>`.
  */
 
 /**
  * Get all `sitePages` so we can pull out a list of pages which become the
- * navigation bar. We'll pass this down to <JDNavItem> shortly.
+ * navigation bar. We'll pass this down to `JDNavItem` shortly.
  *
  * We use a filter to exclude the root / page at
  * - content/site/index.mdx
  * because this same page is also 11.01, and we don't need it twice.
+ *
+ * We also exclude pages where `!data.excludeFromNav`, which is typically
+ * our hidden pages at `90-99 Behind the scenes`.
  */
-const sitePages = await getCollection("site", ({ slug }) => {
-  return slug !== "index";
+const sitePages = await getCollection("site", ({ slug, data }) => {
+  return slug !== "index" && !data.excludeFromNav;
 });
 
 /**
@@ -50,29 +53,27 @@ interface NavItem {
 
 let sitePagesForNav: Array<NavItem> = [];
 
-sitePages
-  .filter((page) => !page.data.excludeFromNav)
-  .map((page) => {
-    sitePagesForNav.push({
-      number: page.data.number,
-      title: page.data.title,
-      /**
-       * We modify slug in two ways:
-       * - Give it a leading slash: we use it as the hyperlink and without a
-       *   trailing slash it appends to the current path rather than starting
-       *   at the root of the domain.
-       * - Give it a trailing slash: the behaviour can differ between local dev
-       *   and Netlify deployment, and this normalises them.
-       * - Astro's slug generator removes the period. I think it thinks it's
-       *   removing a file extension. The result is that this:
-       *   - `00-09-site-administration/01-about/01.01-colophon`
-       *   - becomes this:
-       *   - `00-09-site-administration/01-about/0101-colophon`
-       *   - So we pop the period back in there with a bit of regex wizardry.
-       */
-      slug: "/" + page.slug.replace(/(\/\d\d)(\d\d)/, "$1.$2") + "/",
-    });
+sitePages.map((page) => {
+  sitePagesForNav.push({
+    number: page.data.number,
+    title: page.data.title,
+    /**
+     * We modify slug in two ways:
+     * - Give it a leading slash: we use it as the hyperlink and without a
+     *   trailing slash it appends to the current path rather than starting
+     *   at the root of the domain.
+     * - Give it a trailing slash: the behaviour can differ between local dev
+     *   and Netlify deployment, and this normalises them.
+     * - Astro's slug generator removes the period. I think it thinks it's
+     *   removing a file extension. The result is that this:
+     *   - `00-09-site-administration/01-about/01.01-colophon`
+     *   - becomes this:
+     *   - `00-09-site-administration/01-about/0101-colophon`
+     *   - So we pop the period back in there with a bit of regex wizardry.
+     */
+    slug: "/" + page.slug.replace(/(\/\d\d)(\d\d)/, "$1.$2") + "/",
   });
+});
 
 sitePagesForNav.sort(jdSort);
 // console.log("🆚 JDNavigation.astro/pagesForNav :", pagesForNav);
