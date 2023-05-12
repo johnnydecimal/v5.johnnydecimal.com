@@ -16,15 +16,14 @@ const site = defineCollection({
     // Area pages don't have a category; otherwise like `11 Core`
     category: z.string().optional(),
 
-    // Publication date for RSS & other
-    pubDate: z.date(),
+    // Prevent rendering in the navbar with `true`
+    excludeFromNav: z.boolean().optional(),
 
     // Prevent displaying of the BackNext component with `false`
     backNextDisplay: z.boolean().optional(),
 
-    // Prevent rendering in the navbar with `true`
-    excludeFromNav: z.boolean().optional(),
-
+    // Publication date for RSS & other
+    pubDate: z.date().optional(),
     // Prevent rendering in the RSS feed with `true`
     excludeFromRss: z.boolean().optional(),
   }),
