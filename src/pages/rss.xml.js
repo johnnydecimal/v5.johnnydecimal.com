@@ -17,7 +17,6 @@ export async function get(context) {
   //   sitePages[0].body.replace("+", "soup")
   // );
 
-  /*
   console.log(
     "🆚 rss.xml.js/sanitizeHtml(parser.render(page.body)),:",
     sanitizeHtml(
@@ -25,13 +24,12 @@ export async function get(context) {
         .render(sitePages[18].body)
         .replaceAll(/<p>import.*?<\/p>/gs, "")
         .replace(/<h1>{frontmatter.title}<\/h1>\n/, "")
-      .replaceAll(
-        /<.* \/>/g,
-        "<blockquote>On the website there is a component here: it might render an image, a graphic, a table, or something else. The RSS feed doesn't have these yet. I'm sorry - it's something I'll get round to but it's not trivial.</blockquote>\n"
-      )
+        .replaceAll(
+          /<p>&lt;.* \/&gt;<\/p>/g,
+          "<blockquote>On the website there is a component here: it might render an image, a graphic, a table, or something else. The RSS feed doesn't have these yet. I'm sorry - it's something I'll get round to but it's not trivial.</blockquote>\n"
+        )
     )
   );
-  */
 
   return rss({
     title: "Johnny.Decimal",
