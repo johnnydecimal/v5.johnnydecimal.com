@@ -9,9 +9,10 @@ export async function get(context) {
    * As at `JDNavigation`, only get what we need to get.
    */
   const sitePages = await getCollection("site", ({ slug, data }) => {
-    return slug !== "index" && !data.excludeFromNavAndRss;
+    return slug !== "index" && !data.excludeFromRss;
   });
 
+  /* logging
   console.log(
     "🆚 rss.xml.js/sitePages[18]:",
     sanitizeHtml(
@@ -29,8 +30,9 @@ export async function get(context) {
       )
     )
   );
+  */
 
-  /*
+  /* logging
   console.log(
     "🆚 rss.xml.js/sanitizeHtml(parser.render(page.body)),:",
     sanitizeHtml(
