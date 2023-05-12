@@ -1,0 +1,38 @@
+---
+# The JD number: mandatory, used on JDPage
+number: "01.04"
+# The JD title: mandatory, used on JDPage
+title: Version
+# The area that this ID relates to: mandatory, used on JDPage
+area: 00-09 Site administration
+# The category that this ID relates to: mandatory, used on JDPage
+category: 01 About
+
+# RSS
+pubDate: 2022-02-06
+---
+
+import { version } from "@js/version/version.ts";
+
+# {frontmatter.title}
+
+- Version: <code>{version.number}</code>.
+- Released: <time datetime={new Date().toISOString()}><code>{new Date().toString()}</code></time>.
+
+## I re-wrote everything :-)
+
+New site, new structure, new everything.
+
+The new structure makes it _much_ simpler for me to add content, and I promise that I will do that.
+
+You should check back here often, or [follow the Mastodon account](https://hachyderm.io/@johnnydecimal), or [sign up to the mailing list](/00-09-site-administration/02-send-and-receive/02.02-mailing-list/).
+
+## Release cycle
+
+I will publish content updates as one single update to the site on or around the first weekend of the month.
+
+The version number will update accordingly. [Semantic versioning](https://semver.org) is used:
+
+- MAJOR, `5._._`: a total site re-write. I hope never to have to do this again.
+- MINOR, `_.0._`: content updates. This number will increase when I do a monthly release.
+- PATCH, `_._.0`: fixing errors: spelling mistakes, updating broken links, other small tweaks. I'll make these changes as-needed.
