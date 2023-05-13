@@ -5,8 +5,11 @@
   "private": true,
   "//": "The prebuild script copies 11.01 over src/pages/index.mdx so it also becomes the home page at the site root. We use `sed` to fix the path to the layout component, and it needs `shx` so that it works on Node over on Netlify.",
   "scripts": {
+    "previous-predev-unused": "cp ./src/content/10-19-concepts/11-core/11.01-introduction.mdx ./src/content/index.mdx && shx sed -i 's/\\.\\.\\/\\.\\.\\/\\.\\.\\//\\.\\.\\//' src/pages/index.mdx > /dev/null",
+    "predev": "cp ./src/content/site/10-19-concepts/11-core/11.01-introduction.mdx ./src/content/site/index.mdx",
     "dev": "astro dev --host",
     "start": "astro dev",
+    "prebuild": "cp ./src/content/site/10-19-concepts/11-core/11.01-introduction.mdx ./src/content/site/index.mdx",
     "build": "astro build",
     "preview": "astro preview",
     "bp": "astro build && astro preview",
