@@ -73,12 +73,12 @@ if (pageIndex < pages.length - 1) {
 
 /**
  * We can set `backNextDisplay: false` in our frontmatter to prevent
- * rendering of this component.
+ * rendering of this component. But by default, it renders.
  */
 interface Props {
   backNextDisplay: boolean;
 }
-const { backNextDisplay } = Astro.props;
+const { backNextDisplay = true } = Astro.props;
 
 /* We've introduced a BackNext to the home page, which is at `/`.
    Create a special override case for it for now.
