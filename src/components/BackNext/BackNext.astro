@@ -41,22 +41,43 @@ if (import.meta.env.PROD) {
 }
 // Hack ends.
 
-let backPath, backTitle, nextPath, nextTitle;
+let backPath, backTitle, backId, nextPath, nextTitle, nextId;
 
+/**
+ * If we're not on the very first page, get the previous page.
+ */
 if (pageIndex >= 1) {
   backPath = pages[pageIndex - 1].pathname;
-  backTitle = pages[pageIndex - 1].title;
+  backTitle =
+    pages[pageIndex - 1].title || "🆘 BackNext error - please report me 🆘";
+  /**
+   * To make testing easier, set an ID for each link. Use the text, which we
+   * need to tweak for an HTML id.
+   */
+  backId = backTitle.toLowerCase().replaceAll(" ", "-");
 }
 
+/**
+ * If we're not on the very last page, get the next page.
+ */
 if (pageIndex < pages.length - 1) {
   nextPath = pages[pageIndex + 1].pathname;
-  nextTitle = pages[pageIndex + 1].title;
+  nextTitle =
+    pages[pageIndex + 1].title || "🆘 BackNext error - please report me 🆘";
+  /**
+   * To make testing easier, set an ID for each link. Use the text, which we
+   * need to tweak for an HTML id.
+   */
+  nextId = nextTitle.toLowerCase().replaceAll(" ", "-");
 }
 
+/**
+ * We can set `backNextDisplay: false` in our frontmatter to prevent
+ * rendering of this component.
+ */
 interface Props {
   backNextDisplay: boolean;
 }
-
 const { backNextDisplay } = Astro.props;
 
 /* We've introduced a BackNext to the home page, which is at `/`.
@@ -81,7 +102,9 @@ if (pathname === "/") {
               <a href={backPath}>&#x25C1;&nbsp;</a>
             </div>
             <div class="back">
-              <a href={backPath}> {backTitle}</a>
+              <a id=`backnext-${backId}` href={backPath}>
+                {backTitle}
+              </a>
             </div>
           </>
         ) : (
@@ -94,7 +117,9 @@ if (pathname === "/") {
         {nextPath ? (
           <>
             <div class="next">
-              <a href={nextPath}>{nextTitle}</a>
+              <a id=`backnext-${nextId}` href={nextPath}>
+                {nextTitle}
+              </a>
             </div>
             <div class="next-arrow">
               <a href={nextPath}>&nbsp;&#x25B6;</a>
