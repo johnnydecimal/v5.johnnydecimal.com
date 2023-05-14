@@ -20,10 +20,11 @@
     "astro": "~2.4.5"
   },
   "devDependencies": {
-    "cypress": "^12.12.0",
     "markdown-it": "^13.0.1",
+    "markdown-it": "~13.0.1",
     "prettier": "~2.8.8",
     "prettier-plugin-astro": "~0.8.1",
+    "sanitize-html": "~2.10.0",
     "scss": "~0.2.4",
     "shx": "~0.3.4"
   },
