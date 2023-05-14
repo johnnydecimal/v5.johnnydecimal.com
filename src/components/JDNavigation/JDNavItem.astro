@@ -291,7 +291,7 @@ const isParentItem = isThisNavItemTheParentOfThePageWeAreCreating();
     // P1
     navItemType === "area" && !isInScope && (
       <>
-        <a class="area area-notInScope-P1-grid" href={slug}>
+        <a id=`jd-nav-${number}` class="area area-notInScope-P1-grid" href={slug}>
           <div class="area-number">{number}</div>
           <div />
           <div class="area-title">{title}</div>
@@ -303,7 +303,7 @@ const isParentItem = isThisNavItemTheParentOfThePageWeAreCreating();
   {
     // P3
     navItemType === "category" && !isInScope && (
-      <a class="category category-notInScope-P3-grid" href={slug}>
+      <a id=`jd-nav-${number}` class="category category-notInScope-P3-grid" href={slug}>
         <div />
         <div>{number}</div>
         <div />
@@ -315,7 +315,7 @@ const isParentItem = isThisNavItemTheParentOfThePageWeAreCreating();
   {
     // P4
     navItemType === "id" && !isInScope && (
-      <a class="id id-notInScope-P4-grid" href={slug}>
+      <a id=`jd-nav-${number}` class="id id-notInScope-P4-grid" href={slug}>
         <div />
         <div>{number}</div>
         <div />
@@ -328,7 +328,7 @@ const isParentItem = isThisNavItemTheParentOfThePageWeAreCreating();
     // P2
     navItemType === "area" && isInScope && isActiveItem && (
       <>
-        <a class="area area-inScope-active-P2-grid" href={slug}>
+        <a id=`jd-nav-${number}` class="area area-inScope-active-P2-grid" href={slug}>
           <div>{number}</div>
           <div />
           <div>{title}</div>
@@ -341,7 +341,7 @@ const isParentItem = isThisNavItemTheParentOfThePageWeAreCreating();
     // P5
     navItemType === "area" && isInScope && !isActiveItem && (
       <>
-        <a class="area area-inScope-notActive-P5-grid" href={slug}>
+        <a id=`jd-nav-${number}` class="area area-inScope-notActive-P5-grid" href={slug}>
           <div class="area-inScope-notActive-P5-number">
             {number}
             <br />
@@ -390,7 +390,7 @@ const isParentItem = isThisNavItemTheParentOfThePageWeAreCreating();
   {
     // P7
     navItemType === "id" && isInScope && !isActiveItem && !isParentItem && (
-      <a class="id id-inScope-notActive-notParent-P7-grid" href={slug}>
+      <a id=`jd-nav-${number}` class="id id-inScope-notActive-notParent-P7-grid" href={slug}>
         <div class="id-inScope-notActive-notParent-P7-lines">
           &#x2502;
           <br />
@@ -411,7 +411,7 @@ const isParentItem = isThisNavItemTheParentOfThePageWeAreCreating();
   {
     // P8
     navItemType === "category" && isInScope && isActiveItem && (
-      <a class="category category-inScope-active-P8-grid" href={slug}>
+      <a id=`jd-nav-${number}` class="category category-inScope-active-P8-grid" href={slug}>
         <div class="category-inScope-active-P8-lines">
           &#x2514;&#x2524;
           <br />
@@ -434,7 +434,7 @@ const isParentItem = isThisNavItemTheParentOfThePageWeAreCreating();
       isInScope &&
       !isActiveItem &&
       isParentItem && (
-        <a class="category category-inScope-active-P8-grid" href={slug}>
+        <a id=`jd-nav-${number}` class="category category-inScope-active-P8-grid" href={slug}>
           <div class="category-inScope-active-P8-lines">
             &#x2514;&#x2524;
             <br />
@@ -455,7 +455,7 @@ const isParentItem = isThisNavItemTheParentOfThePageWeAreCreating();
   {
     // P10
     navItemType === "id" && isInScope && !isActiveItem && isParentItem && (
-      <a class="id id-inScope-notActive-isParent-P10-grid" href={slug}>
+      <a id=`jd-nav-${number}` class="id id-inScope-notActive-isParent-P10-grid" href={slug}>
         <div />
         <div class="id-inScope-notActive-isParent-P10-lines">
           &#x2502;
@@ -480,7 +480,7 @@ const isParentItem = isThisNavItemTheParentOfThePageWeAreCreating();
   {
     // P11
     navItemType === "id" && isInScope && isActiveItem && (
-      <a class="id id-inScope-active-P11-grid" href={slug}>
+      <a id=`jd-nav-${number}` class="id id-inScope-active-P11-grid" href={slug}>
         <div />
         <div class="id-inScope-active-P11-lines">
           &#x2514;&#x2500;&#x2500;&#x2524;
