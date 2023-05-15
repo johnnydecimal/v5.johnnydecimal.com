@@ -32,14 +32,15 @@ const pathname = Astro.url.pathname;
  * TODO: that.
  *
  * Until then, if import.meta.env.PROD then we're in Netlify, otherwise not.
- */
-let pageIndex;
-if (import.meta.env.PROD) {
-  pageIndex = pages.findIndex((page) => page.pathname + "/" === pathname);
-} else {
-  pageIndex = pages.findIndex((page) => page.pathname === pathname);
-}
-// Hack ends.
+ let pageIndex;
+ if (import.meta.env.PROD) {
+   pageIndex = pages.findIndex((page) => page.pathname + "/" === pathname);
+  } else {
+    pageIndex = pages.findIndex((page) => page.pathname === pathname);
+  }
+  // Hack ends.
+  */
+let pageIndex = pages.findIndex((page) => page.pathname === pathname);
 
 let backPath, backTitle, backId, nextPath, nextTitle, nextId;
 
