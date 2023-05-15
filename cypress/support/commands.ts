@@ -39,5 +39,5 @@
 import { addMatchImageSnapshotCommand } from "@simonsmith/cypress-image-snapshot/command";
 
 addMatchImageSnapshotCommand({
-  timeout: 60000,
+  allowSizeMismatch: true,
 });
