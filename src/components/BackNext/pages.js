@@ -27,7 +27,7 @@ export const pages = [
   },
   {
     pathname:
-      "/00-09-site-administration/02-send-and-receive/02.02-mailing-list",
+      "/00-09-site-administration/02-send-and-receive/02.02-mailing-list/",
     title: "Mailing list",
   },
   {
