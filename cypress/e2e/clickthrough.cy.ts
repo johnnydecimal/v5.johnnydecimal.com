@@ -1,14 +1,41 @@
-describe("template spec", () => {
+describe("Site clickthrough", () => {
   it("passes", () => {
     cy.visit("/");
 
-    // === 00-09
-    cy.get("#jd-nav-00-09")
+    // Check that BackNext works from the home page
+    cy.get("#backnext-areas-and-categories")
       .invoke("attr", "href")
       .then((href) => {
         cy.visit(`${href}`);
       });
-    cy.get("code").should("have.text", "00-09 Site administration");
+
+    // Areas
+    ["00-09", "10-19", "20-29"].map((area) => {
+      cy.get(`#jd-nav-${area}`)
+        .invoke("attr", "href")
+        .then((href) => {
+          cy.visit(`${href}`);
+        });
+      cy.get(
+        "body > div.NavMain> main > div > div.Location> div.locationbox-acid-details-grid> div:nth-child(2)"
+      ).should("contain.text", area);
+      cy.get("code").should("contain.text", area);
+      cy.get("div.BackNext").should("not.exist");
+    });
+
+    // Categories
+    ["01", "02", "03", "04", "11", "12", "13", "14", "21"].map((category) => {
+      cy.get(`#jd-nav-${category}`)
+        .invoke("attr", "href")
+        .then((href) => {
+          cy.visit(`${href}`);
+        });
+      cy.get(
+        "body > div.NavMain> main > div > div.Location> div.locationbox-acid-details-grid> div:nth-child(4)"
+      ).should("contain.text", category);
+      cy.get("code").should("contain.text", category);
+      cy.get("div.BackNext").should("not.exist");
+    });
 
     // === 02.02
     cy.get("#jd-nav-02-02")
@@ -31,12 +58,6 @@ describe("template spec", () => {
       "contain.text",
       "Areas and categories"
     );
-    // Check that BackNext works from the home page
-    cy.get("#backnext-areas-and-categories")
-      .invoke("attr", "href")
-      .then((href) => {
-        cy.visit(`${href}`);
-      });
 
     // === 11.04
     cy.get("#jd-nav-11-04")
