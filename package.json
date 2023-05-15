@@ -16,23 +16,22 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/image": "~0.16.8",
-    "@astrojs/mdx": "~0.19.1",
-    "@astrojs/rss": "~2.4.1",
-    "@fontsource/ibm-plex-serif": "~4.5.12",
-    "@johnnydecimal/jdgetacidtypefromstring": "~0.0.4",
-    "astro": "~2.4.5"
+    "@astrojs/image": "^0.16.8",
+    "@astrojs/mdx": "^0.19.1",
+    "@astrojs/rss": "^2.4.1",
+    "@fontsource/ibm-plex-serif": "^4.5.12",
+    "@johnnydecimal/jdgetacidtypefromstring": "^0.0.4",
+    "astro": "^2.4.5"
   },
   "devDependencies": {
     "markdown-it": "^13.0.1",
-    "markdown-it": "~13.0.1",
-    "prettier": "~2.8.8",
-    "prettier-plugin-astro": "~0.8.1",
-    "sanitize-html": "~2.10.0",
-    "scss": "~0.2.4",
-    "shx": "~0.3.4"
+    "prettier": "^2.8.8",
+    "prettier-plugin-astro": "^0.8.1",
+    "sanitize-html": "^2.10.0",
+    "scss": "^0.2.4",
+    "shx": "^0.3.4"
   },
   "optionalDependencies": {
-    "@esbuild/linux-x64": "~0.17.x"
+    "@esbuild/linux-x64": "^0.17.19"
   }
 }
