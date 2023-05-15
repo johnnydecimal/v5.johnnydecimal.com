@@ -26,4 +26,4 @@ pnpm-debug.log*
 .astro
 
 # working tree
-_original
+.git-worktree
