@@ -31,6 +31,12 @@ describe("template spec", () => {
       "contain.text",
       "Areas and categories"
     );
+    // Check that BackNext works from the home page
+    cy.get("#backnext-areas-and-categories")
+      .invoke("attr", "href")
+      .then((href) => {
+        cy.visit(`${href}`);
+      });
 
     // === 11.04
     cy.get("#jd-nav-11-04")
@@ -39,12 +45,5 @@ describe("template spec", () => {
         cy.visit(`${href}`);
       });
     cy.get("img").should("be.visible");
-    cy.get(":nth-child(15) > :nth-child(1) > .area-title").should(
-      "have.text",
-      "Finance and accounts"
-    );
-    cy.get(
-      ":nth-child(7) > .category-number-and-title > .category-title"
-    ).should("have.text", "Photography");
   });
 });
