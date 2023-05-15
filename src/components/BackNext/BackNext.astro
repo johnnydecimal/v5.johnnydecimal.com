@@ -2,46 +2,29 @@
 import BracketsHorizontalTop from "@components/BracketsHorizontal/BracketsHorizontalTop.astro";
 import BracketsHorizontalBottom from "@components/BracketsHorizontal/BracketsHorizontalBottom.astro";
 
-// Instead of importing this, let's generate it
+/**
+ * We can set `backNextDisplay: false` in our frontmatter to prevent
+ * rendering of this component. But by default, it renders.
+ */
+interface Props {
+  backNextDisplay: boolean;
+}
+const { backNextDisplay = true } = Astro.props;
+
+/**
+ * BackNext just looks up your current page's path in a static array.
+ * 
+ * The previous page is the previous element; the next, the next.
+ * 
+ * TODO: generate a list of pages rather than relying on a static file.
+ */
 import { pages } from "./pages.js";
 
-// Not doing this now as I want to just get the site published, but here's how we get the list of pages. Build this in to a proper function.
-// const pages = await Astro.glob("../../pages/**/*.mdx");
-// console.log(
-//   pages.map((page) => {
-//     return `{ pathname: "${page.url}", title: "${page.frontmatter.title}" },`;
-//   })
-// );
-
-// create an array
-// of objects like { pathname: "/00-09/01/...", title: "About"}
-// with no trailing slashes
-// by mapping over each `page`
-
-// ============================================================================
-
-/**
- * This doesn't change with the re-doing of pages.js
- */
-const pathname = Astro.url.pathname;
-
-/**
- * Hack because Netlify builds with a trailing slash and locally does not. Yet.
- * You need to fix that to align them.
- *
- * TODO: that.
- *
- * Until then, if import.meta.env.PROD then we're in Netlify, otherwise not.
- let pageIndex;
- if (import.meta.env.PROD) {
-   pageIndex = pages.findIndex((page) => page.pathname + "/" === pathname);
-  } else {
-    pageIndex = pages.findIndex((page) => page.pathname === pathname);
-  }
-  // Hack ends.
-  */
+// Grab the pathname and match it against our array.
+const pathname = Astro.url.pathname; // starts & ends with '/'
 let pageIndex = pages.findIndex((page) => page.pathname === pathname);
 
+// Declare some empty variables.
 let backPath, backTitle, backId, nextPath, nextTitle, nextId;
 
 /**
@@ -72,23 +55,14 @@ if (pageIndex < pages.length - 1) {
   nextId = nextTitle.toLowerCase().replaceAll(" ", "-");
 }
 
-/**
- * We can set `backNextDisplay: false` in our frontmatter to prevent
- * rendering of this component. But by default, it renders.
- */
-interface Props {
-  backNextDisplay: boolean;
-}
-const { backNextDisplay = true } = Astro.props;
-
 /* We've introduced a BackNext to the home page, which is at `/`.
    Create a special override case for it for now.
-   TODO this all needs a re-think.
  */
 if (pathname === "/") {
   backPath = undefined;
   nextPath = "/10-19-concepts/11-core/11.02-areas-and-categories/";
   nextTitle = "Areas and categories";
+  nextId = "areas-and-categories"
 }
 ---
 
