@@ -1,0 +1,120 @@
+---
+number: "11.02"
+title: Areas and categories
+area: 10-19 Concepts
+category: 11 Core concepts
+
+pubDate: 2022-05-12T11:02:00
+---
+
+import Footnote from "@components/Footnote/Footnote.astro";
+import FootRef from "@components/Footnote/FootRef.astro";
+
+import Areas1_random_numbers from "./components/_11.02-Areas1-random-numbers.astro";
+import Areas2_group_them_together from "./components/_11.02-Areas2-group-them-together.astro";
+import Areas3_do_it_again from "./components/_11.02-Areas3-do-it-again.astro";
+import Areas4_interesting from "./components/_11.02-Areas4-interesting.astro";
+import Areas5_small_company_step1 from "./components/_11.02-Areas5-small-company-step1.astro";
+import Areas6_small_company_step2 from "./components/_11.02-Areas6-small-company-step2.astro";
+import Areas7_alphabetical_folders from "./components/_11.02-Areas7-alphabetical-folders.astro";
+import Areas8_new_exports_folder from "./components/_11.02-Areas8-new-exports-folder.astro";
+import Areas9_this_is_better from "./components/_11.02-Areas9-this-is-better.astro";
+
+# {frontmatter.title}
+
+Let's look again at the format of our numbers. It's crucial that you understand _why_ they look like they do.
+
+## The complete Johnny.Decimal number
+
+Just as a reminder, every Johnny.Decimal number looks like this.
+
+<Areas1_random_numbers />
+
+In words, we have any two digits, followed by a decimal point, followed by two more digits.
+
+## Group things together (categories)
+
+Johnny.Decimal is all about **grouping similar things together**, so let's start to do that.
+
+<Areas2_group_them_together />
+
+## Do it again (areas)
+
+That's starting to look more like something organised and a bit less like a bunch of random numbers. Let's take it one step further.
+
+<Areas3_do_it_again />
+
+### Interesting...
+
+<Areas4_interesting />
+
+---
+
+# Of course, we've done this backwards
+
+When we decide to organise something with Johnny.Decimal, we don't _start_ with a bunch of numbers.
+
+We start like this:
+
+- First, we divide everything in our system in to (at most) ten large buckets of stuff. We call those our **areas**, and we assign each area a range like `10-19`, `20-29` … `90-99`.
+- Then, within each area, we break things up again in to (at most) ten more buckets. We call them **categories** and we assign them numbers like `11`, `12` … `19`.
+- Finally, we assign each individual thing in our system to a category, and give it a unique number. We start at `.01` within each category, and work our way up through the numbers.
+
+Let's use a small company as an example, and write it out without the numbers.
+
+<Areas5_small_company_step1 />
+
+All we really do with Johnny.Decimal -- and if at this point you've realised this and are thinking, "hang on, all he's done is put numbers in front of things," well then you're not far wrong -- is put numbers in front of things.<FootRef n={1} />
+
+**But this transforms the way you think about and use everything.** Trust me.
+
+Let's put numbers in front of the system we just built above.
+
+<Areas6_small_company_step2 />
+
+## So long, cursed alphabet
+
+What does this achieve? For one, it's removed our dependence on the alphabet. The alphabet is a fine thing but it's a terrible way to sort your files because things move around.<FootRef n={2} />
+
+Today we have:
+
+<Areas7_alphabetical_folders />
+
+and tomorrow the exports department come along and do this:
+
+<Areas8_new_exports_folder />
+
+…and `Finance` isn't the second thing in the list any more. This sounds like a small thing, but <strong>it makes it impossible for your brain to learn where something will be.</strong>
+
+---
+
+# The Johnny.Decimal version
+
+This is better:
+
+<Areas9_this_is_better />
+
+Because our folders all start with a number, they'll sort in a very predictable way. This concept applies throughout the system.
+
+## 20, 60, 30, 90?
+
+At this point you might be wondering, well, why is `Finance` all of the numbers from `20-29` and why is `Exports` `40-49`? What do those numbers <em>mean</em>?
+
+And the answer is that they mean nothing. They're just numbers. `40` isn't better or worse than `20`.
+
+---
+
+# In summary
+
+On this page I've talked mostly about the way that we structure our areas and categories. By now you should have a good high-level understanding. You have categories of things and each category belongs to one area only. Areas group categories together.
+
+All of this happens <em>before the decimal</em>. Those two digits of the number <strong>are the category</strong>, and the first digit of the number tells you which area it's in.
+
+What we've done here is organise a bunch of 'stuff' in to something with structure; we've created, essentially, a very simple database.
+
+<Footnote
+  footnotes={[
+    "I&rsquo;ve seen countless file systems with <strong>numbers</strong> in front of folder names, but if they&rsquo;re not <strong>structured</strong> it doesn&rsquo;t work.",
+    "This is why people at work naturally put numbers like <code>01</code>, <code>02</code> in front of folders.",
+  ]}
+/>

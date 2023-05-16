@@ -1,21 +1,82 @@
 ---
-import jdSort from "@js/jdSort.js";
-import { version } from "@js/version/version";
+import { getCollection } from "astro:content";
 import JDNavItem from "./JDNavItem.astro";
-
-const allPages = await Astro.glob("../../pages/**/*.{md,mdx}");
+import version from "@js/version/version";
+import jdSort from "@js/jdSort.js";
 
 /**
- * `allPages` is an array of pages. We want to specifically remove any of
- * our `/test/` pages as they're non-standard and break the build.
+ * # JDNavigation
+ *
+ * This component creates the JD site navigation block.
+ *
+ * It is called once by each site page. It is the overall wrapper and is
+ * responsible for the ┌──┐ containing brackets top and bottom.
+ *
+ * It then generates a list of all site pages using `getCollection` and, after
+ * a bit of filtering, sorting, and other tweaking, renders `JDNavItem` with
+ * each of these pages.
+ *
+ * `JDNavItem` is responsible for generating each line of the navblock. This
+ * component wraps everything in an `<ol>`, and JDNavItem wraps each of its
+ * returns in a `<li>`.
  */
 
-const pages = allPages.filter((page) => !page.file.includes("/test/"));
-// pages.forEach((page) => console.log(page.file));
+/**
+ * Get all `sitePages` so we can pull out a list of pages which become the
+ * navigation bar. We'll pass this down to `JDNavItem` shortly.
+ *
+ * We use a filter to exclude the root / page at
+ * - content/site/index.mdx
+ * because this same page is also 11.01, and we don't need it twice.
+ *
+ * We also exclude pages where `!data.excludeFromNav`, which is typically
+ * our hidden pages at `90-99 Behind the scenes`.
+ */
+const sitePages = await getCollection("site", ({ slug, data }) => {
+  return slug !== "index" && !data.excludeFromNav;
+});
 
-/* You need to sort on frontmatter.number, because of the way that Astro feeds
-   you the `index` pages. */
-pages.sort(jdSort);
+/**
+ * <JDNavItem> only needs a small subset of the information in `sitePages`.
+ * - Number (for sorting and display)
+ * - Title (for display)
+ * - Slug (for linking)
+ *
+ * So we extract those, sort them by JD number, and map them on to
+ * <JDNavItem>.
+ */
+interface NavItem {
+  number: string;
+  title: string;
+  slug: string;
+}
+
+let sitePagesForNav: Array<NavItem> = [];
+
+sitePages.map((page) => {
+  sitePagesForNav.push({
+    number: page.data.number,
+    title: page.data.title,
+    /**
+     * We modify slug in two ways:
+     * - Give it a leading slash: we use it as the hyperlink and without a
+     *   trailing slash it appends to the current path rather than starting
+     *   at the root of the domain.
+     * - Give it a trailing slash: the behaviour can differ between local dev
+     *   and Netlify deployment, and this normalises them.
+     * - Astro's slug generator removes the period. I think it thinks it's
+     *   removing a file extension. The result is that this:
+     *   - `00-09-site-administration/01-about/01.01-colophon`
+     *   - becomes this:
+     *   - `00-09-site-administration/01-about/0101-colophon`
+     *   - So we pop the period back in there with a bit of regex wizardry.
+     */
+    slug: "/" + page.slug.replace(/(\/\d\d)(\d\d)/, "$1.$2") + "/",
+  });
+});
+
+sitePagesForNav.sort(jdSort);
+// console.log("🆚 JDNavigation.astro/pagesForNav :", pagesForNav);
 ---
 
 <nav id="00.00">
@@ -30,15 +91,9 @@ pages.sort(jdSort);
   <div class="index-main">
     <ol>
       {
-        pages
-          .filter((page) => !page.frontmatter.exclude)
-          .map((page) => (
-            <JDNavItem
-              number={page.frontmatter.number}
-              title={page.frontmatter.title}
-              url={page.url}
-            />
-          ))
+        sitePagesForNav.map((page) => (
+          <JDNavItem number={page.number} title={page.title} slug={page.slug} />
+        ))
       }
     </ol>
   </div>
@@ -61,7 +116,7 @@ pages.sort(jdSort);
 </nav>
 
 <style lang="scss">
-  @use "/src/styles/johnny.scss" as *;
+  @use "/src/styles/johnny" as *;
 
   nav {
     grid-area: nav;

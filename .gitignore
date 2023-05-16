@@ -22,8 +22,9 @@ pnpm-debug.log*
 # Local Netlify folder
 .netlify
 
-# astro files
+# astro
 .astro
 
+<<<<<<< HEAD
 # git worktree
 .git-worktree

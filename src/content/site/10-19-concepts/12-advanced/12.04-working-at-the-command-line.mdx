@@ -1,0 +1,47 @@
+---
+number: "12.04"
+title: Working at the command line
+area: 10-19 Concepts
+category: 12 Advanced concepts
+
+pubDate: 2022-05-12T12:04:00
+---
+
+import JDBlock from "@components/JDBlock/JDBlock.astro";
+import TerminalTabCompletion from "./components/_12.04-terminal-tab-completion.astro";
+
+# {frontmatter.title}
+
+The structured nature of the Johnny.Decimal numbering system lets you move to any folder with the minimum number of keystrokes using tab completion.
+
+At each level, you know with certainty that there will be no conflicting items.
+
+<TerminalTabCompletion />
+
+## Script your way around
+
+Easier still, use a simple bash script to change to any directory immediately. Put this in your `.zshrc` or equivalent.
+
+<JDBlock
+  text={`
+.zshrc
+&nbsp;
+cdj() {
+  # Update with your document root folder
+  pushd ~/Documents/*/*/\$\{1\}*
+}
+&nbsp;
+export cdj
+`}
+  classArray={["highlight highlight-underline"]}
+/>
+
+And now switch to any directory instantly with `cdj 42.01`.
+
+---
+
+# Awesome List
+
+I'll build an [awesome list](https://github.com/topics/awesome) of third-party scripts and other tools over on GitHub shortly.
+
+It'll be at [github/johnnydecimal/awesome-johnnydecimal](https://github.com/johnnydecimal/awesome-johnnydecimal), which already exists if you want to star it. I need to tidy it up.

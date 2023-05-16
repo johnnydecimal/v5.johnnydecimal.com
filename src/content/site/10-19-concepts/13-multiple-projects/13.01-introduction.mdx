@@ -1,0 +1,223 @@
+---
+number: "13.01"
+title: Introduction
+area: 10-19 Concepts
+category: 13 Multiple projects
+
+pubDate: 2022-05-12T13:01:00
+---
+
+import JDBlock from "@components/JDBlock/JDBlock.astro";
+import Footnote from "@components/Footnote/Footnote.astro";
+import FootRef from "@components/Footnote/FootRef.astro";
+import Table from "./components/_13.01-Table.astro";
+
+# {frontmatter.title}
+
+Johnny.Decimal is, by design, a two-dimensional system.
+
+Areas provide the first dimension. Categories provide the second.<FootRef n={1} />
+
+This limitation is part of what makes the system powerful. It's hard to get lost in a simple space.
+
+But sometimes you need an extra dimension: this is where 'multiple projects' comes in.
+
+We'll apply this new concept to different systems in the pages to come. For now, let's use a freelancer as our example.
+
+## The freelancer
+
+I define a freelancer as someone who has many clients. Each client may have multiple separate jobs.
+
+So you set up a system like this:
+
+<img srcset="/img/13.01-freelancer-v1.jpg 2x" />
+
+A couple of problems are obvious.
+
+1. We are going to want to create folders within `22.01 Job #1` but the system says we shouldn't do that (and we shouldn't -- don't be tempted!).
+2. But if we _don't_ create extra folders, the files for every job are lumped together. This isn't what Johnny.Decimal is about.
+3. This only allows us to have 10 clients, unless we somehow extend our area numbering scheme.
+
+We might try and fix it like this:
+
+<img srcset="/img/13.01-freelancer-v2.jpg 2x" />
+
+...but that's still no good. Now we can only have ~9 clients, and each client can only have 10 jobs.
+
+This problem is an unavoidable consequence of the way that the system is designed: one of the **benefits** of the system is that 'nothing is more than two levels deep'.
+
+This is a problem when we need to structure information about clients and jobs which is _itself_ two levels deep. We've run out of levels.
+
+## A word of caution
+
+Before we start, a word of caution.
+
+You should use multiple projects sparingly. They add complexity.
+
+For over a decade I have used [a single project](https://forum.johnnydecimal.com/t/my-personal-system/412) to handle my entire 'personal life'.
+
+I ran a three-year data centre migration for a large government department using a single project. Some aspects of this did require a 'third dimension', which I'll explain in this section.
+
+**You should only use multiple projects if they are absolutely required.**
+
+> We use the term 'project' to refer to one of many projects; they are all contained in your single Johnny.Decimal 'system'.
+
+## Goals
+
+Here were my goals and constraints when adding project codes to the Johnny.Decimal number.
+
+They must:
+
+1. Not confuse the system.
+2. Be short and preferably memorable.
+3. Allow for a sufficient number of additional projects.
+4. Allow the user to organise those projects in some way (i.e. like you organise categories in to areas).
+
+---
+
+# The multiple projects notation
+
+We introduce _three_ characters -- the project code -- to the start of the Johnny.Decimal number.
+
+They take the form letter-number-number: `[A-Z][00-99]`.
+
+The range is therefore `A00` through `Z99`.<FootRef n={2} />
+
+This makes the range of full project IDs `A00.00.00` through `Z99.99.99`.
+
+> We [refer to this notation](/10-19-concepts/12-advanced/12.05-acid-notation/) as `PRO.AC.ID`.
+
+Some random examples, all of which actually exist across my life:
+
+- `D01.13.01`<FootRef n={3} />
+- `L43.37.12`
+- `P04.52.43`
+
+## 1: Don't confuse the system
+
+Three characters is not two characters.
+
+I think if I'd gone with `PR.AC.ID`, e.g. `10.12.53`, that would have been a bit much for the brain.
+
+The only thing in the Johnny.Decimal system with three characters is a project code.
+
+## 2: Be short and memorable
+
+Over the years I have tested and rejected two ideas, settling on letter-number-number.
+
+### Three letters
+
+Thinking that they might be semantically memorable, I tried using three letters as a project code:
+
+- `HME.AC.ID` = home system
+- `DVO.AC.ID` = the DevOps project at work
+- `ETC.AC.ID` = etc. for more projects
+
+I found that this created an additional burden. Now I have to remember what those letters stand for, and whether I used `HME` or `HOM` or something else.
+
+Three letters as an abbreviation do not lend themselves to further organisation, which is our fourth goal, above.
+
+### Three numbers
+
+Similarly I tried three numbers:
+
+- `101.AC.ID` = first home project
+- `201.AC.ID` = first work project
+- `202.AC.ID` = second work project
+
+While these numbers _do_ lend themselves to further organisation:
+
+<JDBlock
+  text={`
+100-199 Home projects
+    101 First home project
+    102 ...
+&nbsp;
+200-299 Work projects
+    201 First work project
+    202 Second work project
+    203 ...
+&nbsp;
+300-399 Something else...
+    301 ...
+`}
+  classArray={[
+    "highlight bold",
+    ,
+    ,
+    ,
+    "highlight bold",
+    ,
+    ,
+    ,
+    ,
+    "highlight bold",
+  ]}
+/>
+
+I found them not to be memorable, which is interesting as I find my standard `AC.ID` numbers to be very memorable.
+
+Perhaps three _more_ numbers was just too much for the brain?
+
+### Letter-number-number
+
+Trying both of these schemes eventually led me to the letter-number-number solution.
+
+This has the advantage of being both memorable, and of lending itself to a further level of organisation if required:
+
+<JDBlock
+  text={`
+D Johnny.Decimal
+  D01 Johnny.Decimal website
+  D02 Writing a Johnny.Decimal book<sup id="footref-4" class="jd-footnote"><a href="#footnote-4">4</a></sup>
+&nbsp;
+L Work projects<sup id="footref-5" class="jd-footnote"><a href="#footnote-5">5</a></sup>
+  L43 [Work project name redacted]
+&nbsp;
+P Personal projects
+  P01 Personal, daily life
+`}
+  classArray={["highlight bold", , , , "highlight bold", , , "highlight bold"]}
+/>
+
+## 3: Allow a sufficient number of projects
+
+This scheme allows `26 × 100 = 2,600` projects.
+
+If you ever get anywhere close to using that many you're doing it wrong.
+
+## 4: Allow project organisation
+
+As shown above, I suggest you use the letter as your project-level organising principle.
+
+Everything that starts with `P` in my system will be related to my `Personal` life. Everything that starts with `D` will be related to `Johnny.Decimal`.
+
+## You don't have to start at `01`
+
+I don't see any reason to start each of your project groups with number `01`. In fact I recommend that you _don't._
+
+`L43` is an actual work project. It was the first and only project at this company.
+
+I chose `L43` because if you squint it looks a bit like the name of the company.
+
+**Choose something memorable.**
+
+---
+
+# Summary
+
+That's the basic idea. There's a lot of nuance and other ideas around this topic, which we'll cover in the remainder of this section.
+
+We'll show the solution to the freelancer problem, as well as many other patterns.
+
+As of May 2023 this hasn't been written yet. It's the next thing I'll do.
+
+<Footnote
+  footnotes={[
+    "IDs are just items within categories and do not add to the dimensionality of the system.",
+    "I discourage the use of characters that can be mistaken for numbers &ndash; <code>I/1</code>, <code>O/0</code>, <code>S/5</code> &ndash; but use them if you want.",
+    "The full Johnny.Decimal number for the page you are currently reading.",
+    "I am not writing a book. I just needed an example. :-)",
+    "The name of the company I worked for began with &lsquo;L&rsquo;.",
+  ]}
+/>

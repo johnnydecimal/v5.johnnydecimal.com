@@ -1,0 +1,48 @@
+---
+import { CollectionEntry, getCollection } from "astro:content";
+import JDPage from "../layouts/JDPage.astro";
+
+export async function getStaticPaths() {
+  const pages = await getCollection("site");
+
+  /**
+   * getCollection returns a slug with periods removed:
+   * 00-09-site-administration/01-about/0101-colophon
+   *
+   * We need to put 'em back!
+   *
+   * The pattern is an easy regex match, so we do it inline.
+   */
+
+  return pages.map((page) => {
+    let modifiedSlug;
+    if (page.slug === "index") {
+      /**
+       * This special case handles /src/content/site/index.mdx. Astro doesn't
+       * do anything special with it, so its slug is `index`. We want its
+       * slug to be the site root, `/`, which is what you get if the slug is
+       * `undefined`.
+       *
+       * At this stage, that's what `modifiedSlug` is. So we just leave it
+       * alone.
+       */
+    } else {
+      // Otherwise put the decimal point back in.
+      modifiedSlug = page.slug.replace(/(\/\d\d)(\d\d)/, "$1.$2");
+    }
+
+    return {
+      params: { slug: modifiedSlug },
+      props: page,
+    };
+  });
+}
+
+type Props = CollectionEntry<"site">;
+const page = Astro.props;
+const { Content } = await page.render();
+---
+
+<JDPage {...page.data}>
+  <Content />
+</JDPage>

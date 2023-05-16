@@ -1,0 +1,105 @@
+---
+number: "12.03"
+title: What about 00-09?
+area: 10-19 Concepts
+category: 12 Advanced concepts
+
+pubDate: 2022-05-12T12:03:00
+---
+
+import JDBlock from "@components/JDBlock/JDBlock.astro";
+import Footnote from "@components/Footnote/Footnote.astro";
+import FootRef from "@components/Footnote/FootRef.astro";
+
+# {frontmatter.title}
+
+You may be wondering why we started our areas at `10-19` and not `00-09`, and our categories at `11` rather than `10`.
+
+Why don't we use these numbers?
+
+## Reserve them for the system
+
+Sometimes you want to keep information _about the system_, in the
+system.
+
+I use area `00-09` for this and call it `System`.<FootRef n={1} />
+
+I also store common items in this area that don't fit elsewhere. Here's the structure I often use. Feel free to copy or adapt it.
+
+<JDBlock
+  text={`
+00-09 System
+   00 Index
+   01 Inbox
+   02 Notes
+   03 To do & checklists
+   04 Bookmarks
+   05 Templates
+   06 [unused]
+   07 [unused]
+   08 Someday
+   09 Archive
+`}
+  classArray={[, , , , , , , "fade", "fade"]}
+/>
+
+#### `00 Index`
+
+- If I'm using the ['single file as my index' method](/10-19-concepts/11-core/11.05-the-index/#2-one-file-with-all-of-your-ids), that file is always called `00.00 Index`.
+- In a [future post](/90-99-behind-the-scenes/98-hidden-website-pages/98.11-in-a-future-post/) I'll expand on the idea of having this ID be the 'front door' for your project.
+
+#### `01 Inbox`
+
+- A place to put stuff that you know you'll sort in the future.
+- I tend to use this when I'm starting out: it's better to put unorganised stuff here temporarily than on your Desktop.
+- Be careful! You know you need to organise this stuff at some point. Don't be lazy.
+- This is an idea taken from [Getting Things Done](https://gettingthingsdone.com/what-is-gtd/)&reg;.
+
+#### `02 Notes`
+
+- While you should usually store your notes under their own Johnny.Decimal ID -- the note relates to _something_ -- it can be handy to have a project-wide notes category.
+- Use sparingly.
+
+#### `03 To do & checklists`
+
+- A place to keep your to do lists and [checklists](http://atulgawande.com/book/the-checklist-manifesto/).
+
+#### `04 Bookmarks`
+
+- I find it easier to have bookmarks in one place versus throughout my system: that is, if I'm saving them in a text file.
+- If you can link them to an ID (or even a category), you should prepend the proper Johnny.Decimal number to your browser bookmark.
+
+#### `05 Templates`
+
+- Sometimes I'll store things I use as templates here.
+- Some systems lend themselves to repeatability. I'll explain this further [in a future post](/90-99-behind-the-scenes/98-hidden-website-pages/98.11-in-a-future-post/).
+
+#### `08 Someday`
+
+- 'Someday' is another idea borrowed from GTD&reg;.
+- This is for things that you want to do 'someday' but not now.
+- It's a little like `01 Inbox`, but you _know_ that you're not going to deal with it in the immediate future.
+- You should review this periodically.
+
+#### `09 Archive`
+
+- Somewhere to throw stuff you no longer need.
+- Although I generally do _not_ recommend archiving entire sections of your system. I'll expand on this in [a future post](/90-99-behind-the-scenes/98-hidden-website-pages/98.11-in-a-future-post/).
+
+## Similarly for categories 10, 20 ... 90
+
+In our small company example, `20-29` was `Administration` but our first category was `21 Company registration`. What happened to `20`?
+
+We reserve these numbers for 'system' information _about the category_. Although I hardly ever use them, it's rare that I have more than nine categories in an area. I don't miss the wasted number, but I always appreciate it when I need it.
+
+---
+
+# Confused? Don't worry
+
+If you want to use the zeros, use them. It doesn't matter.
+
+<Footnote
+  footnotes={[
+    "I used to call it &lsquo;Management & Meta&rsquo; but &lsquo;System&rsquo; is simpler.",
+  ]}
+/>
