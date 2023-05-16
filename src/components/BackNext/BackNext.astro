@@ -13,9 +13,9 @@ const { backNextDisplay = true } = Astro.props;
 
 /**
  * BackNext just looks up your current page's path in a static array.
- * 
+ *
  * The previous page is the previous element; the next, the next.
- * 
+ *
  * TODO: generate a list of pages rather than relying on a static file.
  */
 import { pages } from "./pages.js";
@@ -62,7 +62,7 @@ if (pathname === "/") {
   backPath = undefined;
   nextPath = "/10-19-concepts/11-core/11.02-areas-and-categories/";
   nextTitle = "Areas and categories";
-  nextId = "areas-and-categories"
+  nextId = "areas-and-categories";
 }
 ---
 
@@ -77,7 +77,7 @@ if (pathname === "/") {
               <a href={backPath}>&#x25C1;&nbsp;</a>
             </div>
             <div class="back">
-              <a id=`backnext-${backId}` href={backPath}>
+              <a id={`backnext-${backId}`} href={backPath}>
                 {backTitle}
               </a>
             </div>
@@ -92,7 +92,7 @@ if (pathname === "/") {
         {nextPath ? (
           <>
             <div class="next">
-              <a id=`backnext-${nextId}` href={nextPath}>
+              <a id={`backnext-${nextId}`} href={nextPath}>
                 {nextTitle}
               </a>
             </div>
