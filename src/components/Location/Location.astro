@@ -12,32 +12,46 @@ import { jdGetAcidTypeFromString } from "@johnnydecimal/jdgetacidtypefromstring"
 
 /**
  * Create a link to this page's area.
- */
-const areaUrl = "/" + area.replaceAll(" ", "-").toLowerCase();
+ *
+ * We're not using this. Just comment out for now.
+ * TODO: clean up.
+ const areaUrl = "/" + area.replaceAll(" ", "-").toLowerCase();
+*/
 
 /**
  * Create a link to this page's category, if it has one. (Areas don't.)
- */
-let categoryUrl;
-if (category) {
-  categoryUrl = areaUrl + "/" + category.replaceAll(" ", "-").toLowerCase();
-}
+
+ * We're not using this. Just comment out for now.
+ * TODO: clean up.
+ let categoryUrl;
+ if (category) {
+   categoryUrl = areaUrl + "/" + category.replaceAll(" ", "-").toLowerCase();
+  }
+*/
 
 /**
- * We only want to show an ID in the 'location' box if it's actually an ID,
- * i.e. not if it's an AC.
+ * We only want to show an ID in the 'location' box if the page we're on
+ * is an ID page, i.e. not if it's an area or category.
  *
  * Current jdGetAcid... expects "10-19 A title", so fudge that for now.
  * TODO: Fix.
  */
 let numberAcidType = jdGetAcidTypeFromString(number + " FIX THIS");
+
+/**
+ * 2023-05-17 added the conditional check to area as well as the other two
+ * to handle the special case of the 404.
+ *
+ * TODO: why necessary? You're specifying an area in its frontmatter.
+ *       Probably related to the switch to content collections. Fix.
+ */
 ---
 
 <div class="Location">
   <BracketsHorizontalTop label="Location" />
 
   <div class="locationbox-acid-details-grid">
-    <div>Area&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</div><div>{area}</div>
+    <div>Area&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</div><div>{area ? area : "-"}</div>
     <div>Category :</div><div>{category ? category : "-"}</div>
     <div>ID&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</div><div>
       {numberAcidType.jdAcidType === "id" ? number : "-"}
