@@ -8,6 +8,8 @@ describe("Site clickthrough", () => {
       .then((href) => {
         cy.visit(`${href}`);
       });
+    cy.get("#areas-and-categories").should("have.id", "areas-and-categories");
+    cy.get("#areas-and-categories").should("have.text", "Areas and categories");
 
     // Areas
     ["00-09", "10-19", "20-29"].map((area) => {
@@ -37,6 +39,51 @@ describe("Site clickthrough", () => {
       cy.get("div.BackNext").should("not.exist");
     });
 
+    [
+      "01.01",
+      "01.02",
+      "01.03",
+      "01.04",
+      "02.01",
+      "02.02",
+      "02.03",
+      "02.04",
+      "03.01",
+      "03.02",
+      "04.01",
+      "04.02",
+      "11.01",
+      "11.02",
+      "11.03",
+      "11.04",
+      "11.05",
+      "11.06",
+      "11.07",
+      "11.08",
+      "12.01",
+      "12.02",
+      "12.03",
+      "12.04",
+      "12.05",
+      "13.01",
+      "14.01",
+      "21.01",
+      "21.02",
+    ].map((id) => {
+      const idWithDash = id.replace(".", "-");
+      cy.get(`#jd-nav-${idWithDash}`)
+        .invoke("attr", "href")
+        .then((href) => {
+          cy.visit(`${href}`);
+        });
+      cy.get(
+        "body > div.NavMain.astro-SCKKX6R4 > main > div > div.Location.astro-GTLXTQD3 > div.locationbox-acid-details-grid.astro-GTLXTQD3 > div:nth-child(6)"
+      ).should("contain.text", id);
+    });
+
+    // TODO: do a full site clickthrough using BackNext.
+
+    // === Random other elements
     // === 02.02
     cy.get("#jd-nav-02-02")
       .invoke("attr", "href")
