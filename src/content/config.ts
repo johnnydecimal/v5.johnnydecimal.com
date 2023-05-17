@@ -29,7 +29,15 @@ const site = defineCollection({
   }),
 });
 
+const blog = defineCollection({
+  schema: z.object({
+    title: z.string(),
+    author: z.enum(["Johnny Noble", "Lucy Butcher"]),
+  }),
+});
+
 // 3. Export a single `collections` object to register your collection(s)
 export const collections = {
   site,
+  blog,
 };

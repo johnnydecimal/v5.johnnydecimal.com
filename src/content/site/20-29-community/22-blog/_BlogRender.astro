@@ -1,0 +1,24 @@
+---
+import { CollectionEntry, getCollection } from "astro:content";
+
+const blogPosts = await getCollection("blog");
+// console.log("🆚 _BlogRender.astro/blogPosts :", blogPosts);
+
+type Props = CollectionEntry<"blog">;
+// const { entry } = Astro.props;
+---
+
+<hr />
+
+{
+  blogPosts.map(async (post) => {
+    const { Content } = await post.render();
+    return (
+      <>
+        <h2>{post.data.title}</h2>
+        <h3>{post.data.author}</h3>
+        <Content />
+      </>
+    );
+  })
+}
