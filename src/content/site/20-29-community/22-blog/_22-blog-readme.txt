@@ -8,5 +8,5 @@
 - So we have this window in to which we need to 'inject' our blog content.
 
   - [ ] Hmm think about how permalinks to blog posts work in this scenario.
-  - You also need to render them out as pages; those pages just aren't in
-    the JDNav.
+    - You also need to render them out as pages; those pages just aren't in
+      the JDNav.
