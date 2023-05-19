@@ -22,10 +22,14 @@ sitePages.forEach((page) => {
     }
   }
 
-  backNextArray.push({
-    pathname: "/" + page.slug.replace(/(\d\d)(\d\d)/, "$1.$2") + "/",
-    title: page.data.title,
-  });
+  // We only push IDs to backNextArray: no areas, no categories.
+  if (page.slug.split("/").length === 3) {
+    backNextArray.push({
+      pathname: "/" + page.slug.replace(/(\d\d)(\d\d)/, "$1.$2") + "/",
+      title: page.data.title,
+    });
+  }
 });
 
+console.log("🆚 backNextArray.ts/backNextArray:", backNextArray);
 export default backNextArray;
