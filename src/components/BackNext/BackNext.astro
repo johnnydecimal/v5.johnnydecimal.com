@@ -12,17 +12,18 @@ interface Props {
 const { backNextDisplay = true } = Astro.props;
 
 /**
- * BackNext just looks up your current page's path in a static array.
+ * BackNext just looks up your current page's path in a generated array.
  *
- * The previous page is the previous element; the next, the next.
+ * The previous page is the previous element; the next, the next. If the
+ * pathname in the array is `undefined`, the back/next doesn't render.
  *
- * TODO: generate a list of pages rather than relying on a static file.
+ * We use a helper to generate this array.
  */
-import { pages } from "./pages.js";
+import backNextArray from "./backNextArray.ts";
 
-// Grab the pathname and match it against our array.
+// Grab the current pathname and match it against our array.
 const pathname = Astro.url.pathname; // starts & ends with '/'
-let pageIndex = pages.findIndex((page) => page.pathname === pathname);
+let pageIndex = backNextArray.findIndex((page) => page.pathname === pathname);
 
 // Declare some empty variables.
 let backPath, backTitle, backId, nextPath, nextTitle, nextId;
@@ -31,9 +32,10 @@ let backPath, backTitle, backId, nextPath, nextTitle, nextId;
  * If we're not on the very first page, get the previous page.
  */
 if (pageIndex >= 1) {
-  backPath = pages[pageIndex - 1].pathname;
+  backPath = backNextArray[pageIndex - 1].pathname;
   backTitle =
-    pages[pageIndex - 1].title || "🆘 BackNext error - please report me 🆘";
+    backNextArray[pageIndex - 1].title ||
+    "🆘 BackNext error - please report me 🆘";
   /**
    * To make testing easier, set an ID for each link. Use the text, which we
    * need to tweak for an HTML id.
@@ -44,10 +46,11 @@ if (pageIndex >= 1) {
 /**
  * If we're not on the very last page, get the next page.
  */
-if (pageIndex < pages.length - 1) {
-  nextPath = pages[pageIndex + 1].pathname;
+if (pageIndex < backNextArray.length - 1) {
+  nextPath = backNextArray[pageIndex + 1].pathname;
   nextTitle =
-    pages[pageIndex + 1].title || "🆘 BackNext error - please report me 🆘";
+    backNextArray[pageIndex + 1].title ||
+    "🆘 BackNext error - please report me 🆘";
   /**
    * To make testing easier, set an ID for each link. Use the text, which we
    * need to tweak for an HTML id.
