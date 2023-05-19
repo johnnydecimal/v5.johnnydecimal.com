@@ -12,7 +12,7 @@ import version from "@js/version/version.ts";
 # {frontmatter.title}
 
 - Version: <code>{version.number}</code>.
-- Released: <time datetime={new Date().toISOString()}><code>{new Date().toString()}</code></time>.
+- Released: <time datetime={new Date().toISOString()}><code>{new Date().toString().replace(" (Coordinated Universal Time)", "")}</code></time>.
 - [Source code on GitHub](https://github.com/johnnydecimal/v5.johnnydecimal.com).
 
 ## I re-wrote everything :-)
