@@ -14,7 +14,7 @@
     "preview": "astro preview",
     "bp": "astro build && astro preview",
     "astro": "astro",
-    "links": "muffet -b 10000 http://localhost:3000"
+    "links": "clear && muffet -b 10000 http://localhost:3000"
   },
   "dependencies": {
     "@astrojs/image": "^0.16.8",
