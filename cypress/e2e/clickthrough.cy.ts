@@ -68,8 +68,8 @@ describe("Site clickthrough", () => {
       "23.01",
       "23.02",
     ].map((id) => {
-      const idWithDash = id.replace(".", "-");
-      cy.get(`#jd-nav-${idWithDash}`)
+      const htmlId = id.replace(".", "");
+      cy.get(`#jd-nav-${htmlId}`)
         .invoke("attr", "href")
         .then((href) => {
           cy.visit(`${href}`);
@@ -83,7 +83,7 @@ describe("Site clickthrough", () => {
 
     // === Random other elements
     // === 02.02
-    cy.get("#jd-nav-21-02")
+    cy.get("#jd-nav-2102")
       .invoke("attr", "href")
       .then((href) => {
         cy.visit(`${href}`);
@@ -92,7 +92,7 @@ describe("Site clickthrough", () => {
     cy.get('[type="submit"]').should("have.value", "─▷     Subscribe     ◁─");
 
     // === 11.01
-    cy.get("#jd-nav-11-01")
+    cy.get("#jd-nav-1101")
       .invoke("attr", "href")
       .then((href) => {
         cy.visit(`${href}`);
@@ -105,7 +105,7 @@ describe("Site clickthrough", () => {
     );
 
     // === 11.04
-    cy.get("#jd-nav-11-04")
+    cy.get("#jd-nav-1104")
       .invoke("attr", "href")
       .then((href) => {
         cy.visit(`${href}`);
