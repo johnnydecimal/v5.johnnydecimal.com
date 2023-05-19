@@ -53,6 +53,11 @@
 
     .small-emoji {
       font-size: 1rem;
+
+      // Invert it *back*, i.e. never change
+      @media (prefers-color-scheme: dark) {
+        filter: invert(1) hue-rotate(180deg);
+      }
     }
 
     * {
