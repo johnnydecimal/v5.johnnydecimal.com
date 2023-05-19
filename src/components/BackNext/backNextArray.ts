@@ -31,5 +31,4 @@ sitePages.forEach((page) => {
   }
 });
 
-console.log("🆚 backNextArray.ts/backNextArray:", backNextArray);
 export default backNextArray;
