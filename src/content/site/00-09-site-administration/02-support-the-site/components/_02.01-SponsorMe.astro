@@ -1,0 +1,31 @@
+<div class="grid jd-box full-width">
+  <div>&#x1F9E1;</div>
+  <div>
+    <a href="https://www.patreon.com/johnnydecimal">Sponsor me on Patreon</a>
+  </div>
+  <div>&#x1F9E1;</div>
+</div>
+
+<style lang="scss">
+  @use "/src/styles/johnny" as *;
+
+  .grid {
+    display: grid;
+    grid-template-columns: auto auto auto;
+  }
+
+  .jd-box {
+    margin: $large auto;
+    text-align: center;
+    width: 100% !important;
+
+    @include for-tablet-landscape-up() {
+      margin: $xl auto;
+      width: 80% !important;
+    }
+  }
+
+  a {
+    padding-inline: $medium;
+  }
+</style>
