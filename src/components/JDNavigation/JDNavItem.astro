@@ -132,55 +132,75 @@ if (navItemBeingGenerated.length < 1 || navItemBeingGenerated.length > 3) {
   );
 }
 
+/**
+ * And, as above, its length tell us what type of page it's linking to.
+ */
 const navItemType: string = pageTypeLookup[navItemBeingGenerated.length];
 
 /**
+ * Figure out what 'shape' the link should take
  * ============================================================================
+ * 
+ * Now that we know:
+ * - creatingNavForThisPage = the page whose navbar we're generating
+ * - creatingThisTypeOfPage = whether that page is AC.ID
+ * - navItemBeingGenerated  = the link we're generating
+ * - navItemType            = whether that link is AC.ID
+ *
+ * We use this to figure out whether this thing should be active, and the shape
+ * of it's ASCII-line-art thing.
+ */
+
+/**
+ * This navItem is 'in scope' of the page we're creating if it is:
+ * 1. 'Above' it in the JD structure: 11 is 'above' 11.01 but not 10.01.
+ * 2. In the same area. 11 is not in scope of 22 even though 22 > 11.
  */
 const isThisNavItemInScopeOfThePageWeAreCreating = (): boolean => {
   /**
-   * Ref. Excel: if navItemBeingGenerated is an area, it's in scope as long as the areas 
-     are the same.
+   * If we're creating a navItem for an area...
+   * 
+   * It's only in scope if it's the same area as the page we're generating.
    */
   if (navItemType === "area") {
     return creatingNavForThisPage[0] === navItemBeingGenerated[0];
   }
 
   /**
-   * If we're creating a wyab item for a category...
+   * If we're creating a navItem for a category...
    */
   if (navItemType === "category") {
-    /* If creatingWyabFor{Area}, a category can't be in scope. */
-    if (creatingThisTypeOfPage === "area") {
-      return false;
-    }
     /**
-     * Otherwise the rules are the same: the category number for the page we're
-     * creating needs to be >= the category number of the wyab item, AND
-     * they need to be in the same area.
-     *
-     * - Creating page 16, wyab is for 14. 16 >= 14 AND in same area, pass.
-     * - Creating page 12.11, wyab is for 14. 12 !>= 14, fail.
+     * If we're creating an area page, a category navItem is necessarily
+     * 'below' it and therefore can't be in scope.
      */
-
-    /* Test for area first. */
-    if (creatingNavForThisPage[0] !== navItemBeingGenerated[0]) {
+    if (creatingThisTypeOfPage === "area") {
       return false;
     }
 
     /**
      * The category number for the page we're creating needs to be >= the
-     * category number of the wyab item. We've just ruled out areas not
-     * matching, so at this point all navItemBeingGenerated have a category at [1].
+     * category number of the navItem, AND they need to be in the same area.
+     *
+     * - Creating page 16, navItem is for 14. 16 >= 14 AND in same area, pass.
+     * - Creating page 12.11, navItem is for 14. 12 !>= 14, fail.
+     * - Creating page 12.11, navItem is for 01. 12 >=01 but wrong area, fail.
      */
+
+    // Test the area equality
+    if (creatingNavForThisPage[0] !== navItemBeingGenerated[0]) {
+      return false;
+    }
+
+    // Test that the category is >= 
     return creatingNavForThisPage[1] >= navItemBeingGenerated[1];
   }
 
   /**
-   * By now we must be creating a wyab item for an ID...
+   * By now we must be creating a navItem for an ID...
    */
   if (navItemType === "id") {
-    /* As above, creating for an area page is an easy fail. */
+    // As above, creating for an area page is an easy fail.
     if (creatingThisTypeOfPage === "area") {
       return false;
     }
@@ -194,16 +214,16 @@ const isThisNavItemInScopeOfThePageWeAreCreating = (): boolean => {
   }
 
   /**
-   * If we're creating a category page, an ID wyab is in scope if the category
-   * number for the page is > the wyab item.
+   * If we're creating a category page, an ID navItem is in scope if the
+   * category number for the page is > the navItem.
    */
   if (creatingThisTypeOfPage === "category") {
     return creatingNavForThisPage[1] > navItemBeingGenerated[1];
   }
 
   /**
-   * And finally if we're creating an ID page, an ID wyab is in scope if the
-   * ID number of the page we're creating is >= the ID number of the wyab item.
+   * And finally if we're creating an ID page, an ID navItem is in scope if the
+   * ID number of the page we're creating is >= the ID number of the navItem.
    */
   if (creatingThisTypeOfPage === "id") {
     return creatingNavForThisPage[2] >= navItemBeingGenerated[2];
@@ -212,19 +232,14 @@ const isThisNavItemInScopeOfThePageWeAreCreating = (): boolean => {
   /**
    * We shouldn't be able to get here.
    */
-  console.log("");
   console.log("‼️‼️‼️‼️ JDNavItem.astro is broken.");
-  console.log(
-    "🆚 JDNavItem.astro/navItemBeingGenerated:",
-    navItemBeingGenerated
-  );
   console.log(
     "🆚 JDNavItem.astro/creatingNavForThisPage:",
     creatingNavForThisPage
   );
   console.log(
-    "🆚 JDNavItem.astro/creatingThisTypeOfPage:",
-    creatingThisTypeOfPage
+    "🆚 JDNavItem.astro/navItemBeingGenerated:",
+    navItemBeingGenerated
   );
   throw new Error("JDNavItem.astro: can't get there from here.");
 };
