@@ -74,9 +74,11 @@ describe("Site clickthrough", () => {
         .then((href) => {
           cy.visit(`${href}`);
         });
-      cy.get(
-        "body > div.NavMain.astro-SCKKX6R4 > main > div > div.Location.astro-GTLXTQD3 > div.locationbox-acid-details-grid.astro-GTLXTQD3 > div:nth-child(6)"
-      ).should("contain.text", id);
+      cy.get("nav > .index-main").matchImageSnapshot(
+        `nav .index-main ${htmlId}`
+      );
+      cy.get(".Location").matchImageSnapshot(`Location ${htmlId}`);
+      cy.get(".BackNext").matchImageSnapshot(`BackNext ${htmlId}`);
     });
 
     // TODO: do a full site clickthrough using BackNext.
