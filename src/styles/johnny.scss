@@ -194,10 +194,10 @@ a {
     margin: 1.75rem 0;
     font-size: 1.8rem;
     line-height: 1.8;
+  }
 
-    strong {
-      color: $colour-700;
-    }
+  strong {
+    color: $colour-700;
   }
 
   blockquote > p {
@@ -312,33 +312,33 @@ a {
   }
 
   // Footnotes
-  & div#footnotes > ol > li {
-    font-size: 1.4rem;
-    & p {
-      font-size: inherit;
-      margin: $small 0;
-      & span > code {
-        font-size: inherit;
-      }
-      & a.footback {
-        color: $colour-500;
-        font-size: 1.2rem;
-        padding-inline: 2px;
+  // & div#footnotes > ol > li {
+  //   font-size: 1.4rem;
+  //   & p {
+  //     font-size: inherit;
+  //     margin: $small 0;
+  //     & span > code {
+  //       font-size: inherit;
+  //     }
+  //     & a.footback {
+  //       color: $colour-500;
+  //       font-size: 1.2rem;
+  //       padding-inline: 2px;
 
-        &:visited {
-          color: $colour-500;
-        }
-        &:hover {
-          background-color: $colour-500;
-          color: $colour-50;
-        }
-        &:visited:hover {
-          background-color: $colour-500;
-          color: $colour-50;
-        }
-      }
-    }
-  }
+  //       &:visited {
+  //         color: $colour-500;
+  //       }
+  //       &:hover {
+  //         background-color: $colour-500;
+  //         color: $colour-50;
+  //       }
+  //       &:visited:hover {
+  //         background-color: $colour-500;
+  //         color: $colour-50;
+  //       }
+  //     }
+  //   }
+  // }
 
   // <ends> .jdcontent
 }

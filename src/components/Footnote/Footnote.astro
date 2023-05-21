@@ -20,3 +20,42 @@ const { footnotes } = Astro.props;
     }
   </ol>
 </div>
+
+<style lang="scss" is:global>
+  // Need global to style the injected content. Control by wrapping
+  // everything in the #footnotes selector.
+  @use "/src/styles/johnny" as *;
+
+  #footnotes ol li.footnote {
+    // This sets the font-size of the list number.
+    font-size: 1.4rem;
+    margin: $small 0;
+
+    // This cascades the font-size down to the content.
+    p {
+      font-size: inherit;
+
+      code {
+        font-size: inherit;
+      }
+
+      a.footback {
+        color: $colour-500;
+        font-size: 1.2rem;
+        padding-inline: 2px;
+
+        &:visited {
+          color: $colour-500;
+        }
+        &:hover {
+          background-color: $colour-500;
+          color: $colour-50;
+        }
+        &:visited:hover {
+          background-color: $colour-500;
+          color: $colour-50;
+        }
+      }
+    }
+  }
+</style>

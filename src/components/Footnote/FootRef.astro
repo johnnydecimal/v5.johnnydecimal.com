@@ -4,22 +4,25 @@ const { n } = Astro.props;
 
 <!-- If there's whitespace between <sup> and <a> it renders -->
 <sup class="jd-footnote" id={`footref-${n}`}
-  ><a href={`#footnote-${n}`}>{n}</a></sup
+  ><a class="jd-footnote-link" href={`#footnote-${n}`}>{n}</a></sup
 >
 
 <style lang="scss">
   @use "/src/styles/johnny" as *;
 
-  sup.jd-footnote > a {
+  sup.jd-footnote > a.jd-footnote-link {
     color: $colour-500;
     padding-inline: 2px;
+    text-decoration: none;
 
     &:visited {
       color: $colour-500;
     }
 
+    &:hover,
     &:visited:hover {
       background-color: $colour-500;
+      color: $colour-50;
     }
   }
 </style>
