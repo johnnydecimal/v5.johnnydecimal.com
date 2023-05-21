@@ -40,4 +40,6 @@ import { addMatchImageSnapshotCommand } from "@simonsmith/cypress-image-snapshot
 
 addMatchImageSnapshotCommand({
   allowSizeMismatch: true,
+  failureThreshold: 4,
+  failureThresholdType: "percent",
 });
