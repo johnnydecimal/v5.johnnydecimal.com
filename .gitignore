@@ -25,6 +25,8 @@ pnpm-debug.log*
 # astro
 .astro
 
-<<<<<<< HEAD
 # git worktree
 .git-worktree
+
+# cypress
+cypress/videos

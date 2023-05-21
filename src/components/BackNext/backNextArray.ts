@@ -1,6 +1,8 @@
 import { getCollection } from "astro:content";
 
-const sitePages = await getCollection("site");
+const sitePages = await getCollection("site", ({ data }) => {
+  return !data.excludeFromNav;
+});
 
 interface BackNext {
   pathname?: string;
