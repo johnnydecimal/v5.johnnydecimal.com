@@ -8,17 +8,23 @@ type Props = CollectionEntry<"blog">;
 // const { entry } = Astro.props;
 ---
 
-<hr />
-
 {
   blogPosts.map(async (post) => {
     const { Content } = await post.render();
     return (
       <>
-        <h2>{post.data.title}</h2>
+        <h2 class="blog-post-title">{post.data.title}</h2>
         <h3>{post.data.author}</h3>
         <Content />
       </>
     );
   })
 }
+
+<style lang="scss">
+  @use "/src/styles/johnny" as *;
+
+  h2.blog-post-title {
+    color: hotpink;
+  }
+</style>
