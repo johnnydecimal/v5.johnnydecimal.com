@@ -1,7 +1,13 @@
 ---
 import { CollectionEntry, getCollection } from "astro:content";
 
-const blogPosts = await getCollection("blog");
+const blogPosts = await getCollection("blog", ({ data }) =>
+  // In DEV, return everything; otherwise, return data.publish.
+  import.meta.env.DEV ? true : data.publish
+);
+
+// We publish with oldest (21.01.0001) last.
+blogPosts.reverse();
 
 type Props = CollectionEntry<"blog">;
 ---

@@ -31,9 +31,11 @@ const site = defineCollection({
 
 const blog = defineCollection({
   schema: z.object({
-    title: z.string(),
     author: z.enum(["Johnny Noble", "Lucy Butcher"]),
     pubDate: z.date(),
+    title: z.string(),
+
+    publish: z.boolean(), // must be 'true' to publish
   }),
 });
 

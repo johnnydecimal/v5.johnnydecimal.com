@@ -16,7 +16,8 @@
     "astro": "astro",
     "links": "clear && muffet -b 10000 http://localhost:3000",
     "cyo": "npx cypress open --e2e",
-    "cyr": "npx cypress run"
+    "cyr": "npx cypress run",
+    "prodlike": "DEV=false npm run dev"
   },
   "dependencies": {
     "@astrojs/image": "^0.16.9",
