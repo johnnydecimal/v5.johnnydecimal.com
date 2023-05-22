@@ -16,7 +16,7 @@ import Footer from "@components/Footer.astro";
   <div class="JDPage">
     <div class="NavMain">
       <main>
-        <Location number={number} area="test" category="test" />
+        <!-- <Location number={number} area="test" category="test" /> -->
         <div class="jdcontent">
           <h1>{title}</h1>
           <slot />
@@ -56,9 +56,14 @@ import Footer from "@components/Footer.astro";
       grid-template-columns: 1fr;
     }
   }
+
   .JDPage {
     @include for-tablet-portrait-up {
       padding-bottom: 4rem;
+    }
+
+    .NavMain h1 {
+      margin-top: 0;
     }
   }
 </style>

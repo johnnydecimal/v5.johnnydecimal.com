@@ -109,6 +109,10 @@
     border-bottom: 2px solid $colour-500;
     margin-bottom: $small;
     padding: $small;
+
+    @include for-tablet-portrait-up() {
+      margin-bottom: $large;
+    }
   }
 
   .desktop {

@@ -3,10 +3,44 @@ import BracketsHorizontalTop from "../BracketsHorizontal/BracketsHorizontalTop.a
 import BracketsHorizontalBottom from "../BracketsHorizontal/BracketsHorizontalBottom.astro";
 ---
 
-<div>
-  <BracketsHorizontalTop label="Hey!" />
+<div class="BlogHeader">
+  <BracketsHorizontalTop label="Navigation" />
 
-  <div>Go back to the main site</div>
-  <div>Go to the blog index</div>
+  <ul class="links">
+    <li>
+      <a href="https://johnnydecimal.com/">Johnny.Decimal documentation</a>
+    </li>
+    <li>&nbsp;</li>
+    <li>
+      <a
+        href="http://localhost:3000/20-29-communication/22-blog/22.02-all-posts/"
+        >All blog posts</a
+      >
+    </li>
+  </ul>
+
   <BracketsHorizontalBottom />
 </div>
+
+<style lang="scss">
+  @use "/src/styles/johnny" as *;
+
+  .BlogHeader {
+    color: $colour-700;
+    font-family: $monospace;
+    width: fit-content;
+
+    ul.links {
+      list-style-type: none;
+      margin: 0;
+      padding: 0 2ch;
+
+      a {
+        &:hover {
+          background-color: $colour-500;
+          color: $colour-50;
+        }
+      }
+    }
+  }
+</style>
