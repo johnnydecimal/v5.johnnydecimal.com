@@ -1,46 +1,100 @@
 ---
-import BracketsHorizontalTop from "../BracketsHorizontal/BracketsHorizontalTop.astro";
-import BracketsHorizontalBottom from "../BracketsHorizontal/BracketsHorizontalBottom.astro";
+interface Props {
+  id: string;
+  date: string;
+}
+const { id, date } = Astro.props;
+
+import BracketsHorizontalTop from "@components/BracketsHorizontal/BracketsHorizontalTop.astro";
+import BracketsHorizontalBottom from "@components/BracketsHorizontal/BracketsHorizontalBottom.astro";
 ---
 
 <div class="BlogHeader">
-  <BracketsHorizontalTop label="Navigation" />
+  <BracketsHorizontalTop label="Post" />
 
-  <ul class="links">
-    <li>
-      <a href="https://johnnydecimal.com/">Johnny.Decimal documentation</a>
-    </li>
-    <li>&nbsp;</li>
-    <li>
-      <a
-        href="http://localhost:3000/20-29-communication/22-blog/22.02-all-posts/"
-        >All blog posts</a
+  <div class="details-grid">
+    <div class="margin-bottom">ID&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</div><div>
+      {id}
+    </div>
+    <div>Date&nbsp;&nbsp;&nbsp;:</div><div>{date}</div>
+    <div class="divider">
+      ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+    </div>
+  </div>
+
+  <div class="site-links">
+    <div class="margin-bottom">
+      <a class="link-grid margin-bottom" href="https://johnnydecimal.com"
+        ><span>↖</span><span>Johnny.Decimal documentation</span></a
       >
-    </li>
-  </ul>
+    </div>
+    <div>
+      <a
+        class="link-grid"
+        href="https://johnnydecimal.com/20-29-communication/22-blog/22.02-all-posts/"
+        ><span>↑</span><span>Blog post index</span></a
+      >
+    </div>
+  </div>
 
   <BracketsHorizontalBottom />
-</div>
 
-<style lang="scss">
-  @use "/src/styles/johnny" as *;
+  <style lang="scss">
+    @use "/src/styles/johnny" as *;
 
-  .BlogHeader {
-    color: $colour-700;
-    font-family: $monospace;
-    width: fit-content;
-
-    ul.links {
-      list-style-type: none;
-      margin: 0;
-      padding: 0 2ch;
-
-      a {
-        &:hover {
-          background-color: $colour-500;
-          color: $colour-50;
-        }
+    a.link-grid {
+      display: grid;
+      margin: 0 2ch;
+      grid-template-columns: 2ch 1fr;
+      &:hover,
+      &:hover:visited {
+        background-color: $colour-500;
+        color: $colour-50;
       }
     }
-  }
-</style>
+
+    .margin-bottom {
+      // margin-bottom: $small;
+    }
+
+    .BlogHeader {
+      font-family: $monospace;
+      padding: $medium $small;
+      color: $colour-700;
+
+      @include for-tablet-landscape-up {
+        padding: 0;
+      }
+    }
+
+    a {
+      &:hover,
+      &:visited:hover {
+        background-color: $colour-500;
+        color: $colour-50;
+      }
+    }
+
+    .details-grid {
+      display: grid;
+      grid-template-columns: 11ch 1fr;
+      margin: 0 2ch;
+    }
+
+    .divider {
+      grid-column: span 2;
+      margin: $medium 0;
+      overflow: hidden;
+    }
+
+    .span-2 {
+      grid-column: span 2;
+    }
+
+    // .site-links {
+    //   display: grid;
+    //   grid-template-columns: 2ch 1fr;
+    //   margin: 0 2ch;
+    // }
+  </style>
+</div>

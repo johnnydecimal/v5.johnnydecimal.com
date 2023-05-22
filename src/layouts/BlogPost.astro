@@ -6,24 +6,23 @@ const { title, number, author, pubDate } = Astro.props;
 import Layout from "./Layout.astro";
 import Header from "@components/Header.astro";
 import BlogHeader from "@components/BlogHeader/BlogHeader.astro";
-import Location from "@components/Location/Location.astro";
 import BackNext from "@components/BackNext/BackNext.astro";
 import Footer from "@components/Footer.astro";
 ---
 
 <Layout title={`${number} ${title}`}>
   <Header />
-  <div class="JDPage">
+  <div class="BlogPost">
     <div class="NavMain">
       <main>
-        <!-- <Location number={number} area="test" category="test" /> -->
+        <!-- .jdcontent picks up global styling -->
         <div class="jdcontent">
           <h1>{title}</h1>
           <slot />
         </div>
         <!-- <BackNext {backNextDisplay} /> -->
       </main>
-      <BlogHeader />
+      <BlogHeader id={number} date={pubDate.toDateString()} />
     </div>
   </div>
 
@@ -33,37 +32,38 @@ import Footer from "@components/Footer.astro";
 <style lang="scss" is:global>
   @use "/src/styles/johnny" as *;
 
-  main {
-    grid-area: main;
-  }
-
-  .NavMain {
-    display: grid;
-    grid-template-areas:
-      "main"
-      "nav";
-    max-width: $site-width;
-    margin: 0 auto;
-
-    @include for-tablet-landscape-up() {
-      grid-template-areas: "nav main";
-      grid-template-columns: 350px auto;
-      gap: $large;
-    }
-
-    @include for-print() {
-      grid-template-areas: "main";
-      grid-template-columns: 1fr;
-    }
-  }
-
-  .JDPage {
+  .BlogPost {
     @include for-tablet-portrait-up {
       padding-bottom: 4rem;
     }
 
-    .NavMain h1 {
+    .NavMain h1:first-of-type {
       margin-top: 0;
+      margin-bottom: $xl;
+    }
+
+    main {
+      grid-area: main;
+    }
+
+    .NavMain {
+      display: grid;
+      grid-template-areas:
+        "main"
+        "nav";
+      max-width: $site-width;
+      margin: 0 auto;
+
+      @include for-tablet-landscape-up() {
+        grid-template-areas: "nav main";
+        grid-template-columns: 350px auto;
+        gap: $large;
+      }
+
+      @include for-print() {
+        grid-template-areas: "main";
+        grid-template-columns: 1fr;
+      }
     }
   }
 </style>
