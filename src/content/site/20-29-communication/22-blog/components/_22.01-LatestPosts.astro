@@ -36,7 +36,7 @@ type Props = CollectionEntry<"blog">;
           </p>
         </div>
         <Content />
-        <hr class="full-width" />
+        <hr class="end-of-post" />
       </article>
     );
   })
@@ -103,13 +103,17 @@ type Props = CollectionEntry<"blog">;
 
     hr {
       width: 65%;
-      &.full-width {
-        margin: $xl auto;
+      &.end-of-post {
+        border: 0;
+        margin: $medium auto;
         width: 100%;
+        @include for-tablet-portrait-up() {
+          margin: $xl auto;
+        }
       }
     }
 
-    &:last-child hr.full-width {
+    &:last-child hr.end-of-post {
       display: none;
     }
   }
