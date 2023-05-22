@@ -72,44 +72,43 @@ const { title } = Astro.props;
     <link rel="manifest" href="/img/favicon-io/site.webmanifest" /> -->
   </head>
   <body>
-    <Header />
+    <!-- <Header /> -->
 
-    <div class="NavMain">
+    <!-- <div class="NavMain">
       <main>
-        <!-- <JDPage> fills the slot. -->
         <slot />
       </main>
       <JDNavigation />
-    </div>
+    </div> -->
 
-    <Footer />
+    <!-- <Footer /> -->
   </body>
+
+  <style lang="scss">
+    @use "/src/styles/johnny" as *;
+
+    main {
+      grid-area: main;
+    }
+
+    .NavMain {
+      display: grid;
+      grid-template-areas:
+        "main"
+        "nav";
+      max-width: $site-width;
+      margin: 0 auto;
+
+      @include for-tablet-landscape-up() {
+        grid-template-areas: "nav main";
+        grid-template-columns: 350px auto;
+        gap: $large;
+      }
+
+      @include for-print() {
+        grid-template-areas: "main";
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 </html>
-
-<style lang="scss">
-  @use "/src/styles/johnny" as *;
-
-  main {
-    grid-area: main;
-  }
-
-  .NavMain {
-    display: grid;
-    grid-template-areas:
-      "main"
-      "nav";
-    max-width: $site-width;
-    margin: 0 auto;
-
-    @include for-tablet-landscape-up() {
-      grid-template-areas: "nav main";
-      grid-template-columns: 350px auto;
-      gap: $large;
-    }
-
-    @include for-print() {
-      grid-template-areas: "main";
-      grid-template-columns: 1fr;
-    }
-  }
-</style>

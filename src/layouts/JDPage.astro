@@ -3,44 +3,62 @@ import type { CollectionEntry } from "astro:content";
 type Props = CollectionEntry<"site">["data"];
 const { title, number, area, category, backNextDisplay } = Astro.props;
 
+import Header from "@components/Header.astro";
+import Footer from "@components/Footer.astro";
 import Layout from "./Layout.astro";
+import JDNavigation from "@components/JDNavigation/JDNavigation.astro";
 import Location from "@components/Location/Location.astro";
 import BackNext from "@components/BackNext/BackNext.astro";
 import { pages } from "@components/BackNext/pages";
-
-// below = old
-
-// export interface Props {
-//   number: string;
-//   title: string;
-//   area: string;
-//   category: string;
-//   backNext?: boolean;
-// }
-// const {
-//   number,
-//   title,
-//   area,
-//   category,
-//   backNextDisplay = true,
-// } = Astro.props.frontmatter;
 ---
 
 <Layout title={`${number} ${title}`}>
+  <Header />
   <div class="JDPage">
     <Location number={number} area={area} category={category} />
 
-    <div class="jdcontent">
-      <slot />
+    <div class="NavMain">
+      <main>
+        <!-- <JDPage> fills the slot. -->
+        <div class="jdcontent">
+          <slot />
+        </div>
+      </main>
+      <JDNavigation />
     </div>
 
     <BackNext {backNextDisplay} />
   </div>
+
+  <Footer />
 </Layout>
 
 <style lang="scss" is:global>
   @use "/src/styles/johnny" as *;
 
+  main {
+    grid-area: main;
+  }
+
+  .NavMain {
+    display: grid;
+    grid-template-areas:
+      "main"
+      "nav";
+    max-width: $site-width;
+    margin: 0 auto;
+
+    @include for-tablet-landscape-up() {
+      grid-template-areas: "nav main";
+      grid-template-columns: 350px auto;
+      gap: $large;
+    }
+
+    @include for-print() {
+      grid-template-areas: "main";
+      grid-template-columns: 1fr;
+    }
+  }
   .JDPage {
     @include for-tablet-portrait-up {
       padding-bottom: 4rem;
