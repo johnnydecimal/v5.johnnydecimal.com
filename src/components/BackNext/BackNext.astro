@@ -120,12 +120,8 @@ if (pathname === "/") {
 
   // @include troubleshooting;
 
-  a:hover {
-    background-color: $colour-500;
-    color: $colour-100;
-  }
-
   .BackNext {
+    color: $colour-700;
     margin: 0 auto;
     padding: $medium $small;
 
@@ -137,37 +133,42 @@ if (pathname === "/") {
     @include for-print() {
       display: none;
     }
-  }
 
-  .back-next-grid {
-    display: grid;
-    grid-auto-flow: column;
-    grid-template-columns: 2ch 1fr 2ch 1fr 2ch;
-
-    font-family: $monospace;
-
-    margin: 0;
-
-    @include for-tablet-landscape-up {
-      margin: 0 2ch;
+    a:hover {
+      background-color: $colour-500;
+      color: $colour-100;
     }
-  }
 
-  .back,
-  .back-arrow {
-    justify-self: start;
-    align-self: center;
-  }
+    .back-next-grid {
+      display: grid;
+      grid-auto-flow: column;
+      grid-template-columns: 2ch 1fr 2ch 1fr 2ch;
 
-  .next,
-  .next-arrow {
-    justify-self: end;
-    text-align: right;
-    align-self: center;
-  }
+      font-family: $monospace;
 
-  .spacer {
-    text-align: center;
-    align-self: center;
+      margin: 0;
+
+      @include for-tablet-landscape-up {
+        margin: 0 2ch;
+      }
+    }
+
+    .back,
+    .back-arrow {
+      justify-self: start;
+      align-self: center;
+    }
+
+    .next,
+    .next-arrow {
+      justify-self: end;
+      text-align: right;
+      align-self: center;
+    }
+
+    .spacer {
+      text-align: center;
+      align-self: center;
+    }
   }
 </style>
