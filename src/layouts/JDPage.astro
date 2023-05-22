@@ -1,33 +1,29 @@
 ---
 import type { CollectionEntry } from "astro:content";
 type Props = CollectionEntry<"site">["data"];
-const { title, number, area, category, backNextDisplay } = Astro.props;
+const { title, number, area, category, backNextDisplay = true } = Astro.props;
 
-import Header from "@components/Header.astro";
-import Footer from "@components/Footer.astro";
 import Layout from "./Layout.astro";
+import Header from "@components/Header.astro";
 import JDNavigation from "@components/JDNavigation/JDNavigation.astro";
 import Location from "@components/Location/Location.astro";
 import BackNext from "@components/BackNext/BackNext.astro";
-import { pages } from "@components/BackNext/pages";
+import Footer from "@components/Footer.astro";
 ---
 
 <Layout title={`${number} ${title}`}>
   <Header />
   <div class="JDPage">
-    <Location number={number} area={area} category={category} />
-
     <div class="NavMain">
       <main>
-        <!-- <JDPage> fills the slot. -->
+        <Location number={number} area={area} category={category} />
         <div class="jdcontent">
           <slot />
         </div>
+        <BackNext {backNextDisplay} />
       </main>
       <JDNavigation />
     </div>
-
-    <BackNext {backNextDisplay} />
   </div>
 
   <Footer />

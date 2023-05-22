@@ -1,10 +1,6 @@
 ---
 import "../styles/global.css";
 
-import Header from "@components/Header.astro";
-import Footer from "@components/Footer.astro";
-import JDNavigation from "@components/JDNavigation/JDNavigation.astro";
-
 export interface Props {
   title: string;
 }
@@ -72,43 +68,10 @@ const { title } = Astro.props;
     <link rel="manifest" href="/img/favicon-io/site.webmanifest" /> -->
   </head>
   <body>
-    <!-- <Header /> -->
-
-    <!-- <div class="NavMain">
-      <main>
-        <slot />
-      </main>
-      <JDNavigation />
-    </div> -->
-
-    <!-- <Footer /> -->
+    <slot />
   </body>
 
   <style lang="scss">
     @use "/src/styles/johnny" as *;
-
-    main {
-      grid-area: main;
-    }
-
-    .NavMain {
-      display: grid;
-      grid-template-areas:
-        "main"
-        "nav";
-      max-width: $site-width;
-      margin: 0 auto;
-
-      @include for-tablet-landscape-up() {
-        grid-template-areas: "nav main";
-        grid-template-columns: 350px auto;
-        gap: $large;
-      }
-
-      @include for-print() {
-        grid-template-areas: "main";
-        grid-template-columns: 1fr;
-      }
-    }
   </style>
 </html>
