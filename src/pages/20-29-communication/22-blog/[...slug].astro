@@ -1,24 +1,26 @@
 ---
-import JDPage from "../../../layouts/BlogPost.astro";
+import { CollectionEntry, getCollection } from "astro:content";
+import BlogPost from "../../../layouts/BlogPost.astro";
 
-import { getCollection } from "astro:content";
-// 1. Generate a new path for every collection entry
 export async function getStaticPaths() {
-  const blogEntries = await getCollection("blog");
-  return blogEntries.map((entry) => ({
-    // Astro strips periods from our slugs: put them back with regex
-    // entry.slug looks like 22010000-title
-    params: {
-      slug: entry.slug.replace(/^(\d\d)(\d\d)(\d\d\d\d)(.*)/, "$1.$2.$3$4"),
-    },
-    props: { entry },
-  }));
+  const pages = await getCollection("blog");
+
+  return pages.map((page) => {
+    // Astro's slug processor removes all decimal points. Put them back.
+    const modifiedSlug = page.slug.replace(/^(\d\d)(\d\d)(.*)/, "$1.$2.$3");
+    console.log("🆚 [...slug].astro/modifiedSlug :", modifiedSlug);
+    return {
+      params: { slug: modifiedSlug },
+      props: page,
+    };
+  });
 }
-// 2. When it's time to render, you can get the entry directly from the prop
-const { entry } = Astro.props;
-const { Content } = await entry.render();
+
+type Props = CollectionEntry<"blog">;
+const page = Astro.props;
+const { Content } = await page.render();
 ---
 
-<JDPage {...entry.data}>
+<BlogPost {...page.data}>
   <Content />
-</JDPage>
+</BlogPost>
