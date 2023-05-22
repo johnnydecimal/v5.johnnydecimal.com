@@ -2,29 +2,109 @@
 import { CollectionEntry, getCollection } from "astro:content";
 
 const blogPosts = await getCollection("blog");
-// console.log("🆚 _BlogRender.astro/blogPosts :", blogPosts);
 
 type Props = CollectionEntry<"blog">;
-// const { entry } = Astro.props;
 ---
 
 {
   blogPosts.map(async (post) => {
-    const { Content } = await post.render();
+    const { Content, headings } = await post.render();
+
+    const postSlug =
+      "/20-29-communication/22-blog/" +
+      post.slug.replace(/(\d\d)(\d\d)(.*)/, "$1.$2.$3/");
+
     return (
-      <>
-        <h2 class="blog-post-title">{post.data.title}</h2>
-        <h3>{post.data.author}</h3>
+      <article class="blog-post">
+        <div class="header">
+          <a class="blog-post-link" href={postSlug}>
+            <h1 class="blog-post-title">
+              <span>{post.data.title}</span>
+              <span class="blog-post-title-arrows">»</span>
+            </h1>
+          </a>
+          <p class="date">
+            <time datetime={post.data.pubDate.toDateString()}>
+              {post.data.pubDate.toDateString()}
+            </time>
+          </p>
+        </div>
         <Content />
-      </>
+        <hr class="full-width" />
+      </article>
     );
   })
 }
 
-<style lang="scss">
+<style lang="scss" is:global>
+  // Global required to affect <Content />.
+  // Everything must be contained in article.blog-post.
   @use "/src/styles/johnny" as *;
 
-  h2.blog-post-title {
-    color: hotpink;
+  article.blog-post {
+    margin-bottom: $xl;
+
+    .header a.blog-post-link {
+      text-decoration: none;
+      &:hover,
+      &:hover:visited {
+        h1 {
+          background-color: $colour-500;
+          color: $colour-50;
+        }
+      }
+
+      &:visited .blog-post-title-arrows {
+        color: $colour-50;
+      }
+      &:hover .blog-post-title-arrows {
+        color: $colour-500;
+      }
+    }
+
+    h1 {
+      font-size: 2.2rem;
+      border-bottom: 2px solid;
+
+      &.blog-post-title {
+        color: $colour-500;
+        display: grid;
+        gap: $small;
+        grid-template-columns: auto min-content;
+        font-size: 2.6rem;
+        border-bottom: 3px solid;
+        margin-bottom: 1rem;
+      }
+    }
+
+    h2 {
+      font-size: 2rem;
+    }
+
+    h3 {
+      font-size: 1.8rem;
+      font-weight: bold;
+    }
+
+    p {
+      color: $colour-800;
+    }
+
+    p.date {
+      font-size: 1.3rem;
+      margin: $tiny 0;
+    }
+
+    hr {
+      width: 65%;
+      &.full-width {
+        margin: $xl auto;
+        width: 100%;
+      }
+    }
+
+    &:last-child hr.full-width {
+      display: none;
+    }
   }
 </style>

@@ -33,6 +33,7 @@ const blog = defineCollection({
   schema: z.object({
     title: z.string(),
     author: z.enum(["Johnny Noble", "Lucy Butcher"]),
+    pubDate: z.date(),
   }),
 });
 
