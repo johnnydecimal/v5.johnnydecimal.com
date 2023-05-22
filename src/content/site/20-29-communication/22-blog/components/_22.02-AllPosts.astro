@@ -12,100 +12,58 @@ blogPosts.reverse();
 type Props = CollectionEntry<"blog">;
 ---
 
-{
-  blogPosts.map(async (post) => {
-    const { Content, headings } = await post.render();
+<ul class="AllPosts">
+  {
+    blogPosts.map(async (post) => {
+      const { Content, headings } = await post.render();
 
-    const postSlug =
-      "/20-29-communication/22-blog/" +
-      post.slug.replace(/(\d\d)(\d\d)(.*)/, "$1.$2.$3/");
+      const postSlug =
+        "/20-29-communication/22-blog/" +
+        post.slug.replace(/(\d\d)(\d\d)(.*)/, "$1.$2.$3/");
 
-    return (
-      <ul>
+      return (
         <li>
           <a class="blog-post-link" href={postSlug}>
-            {post.data.title}
+            <span>{post.data.title}</span> <span>[{post.data.number}]</span>
           </a>
         </li>
-      </ul>
-      // <p class="date">
-      // <time datetime={post.data.pubDate.toDateString()}>
-      //   {post.data.pubDate.toDateString()}
-      // </time>
-      // </p>
-    );
-  })
-}
+      );
+    })
+  }
+</ul>
 
 <style lang="scss" is:global>
   // Global required to affect <Content />.
   // Everything must be contained in article.blog-post.
   @use "/src/styles/johnny" as *;
 
-  article.blog-post {
+  ul.AllPosts {
+    font-family: $monospace;
     margin-bottom: $xl;
 
-    .header a.blog-post-link {
-      text-decoration: none;
-      &:hover,
-      &:hover:visited {
-        h1 {
+    li {
+      font-size: 1.6rem;
+
+      a.blog-post-link {
+        display: grid;
+        grid-template-columns: 1fr 12ch;
+        text-decoration: none;
+        color: $colour-500;
+
+        &:hover {
+          color: $colour-50;
           background-color: $colour-500;
+        }
+
+        &:visited {
+          color: $colour-700;
+        }
+
+        &:hover:visited {
+          background-color: $colour-600;
           color: $colour-50;
         }
       }
-
-      &:visited .blog-post-title-arrows {
-        color: $colour-50;
-      }
-      &:hover .blog-post-title-arrows {
-        color: $colour-500;
-      }
-    }
-
-    h1 {
-      font-size: 2.2rem;
-      border-bottom: 2px solid;
-
-      &.blog-post-title {
-        color: $colour-500;
-        display: grid;
-        gap: $small;
-        grid-template-columns: auto min-content;
-        font-size: 2.6rem;
-        border-bottom: 3px solid;
-        margin-bottom: 1rem;
-      }
-    }
-
-    h2 {
-      font-size: 2rem;
-    }
-
-    h3 {
-      font-size: 1.8rem;
-      font-weight: bold;
-    }
-
-    p {
-      color: $colour-800;
-    }
-
-    p.date {
-      font-size: 1.3rem;
-      margin: $tiny 0;
-    }
-
-    hr {
-      width: 65%;
-      &.full-width {
-        margin: $xl auto;
-        width: 100%;
-      }
-    }
-
-    &:last-child hr.full-width {
-      display: none;
     }
   }
 </style>
