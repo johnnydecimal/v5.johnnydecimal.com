@@ -6,7 +6,7 @@ const { title, number, author, pubDate } = Astro.props;
 import Layout from "./Layout.astro";
 import Header from "@components/Header.astro";
 import BlogHeader from "@components/BlogHeader/BlogHeader.astro";
-import BackNext from "@components/BackNext/BackNext.astro";
+import BlogBackNext from "@components/BlogBackNext/BlogBackNext.astro";
 import Footer from "@components/Footer.astro";
 ---
 
@@ -20,7 +20,7 @@ import Footer from "@components/Footer.astro";
           <h1>{title}</h1>
           <slot />
         </div>
-        <!-- <BackNext {backNextDisplay} /> -->
+        <BlogBackNext />
       </main>
       <BlogHeader id={number} date={pubDate.toDateString()} />
     </div>

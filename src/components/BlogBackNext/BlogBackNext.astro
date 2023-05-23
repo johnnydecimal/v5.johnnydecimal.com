@@ -1,0 +1,152 @@
+---
+import { CollectionEntry, getCollection } from "astro:content";
+import BracketsHorizontalTop from "@components/BracketsHorizontal/BracketsHorizontalTop.astro";
+import BracketsHorizontalBottom from "@components/BracketsHorizontal/BracketsHorizontalBottom.astro";
+
+const blogPosts = await getCollection("blog", ({ data }) =>
+  import.meta.env.DEV ? true : data.publish
+);
+
+// Get just the blog post unique part from our current path.
+const pagePath = Astro.url.pathname.split("/")[3];
+console.log("🆚 BlogBackNext.astro/pagePath :", pagePath);
+
+const pageIndex = blogPosts.findIndex((post) => {
+  // Put the decimals back in Astro's de-decimal'd slug.
+  const postPath = post.slug.replace(/^(\d\d)(\d\d)(.*)/, "$1.$2.$3");
+  console.log("🆚 BlogBackNext.astro/postPath :", postPath);
+
+  return pagePath === postPath;
+});
+console.log("🆚 BlogBackNext.astro/pageIndex :", pageIndex);
+
+const blogPostRoot = "/20-29-communication/22-blog/";
+
+// testing
+let backPath, backId, backTitle, nextPath, nextId, nextTitle;
+
+if (pageIndex === 0) {
+  // This is the first entry.
+  // back[Property] is already undefined. Do nothing.
+} else {
+  backPath =
+    blogPostRoot +
+    blogPosts[pageIndex - 1].slug.replace(/^(\d\d)(\d\d)(.*)/, "$1.$2.$3/");
+  backTitle = blogPosts[pageIndex - 1].data.title;
+}
+
+if (pageIndex === blogPosts.length) {
+  // This is the last entry.
+  // next[Property] is already undefined. Do nothing.
+} else {
+  nextPath =
+    blogPostRoot +
+    blogPosts[pageIndex + 1].slug.replace(/^(\d\d)(\d\d)(.*)/, "$1.$2.$3/");
+  nextTitle = blogPosts[pageIndex + 1].data.title;
+}
+---
+
+<div class="BlogBackNext">
+  <BracketsHorizontalTop label="◁/▶" />
+  <div class="back-next-grid">
+    {
+      backPath ? (
+        <div class="back">
+          <a id={`blogbacknext-${backId}`} href={backPath}>
+            <span class="back-arrow">&#x25C1;</span> <span>{backTitle}</span>
+          </a>
+        </div>
+      ) : (
+        <div />
+      )
+    }
+    <div class="spacer">•</div>
+    {
+      nextPath ? (
+        <div class="next">
+          <a id={`blogbacknext-${backId}`} href={nextPath}>
+            <span>{nextTitle}</span> <span class="next-arrow">&#x25B6;</span>
+          </a>
+        </div>
+      ) : (
+        <div />
+      )
+    }
+  </div>
+  <BracketsHorizontalBottom />
+</div>
+
+<style lang="scss">
+  @use "/src/styles/johnny" as *;
+
+  // @include troubleshooting;
+
+  .BlogBackNext {
+    color: $colour-700;
+    margin: 0 auto;
+    padding: $medium $small;
+
+    @include for-tablet-landscape-up() {
+      margin: $xl auto;
+      padding: 0;
+    }
+
+    @include for-print() {
+      display: none;
+    }
+
+    a:hover {
+      background-color: $colour-500;
+      color: $colour-100;
+    }
+
+    .back-next-grid {
+      display: grid;
+      grid-auto-flow: column;
+      grid-template-columns: 1fr 2ch 1fr;
+
+      font-family: $monospace;
+
+      margin: 0;
+
+      @include for-tablet-landscape-up {
+        margin: 0 2ch;
+      }
+    }
+
+    .back a {
+      display: grid;
+      grid-template-columns: 2ch 1fr;
+
+      .back-arrow {
+        align-self: center;
+      }
+    }
+    .next a {
+      display: grid;
+      grid-template-columns: 1fr 2ch;
+
+      .next-arrow {
+        align-self: center;
+      }
+    }
+
+    .back,
+    .back-arrow {
+      justify-self: start;
+      align-self: center;
+    }
+
+    .next,
+    .next-arrow {
+      justify-self: end;
+      text-align: right;
+      align-self: center;
+    }
+
+    .spacer {
+      text-align: center;
+      align-self: center;
+    }
+  }
+</style>
