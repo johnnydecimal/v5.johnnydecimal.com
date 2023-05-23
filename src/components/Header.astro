@@ -108,7 +108,7 @@
   header {
     border-bottom: 2px solid $colour-500;
     margin-bottom: $small;
-    padding: $small;
+    padding: $small 0;
 
     @include for-tablet-portrait-up() {
       margin-bottom: $large;
@@ -136,11 +136,16 @@
 
     font-family: $monospace;
     color: $colour-700;
+
+    @include for-desktop-up() {
+      max-width: calc($site-width + $xl);
+    }
   }
 
   svg {
     align-self: center;
-    justify-self: start;
+    justify-self: left;
+    padding-left: 4px;
 
     .st0 {
       fill: $colour-700;

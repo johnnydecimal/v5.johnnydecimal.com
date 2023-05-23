@@ -60,6 +60,11 @@ import Footer from "@components/Footer.astro";
         gap: $large;
       }
 
+      @include for-desktop-up() {
+        gap: calc($large + $xl);
+        max-width: calc($site-width + $xl);
+      }
+
       @include for-print() {
         grid-template-areas: "main";
         grid-template-columns: 1fr;
