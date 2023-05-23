@@ -12,40 +12,46 @@ blogPosts.reverse();
 type Props = CollectionEntry<"blog">;
 ---
 
-{
-  blogPosts.map(async (post) => {
-    const { Content, headings } = await post.render();
+<div class="LatestPosts">
+  {
+    blogPosts.map(async (post) => {
+      const { Content, headings } = await post.render();
 
-    const postSlug =
-      "/20-29-communication/22-blog/" +
-      post.slug.replace(/(\d\d)(\d\d)(.*)/, "$1.$2.$3/");
+      const postSlug =
+        "/20-29-communication/22-blog/" +
+        post.slug.replace(/(\d\d)(\d\d)(.*)/, "$1.$2.$3/");
 
-    return (
-      <article class="blog-post">
-        <div class="header">
-          <a class="blog-post-link" href={postSlug}>
-            <h1 class="blog-post-title">
-              <span>{post.data.title}</span>
-              <span class="blog-post-title-arrows">»</span>
-            </h1>
-          </a>
-          <p class="date">
-            <time datetime={post.data.pubDate.toDateString()}>
-              {post.data.pubDate.toDateString()}
-            </time>
-          </p>
-        </div>
-        <Content />
-        <hr class="end-of-post" />
-      </article>
-    );
-  })
-}
+      return (
+        <article class="blog-post">
+          <div class="header">
+            <a class="blog-post-link" href={postSlug}>
+              <h1 class="blog-post-title">
+                <span>{post.data.title}</span>
+                <span class="blog-post-title-arrows">»</span>
+              </h1>
+            </a>
+            <p class="date">
+              <time datetime={post.data.pubDate.toDateString()}>
+                {post.data.pubDate.toDateString()}
+              </time>
+            </p>
+          </div>
+          <Content />
+          <hr class="end-of-post" />
+        </article>
+      );
+    })
+  }
+</div>
 
 <style lang="scss" is:global>
   // Global required to affect <Content />.
   // Everything must be contained in article.blog-post.
   @use "/src/styles/johnny" as *;
+
+  .LatestPosts {
+    margin-bottom: $xxxl;
+  }
 
   article.blog-post {
     margin-bottom: $xl;

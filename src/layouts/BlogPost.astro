@@ -46,6 +46,13 @@ import Footer from "@components/Footer.astro";
       grid-area: main;
     }
 
+    .jdcontent {
+      margin-bottom: 50px;
+      @include for-tablet-portrait-up() {
+        margin-bottom: $xxxl;
+      }
+    }
+
     .NavMain {
       display: grid;
       grid-template-areas:
