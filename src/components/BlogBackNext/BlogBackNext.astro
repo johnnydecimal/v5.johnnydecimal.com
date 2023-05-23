@@ -9,16 +9,13 @@ const blogPosts = await getCollection("blog", ({ data }) =>
 
 // Get just the blog post unique part from our current path.
 const pagePath = Astro.url.pathname.split("/")[3];
-console.log("🆚 BlogBackNext.astro/pagePath :", pagePath);
 
 const pageIndex = blogPosts.findIndex((post) => {
   // Put the decimals back in Astro's de-decimal'd slug.
   const postPath = post.slug.replace(/^(\d\d)(\d\d)(.*)/, "$1.$2.$3");
-  console.log("🆚 BlogBackNext.astro/postPath :", postPath);
 
   return pagePath === postPath;
 });
-console.log("🆚 BlogBackNext.astro/pageIndex :", pageIndex);
 
 const blogPostRoot = "/20-29-communication/22-blog/";
 
