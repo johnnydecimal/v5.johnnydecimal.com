@@ -12,6 +12,9 @@ export async function get(context) {
     return slug !== "index" && !data.excludeFromRss;
   });
 
+  // const blogPosts = await getCollection("blog", ({ data }) => data.publish);
+  // console.log("🆚 rss.xml.js/blogPosts :", blogPosts);
+
   /* logging
   console.log(
     "🆚 rss.xml.js/sitePages[18]:",
