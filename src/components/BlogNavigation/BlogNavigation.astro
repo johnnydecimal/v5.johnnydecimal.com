@@ -9,7 +9,7 @@ import BracketsHorizontalTop from "@components/BracketsHorizontal/BracketsHorizo
 import BracketsHorizontalBottom from "@components/BracketsHorizontal/BracketsHorizontalBottom.astro";
 ---
 
-<div class="BlogHeader">
+<nav id="BlogNavigation">
   <BracketsHorizontalTop label="Post" />
 
   <div class="details-grid">
@@ -39,63 +39,78 @@ import BracketsHorizontalBottom from "@components/BracketsHorizontal/BracketsHor
   </div>
 
   <BracketsHorizontalBottom />
+</nav>
 
-  <style lang="scss">
-    @use "/src/styles/johnny" as *;
+<style lang="scss">
+  @use "/src/styles/johnny" as *;
 
-    a.link-grid {
-      display: grid;
-      margin: 0 2ch;
-      grid-template-columns: 2ch 1fr;
-      &:hover,
-      &:hover:visited {
-        background-color: $colour-500;
-        color: $colour-50;
-      }
+  nav {
+    font-family: $monospace;
+    border-top: 1px dashed $colour-800;
+    padding: $medium $small;
+
+    @include for-tablet-landscape-up {
+      max-width: 40ch;
+
+      margin: 0 auto $large 0;
+      padding: 0;
+
+      border-top: none;
     }
+  }
 
-    .margin-bottom {
-      // margin-bottom: $small;
+  a.link-grid {
+    display: grid;
+    margin: 0 2ch;
+    grid-template-columns: 2ch 1fr;
+    &:hover,
+    &:hover:visited {
+      background-color: $colour-500;
+      color: $colour-50;
     }
+  }
 
-    .BlogHeader {
-      font-family: $monospace;
-      padding: $medium $small;
-      color: $colour-700;
+  .margin-bottom {
+    // margin-bottom: $small;
+  }
 
-      @include for-tablet-landscape-up {
-        padding: 0;
-      }
+  .BlogNavigation {
+    font-family: $monospace;
+    padding: $medium $small;
+    color: $colour-700;
+
+    @include for-tablet-landscape-up {
+      padding: 0;
     }
+  }
 
-    a {
-      &:hover,
-      &:visited:hover {
-        background-color: $colour-500;
-        color: $colour-50;
-      }
+  a {
+    &:hover,
+    &:visited:hover {
+      background-color: $colour-500;
+      color: $colour-50;
     }
+  }
 
-    .details-grid {
-      display: grid;
-      grid-template-columns: 11ch 1fr;
-      margin: 0 2ch;
-    }
+  .details-grid {
+    display: grid;
+    grid-template-columns: 11ch 1fr;
+    margin: 0 2ch;
+  }
 
-    .divider {
-      grid-column: span 2;
-      margin: $medium 0;
-      overflow: hidden;
-    }
+  .divider {
+    grid-column: span 2;
+    margin: $medium 0;
+    overflow: hidden;
+  }
 
-    .span-2 {
-      grid-column: span 2;
-    }
+  .span-2 {
+    grid-column: span 2;
+  }
 
-    // .site-links {
-    //   display: grid;
-    //   grid-template-columns: 2ch 1fr;
-    //   margin: 0 2ch;
-    // }
-  </style>
-</div>
+  // .site-links {
+  //   display: grid;
+  //   grid-template-columns: 2ch 1fr;
+  //   margin: 0 2ch;
+  // }
+</style>

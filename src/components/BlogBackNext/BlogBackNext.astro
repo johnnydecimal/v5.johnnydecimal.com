@@ -33,9 +33,10 @@ if (pageIndex === 0) {
     blogPostRoot +
     blogPosts[pageIndex - 1].slug.replace(/^(\d\d)(\d\d)(.*)/, "$1.$2.$3/");
   backTitle = blogPosts[pageIndex - 1].data.title;
+  backId = blogPosts[pageIndex - 1].slug;
 }
 
-if (pageIndex === blogPosts.length) {
+if (pageIndex === blogPosts.length - 1) {
   // This is the last entry.
   // next[Property] is already undefined. Do nothing.
 } else {
@@ -43,6 +44,7 @@ if (pageIndex === blogPosts.length) {
     blogPostRoot +
     blogPosts[pageIndex + 1].slug.replace(/^(\d\d)(\d\d)(.*)/, "$1.$2.$3/");
   nextTitle = blogPosts[pageIndex + 1].data.title;
+  nextId = blogPosts[pageIndex + 1].slug;
 }
 ---
 
