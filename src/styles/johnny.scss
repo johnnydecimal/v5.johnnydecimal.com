@@ -408,3 +408,42 @@ a {
     }
   }
 }
+
+/* == Blog hacking ========================================================= */
+// See the comment at Footnote.astro.
+@mixin footnote {
+  #footnotes > ol > li.footnote {
+    // This sets the font-size of the list number.
+    font-size: 1.4rem;
+    margin: $small 0;
+
+    // This cascades the font-size down to the content.
+    p.footnote {
+      font-size: inherit;
+      margin: 0;
+
+      code {
+        font-size: inherit;
+      }
+
+      a.footback {
+        color: $colour-500;
+        font-size: 1.2rem;
+        padding-inline: 2px;
+
+        &:visited {
+          color: $colour-500;
+        }
+        &:hover {
+          background-color: $colour-500;
+          color: $colour-50;
+        }
+        &:visited:hover {
+          background-color: $colour-500;
+          color: $colour-50;
+        }
+      }
+    }
+  }
+}
+@include footnote;

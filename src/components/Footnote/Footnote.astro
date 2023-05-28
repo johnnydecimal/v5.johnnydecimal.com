@@ -9,7 +9,7 @@ const { footnotes } = Astro.props;
     {
       footnotes.map((footnote: string, n: number) => (
         <li class="footnote" id={`footnote-${n + 1}`}>
-          <p>
+          <p class="footnote">
             <span set:html={footnote} />
             <a class="footback" href={`#footref-${n + 1}`}>
               &#8617;&#xfe0e;
@@ -26,37 +26,8 @@ const { footnotes } = Astro.props;
   // everything in the #footnotes selector.
   @use "/src/styles/johnny" as *;
 
-  #footnotes ol li.footnote {
-    // This sets the font-size of the list number.
-    font-size: 1.4rem;
-    margin: $small 0;
-
-    // This cascades the font-size down to the content.
-    p {
-      font-size: inherit;
-      margin: 0;
-
-      code {
-        font-size: inherit;
-      }
-
-      a.footback {
-        color: $colour-500;
-        font-size: 1.2rem;
-        padding-inline: 2px;
-
-        &:visited {
-          color: $colour-500;
-        }
-        &:hover {
-          background-color: $colour-500;
-          color: $colour-50;
-        }
-        &:visited:hover {
-          background-color: $colour-500;
-          color: $colour-50;
-        }
-      }
-    }
-  }
+  // With styles here, they don't flow down through 22.01's blog rendering
+  // component and on to the page. You tried all sorts, they just don't.
+  // So, alas, for now, this is in johnny.scss.
+  @include footnote;
 </style>
