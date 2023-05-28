@@ -1,7 +1,7 @@
 ---
 import type { CollectionEntry } from "astro:content";
 type Props = CollectionEntry<"blog">["data"];
-const { title, number, author, pubDate, publish = true } = Astro.props;
+const { title, number, pubDate, publish } = Astro.props;
 
 import Layout from "./Layout.astro";
 import Header from "@components/Header.astro";

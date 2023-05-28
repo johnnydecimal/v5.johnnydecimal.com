@@ -19,9 +19,8 @@ import BracketsHorizontalBottom from "@components/BracketsHorizontal/BracketsHor
 // 0. If the page we're generating isn't published, we don't need to generate
 //    a BackNext for it.
 type Props = {
-  publish: boolean;
+  publish: boolean; // required by the schema
 };
-// BlogPost.astro defaults this to `true` when it destructures it.
 const { publish } = Astro.props;
 if (!publish) {
   return;
@@ -131,7 +130,7 @@ if (pageIndex === blogPosts.length - 1) {
     .back-next-grid {
       display: grid;
       grid-auto-flow: column;
-      grid-template-columns: 1fr 2ch 1fr;
+      grid-template-columns: 1fr 3ch 1fr;
 
       font-family: $monospace;
 

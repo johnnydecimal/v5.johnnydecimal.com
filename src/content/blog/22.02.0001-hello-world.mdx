@@ -1,0 +1,29 @@
+---
+title: Hello, World!
+number: "22.00.0001"
+author: Johnny Noble
+
+publish: true
+pubDate: 2023-05-28T00:00:00
+---
+
+import Footnote from "@components/Footnote/Footnote.astro";
+import FootRef from "@components/Footnote/FootRef.astro";
+
+I thought I'd use this first post to explain the numbering scheme.
+
+As you might expect, each post has an ID. This post's ID is `22.00.0001`.
+
+Blog posts are [breaking the rules](/10-19-concepts/12-advanced/12.02-exceptions-to-the-rules/). I wanted to give them some sort of identifier but in the context of the [broader site](/) they don't fit in the overall structure.
+
+Imagine if every post had a Johnny.Decimal ID. My navigation tree would soon get out of control.
+
+This is a nice example of [why I save the `00` numbers](/10-19-concepts/12-advanced/12.03-what-about-00-09/). In this case I'm using `22.00`, which is the 'meta' ID for the blog category, as an ID to represent **all blog posts**.
+
+Each post then gets its own supplementary ID, starting from `0001`. (I'm assuming I'll never write more than 10,000 posts.)<FootRef n={1} />
+
+<Footnote
+  footnotes={[
+    "Let's say I write a post a day. 365 days/year means I could easily hit 1,000 in a couple of years, but at the same rate I'd need to do a post a day until the year 2050. Unlikely.",
+  ]}
+/>
