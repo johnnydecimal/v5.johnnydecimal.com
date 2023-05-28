@@ -132,10 +132,14 @@
     display: grid;
     grid-template-columns: 90px 1fr 90px;
     max-width: $site-width;
-    margin: 0 auto;
+    margin: 0 $small;
 
     font-family: $monospace;
     color: $colour-700;
+
+    @include for-tablet-landscape-up() {
+      margin: 0 auto;
+    }
 
     @include for-desktop-up() {
       max-width: calc($site-width + $xl);
