@@ -23,6 +23,7 @@ type Props = {
 };
 // BlogPost.astro defaults this to `true` when it destructures it.
 const { publish } = Astro.props;
+console.log("🆚 BlogBackNext.astro/publish :", publish);
 if (!publish) {
   return;
 }

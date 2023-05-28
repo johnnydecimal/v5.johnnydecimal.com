@@ -1,7 +1,7 @@
 ---
 import type { CollectionEntry } from "astro:content";
 type Props = CollectionEntry<"blog">["data"];
-const { title, number, author, pubDate } = Astro.props;
+const { title, number, author, pubDate, publish = true } = Astro.props;
 
 import Layout from "./Layout.astro";
 import Header from "@components/Header.astro";
@@ -20,7 +20,7 @@ import Footer from "@components/Footer.astro";
           <h1>{title}</h1>
           <slot />
         </div>
-        <BlogBackNext />
+        <BlogBackNext {publish} />
       </main>
       <BlogNavigation id={number} date={pubDate.toDateString()} />
     </div>
