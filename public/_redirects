@@ -39,4 +39,6 @@
 # Blog short links -- they don't work like this because each also has a title
 # that won't be in the short-splat.
 # /22.00.*   /20-29-communication/22-blog/22.00.:splat/
-/22.00.0001/   /20-29-communication/22-blog/22.00.0001-hello-world/
+
+/22.02.0001/ /20-29-communication/22-blog/22.02.0001-hello-world/
+/22.02.0002/ /20-29-communication/22-blog/22.02.0002-business-knowledge-management/
