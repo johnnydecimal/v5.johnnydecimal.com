@@ -1,31 +1,68 @@
 ---
-import { CollectionEntry, getCollection } from "astro:content";
+/**
+ * Generate the ◁/▶ BackNext dingus at the bottom of a blog post.
+ *
+ * 0. If the page we're generating isn't published, we don't need to generate
+ *    a BackNext for it.
+ * 1. Gets all published `blogPosts`.
+ * 2. Gets the current `pagePath`.
+ * 3. Finds the `pageIndex` for the current page, `pagePath`, in `blogPosts`.
+ * 4. If we're not on the first or last page,
+ *    a. Return the previous or next entry from `blogPosts` to render as
+ *       Back or Next.
+ */
+
+import { getCollection } from "astro:content";
 import BracketsHorizontalTop from "@components/BracketsHorizontal/BracketsHorizontalTop.astro";
 import BracketsHorizontalBottom from "@components/BracketsHorizontal/BracketsHorizontalBottom.astro";
 
+// 0. If the page we're generating isn't published, we don't need to generate
+//    a BackNext for it.
+type Props = {
+  publish: boolean;
+};
+// BlogPost.astro defaults this to `true` when it destructures it.
+const { publish } = Astro.props;
+if (!publish) {
+  return;
+}
+
+// 1. Gets all published `blogPosts`.
 const blogPosts = await getCollection("blog", ({ data }) =>
   import.meta.env.DEV ? true : data.publish
 );
+console.log("🆚 BlogBackNext.astro/blogPosts.length :", blogPosts.length);
 
-// Get just the blog post unique part from our current path.
+// 2. Gets the current `pagePath`.
 const pagePath = Astro.url.pathname.split("/")[3];
+console.log("🆚 BlogBackNext.astro/pagePath :", pagePath);
 
+// 3. Finds the `pageIndex` for the current page, `pagePath`, in `blogPosts`.
 const pageIndex = blogPosts.findIndex((post) => {
   // Put the decimals back in Astro's de-decimal'd slug.
   const postPath = post.slug.replace(/^(\d\d)(\d\d)(.*)/, "$1.$2.$3");
+  console.log("🆚 BlogBackNext.astro/postPath :", postPath);
 
   return pagePath === postPath;
 });
+console.log("🆚 BlogBackNext.astro/pageIndex :", pageIndex);
 
 const blogPostRoot = "/20-29-communication/22-blog/";
 
 // testing
 let backPath, backId, backTitle, nextPath, nextId, nextTitle;
 
+// 4. If we're not on the first or last page,
+//     a. Return the previous or next entry from `blogPosts` to render as
+//        Back or Next.
 if (pageIndex === 0) {
   // This is the first entry.
   // back[Property] is already undefined. Do nothing.
 } else {
+  console.log(
+    "🆚 BlogBackNext.astro/blogPosts[pageIndex - 1]:",
+    blogPosts[pageIndex - 1]
+  );
   backPath =
     blogPostRoot +
     blogPosts[pageIndex - 1].slug.replace(/^(\d\d)(\d\d)(.*)/, "$1.$2.$3/");
@@ -37,6 +74,10 @@ if (pageIndex === blogPosts.length - 1) {
   // This is the last entry.
   // next[Property] is already undefined. Do nothing.
 } else {
+  console.log(
+    "🆚 BlogBackNext.astro/blogPosts[pageIndex + 1]:",
+    blogPosts[pageIndex + 1]
+  );
   nextPath =
     blogPostRoot +
     blogPosts[pageIndex + 1].slug.replace(/^(\d\d)(\d\d)(.*)/, "$1.$2.$3/");
@@ -63,7 +104,7 @@ if (pageIndex === blogPosts.length - 1) {
     {
       nextPath ? (
         <div class="next">
-          <a id={`blogbacknext-${backId}`} href={nextPath}>
+          <a id={`blogbacknext-${nextId}`} href={nextPath}>
             <span>{nextTitle}</span> <span class="next-arrow">&#x25B6;</span>
           </a>
         </div>
