@@ -23,7 +23,6 @@ type Props = {
 };
 // BlogPost.astro defaults this to `true` when it destructures it.
 const { publish } = Astro.props;
-console.log("🆚 BlogBackNext.astro/publish :", publish);
 if (!publish) {
   return;
 }
@@ -32,21 +31,17 @@ if (!publish) {
 const blogPosts = await getCollection("blog", ({ data }) =>
   import.meta.env.DEV ? true : data.publish
 );
-console.log("🆚 BlogBackNext.astro/blogPosts.length :", blogPosts.length);
 
 // 2. Gets the current `pagePath`.
 const pagePath = Astro.url.pathname.split("/")[3];
-console.log("🆚 BlogBackNext.astro/pagePath :", pagePath);
 
 // 3. Finds the `pageIndex` for the current page, `pagePath`, in `blogPosts`.
 const pageIndex = blogPosts.findIndex((post) => {
   // Put the decimals back in Astro's de-decimal'd slug.
   const postPath = post.slug.replace(/^(\d\d)(\d\d)(.*)/, "$1.$2.$3");
-  console.log("🆚 BlogBackNext.astro/postPath :", postPath);
 
   return pagePath === postPath;
 });
-console.log("🆚 BlogBackNext.astro/pageIndex :", pageIndex);
 
 const blogPostRoot = "/20-29-communication/22-blog/";
 
@@ -60,10 +55,6 @@ if (pageIndex === 0) {
   // This is the first entry.
   // back[Property] is already undefined. Do nothing.
 } else {
-  console.log(
-    "🆚 BlogBackNext.astro/blogPosts[pageIndex - 1]:",
-    blogPosts[pageIndex - 1]
-  );
   backPath =
     blogPostRoot +
     blogPosts[pageIndex - 1].slug.replace(/^(\d\d)(\d\d)(.*)/, "$1.$2.$3/");
@@ -75,10 +66,6 @@ if (pageIndex === blogPosts.length - 1) {
   // This is the last entry.
   // next[Property] is already undefined. Do nothing.
 } else {
-  console.log(
-    "🆚 BlogBackNext.astro/blogPosts[pageIndex + 1]:",
-    blogPosts[pageIndex + 1]
-  );
   nextPath =
     blogPostRoot +
     blogPosts[pageIndex + 1].slug.replace(/^(\d\d)(\d\d)(.*)/, "$1.$2.$3/");
