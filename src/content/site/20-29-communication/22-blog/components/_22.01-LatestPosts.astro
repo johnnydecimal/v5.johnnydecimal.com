@@ -37,14 +37,14 @@ type Props = CollectionEntry<"blog">;
             </p>
           </div>
           <Content />
-          <hr class="end-of-post" />
+          <div class="end-of-post">≡</div>
         </article>
       );
     })
   }
 </div>
 
-<style lang="scss">
+<style lang="scss" is:global>
   // Global required to affect <Content />.
   // Everything must be contained in article.blog-post.
   @use "/src/styles/johnny" as *;
@@ -100,27 +100,25 @@ type Props = CollectionEntry<"blog">;
 
     p {
       color: $colour-800;
+
+      &.date {
+        font-size: 1.3rem;
+        margin: $tiny 0;
+      }
     }
 
-    p.date {
-      font-size: 1.3rem;
-      margin: $tiny 0;
+    .end-of-post {
+      color: $colour-500;
+      font-family: $monospace;
+      text-align: center;
+      margin: $xl auto;
+    }
+    &:last-child .end-of-post {
+      display: none;
     }
 
     hr {
       width: 65%;
-      &.end-of-post {
-        border: 0;
-        margin: $medium auto;
-        width: 100%;
-        @include for-tablet-portrait-up() {
-          margin: $xl auto;
-        }
-      }
-    }
-
-    &:last-child hr.end-of-post {
-      display: none;
     }
   }
 </style>
