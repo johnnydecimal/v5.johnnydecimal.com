@@ -12,50 +12,21 @@ export async function get(context) {
     return slug !== "index" && !data.excludeFromRss;
   });
 
-  // const blogPosts = await getCollection("blog", ({ data }) => data.publish);
-  // console.log("🆚 rss.xml.js/blogPosts :", blogPosts);
+  const blogPosts = await getCollection("blog", ({ data }) => {
+    return data.publish;
+  });
 
-  /* logging
-  console.log(
-    "🆚 rss.xml.js/sitePages[18]:",
-    sanitizeHtml(
-      parser.render(
-        sitePages[18].body
-          // Replace # {frontmatter.title}
-          .replace("# {frontmatter.title}", "")
-          // Replace all component imports
-          .replaceAll(/import.*;/g, "")
-          // Replace all <Components />
-          .replaceAll(
-            /<.* \/>/g,
-            "> See [the note at 02.03 RSS feed](https://johnnydecimal.com/00-09-site-administration/02-send-and-receive/02.03-rss-feed/) regarding the display of additional components in this feed."
-          )
-      )
-    )
-  );
-  */
+  const allPages = [...sitePages, ...blogPosts].sort((a, b) => {
+    return a.data.pubDate > b.data.pubDate;
+  });
 
-  /* logging
-  console.log(
-    "🆚 rss.xml.js/sanitizeHtml(parser.render(page.body)),:",
-    sanitizeHtml(
-      parser
-        .render(sitePages[18].body)
-        .replaceAll(/<p>import.*?<\/p>/gs, "")
-        .replace(/<h1>{frontmatter.title}<\/h1>\n/, "")
-        .replaceAll(
-          /<p>&lt;.* \/&gt;<\/p>/g,
-          "<blockquote>On the website there is a component here: it might render an image, a graphic, a table, or something else. The RSS feed doesn't have these yet. I'm sorry - it's something I'll get round to but it's not trivial.</blockquote>\n"
-        )
-    )
-  );
-  */
+  console.log("🆚 rss.xml.js/allPages :", allPages);
 
   return rss({
     title: "Johnny.Decimal",
     description: "A system to organise projects - full site feed",
     site: context.site,
-    items: sitePages.map((page) => {
+    items: allPages.map((page) => {
       return {
         title: `${page.data.number} ${page.data.title}`,
         pubDate: page.data.pubDate,
