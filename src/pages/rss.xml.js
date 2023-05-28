@@ -16,11 +16,10 @@ export async function get(context) {
     return data.publish;
   });
 
-  const allPages = [...sitePages, ...blogPosts].sort((a, b) => {
-    return a.data.pubDate > b.data.pubDate;
+  const allPages = [...sitePages, ...blogPosts];
+  allPages.sort((a, b) => {
+    return a.data.pubDate - b.data.pubDate;
   });
-
-  console.log("🆚 rss.xml.js/allPages :", allPages);
 
   return rss({
     title: "Johnny.Decimal",
