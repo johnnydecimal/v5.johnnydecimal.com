@@ -38,8 +38,11 @@ import Footer from "@components/Footer.astro";
     }
 
     .NavMain h1:first-of-type {
-      margin-top: 0;
-      margin-bottom: $xl;
+      margin: $medium 0 $large 0;
+
+      @include for-tablet-portrait-up() {
+        margin: 0 0 $xl 0;
+      }
     }
 
     main {
