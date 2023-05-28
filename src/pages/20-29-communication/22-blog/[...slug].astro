@@ -7,6 +7,7 @@ export async function getStaticPaths() {
 
   return pages.map((page) => {
     // Astro's slug processor removes all decimal points. Put them back.
+    console.log("🆚 [...slug].astro/page.slug:", page.slug);
     const modifiedSlug = page.slug.replace(/^(\d\d)(\d\d)(.*)/, "$1.$2.$3");
 
     return {

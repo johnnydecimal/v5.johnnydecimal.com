@@ -17,6 +17,7 @@ type Props = CollectionEntry<"blog">;
     blogPosts.map(async (post) => {
       const { Content, headings } = await post.render();
 
+      console.log("🆚 _22.02-AllPosts.astro/page.slug:", post.slug);
       const postSlug =
         "/20-29-communication/22-blog/" +
         post.slug.replace(/(\d\d)(\d\d)(.*)/, "$1.$2.$3/");
