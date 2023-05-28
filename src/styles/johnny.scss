@@ -447,3 +447,22 @@ a {
   }
 }
 @include footnote;
+
+@mixin footref {
+  sup.jd-footnote > a.jd-footnote-link {
+    color: $colour-500;
+    padding-inline: 2px;
+    text-decoration: none;
+
+    &:visited {
+      color: $colour-500;
+    }
+
+    &:hover,
+    &:visited:hover {
+      background-color: $colour-500;
+      color: $colour-50;
+    }
+  }
+}
+@include footref;
