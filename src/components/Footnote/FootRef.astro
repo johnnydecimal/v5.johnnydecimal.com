@@ -1,10 +1,16 @@
 ---
-const { n } = Astro.props;
+type Props = {
+  blog?: number;
+  n: number;
+};
+
+// See the comments at Footnote.astro.
+const { blog = "", n } = Astro.props;
 ---
 
 <!-- If there's whitespace between <sup> and <a> it renders -->
-<sup class="jd-footnote" id={`footref-${n}`}
-  ><a class="jd-footnote-link" href={`#footnote-${n}`}>{n}</a></sup
+<sup class="jd-footnote" id={`footref${blog}-${n}`}
+  ><a class="jd-footnote-link" href={`#footnote${blog}-${n}`}>{n}</a></sup
 >
 
 <style lang="scss">

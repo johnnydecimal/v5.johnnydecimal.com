@@ -20,7 +20,7 @@ Imagine if every post had a Johnny.Decimal ID: `22.01`, `22.02`, and so on. My n
 
 This is a nice example of [why I save the `00` numbers](/10-19-concepts/12-advanced/12.03-what-about-00-09/). In this case I'm using `22.00`, which is the 'meta' ID for the blog category, as an ID to represent **all blog posts**.
 
-Each post then gets its own supplementary ID, starting from `0001`. (I'm assuming I'll never write more than 10,000 posts.)<FootRef n={1} />
+Each post then gets its own supplementary ID, starting from `0001`. (I'm assuming I'll never write more than 10,000 posts.)<FootRef n={1} blog={1} />
 
 ## Accessing the posts
 
@@ -35,6 +35,7 @@ If I add 'tags' to future posts, I might use `22.03` and upwards to show pages t
 None of this was really necessary. :-)
 
 <Footnote
+  blog={1}
   footnotes={[
     "Let&rsquo;s say I write a post a day. 365 days/year means I could easily hit 1,000 in a couple of years, but at the same rate I&rsquo;d need to do that until the year 2050 to get close to 10,000. Unlikely.",
   ]}

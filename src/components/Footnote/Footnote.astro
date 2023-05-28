@@ -1,6 +1,17 @@
 ---
-const { footnotes } = Astro.props;
-// <sup>{n + 1}</sup>
+type Props = {
+  blog?: number;
+  footnotes: string[];
+};
+
+/**
+ * If this is a blog post, `blog` is a number. We use it below to make the
+ * html ID unique, otherwise on a page of many blog posts it isnt'.
+ *
+ * If this isn't a blog post, `blog` comes in as `undefined`. In this case
+ * just make it an empty string so it's ignored when we render the ID.
+ */
+const { blog = "", footnotes } = Astro.props;
 ---
 
 <div id="footnotes">
@@ -8,10 +19,10 @@ const { footnotes } = Astro.props;
   <ol>
     {
       footnotes.map((footnote: string, n: number) => (
-        <li class="footnote" id={`footnote-${n + 1}`}>
+        <li class="footnote" id={`footnote${blog}-${n + 1}`}>
           <p class="footnote">
             <span set:html={footnote} />
-            <a class="footback" href={`#footref-${n + 1}`}>
+            <a class="footback" href={`#footref${blog}-${n + 1}`}>
               &#8617;&#xfe0e;
             </a>
           </p>
