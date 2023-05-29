@@ -130,7 +130,7 @@ if (pageIndex === blogPosts.length - 1) {
     .back-next-grid {
       display: grid;
       grid-auto-flow: column;
-      grid-template-columns: 1fr 3ch 1fr;
+      grid-template-columns: 1fr 2ch 1fr;
 
       font-family: $monospace;
 
@@ -138,6 +138,7 @@ if (pageIndex === blogPosts.length - 1) {
 
       @include for-tablet-landscape-up {
         margin: 0 2ch;
+        grid-template-columns: 1fr 3ch 1fr;
       }
     }
 

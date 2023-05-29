@@ -18,9 +18,10 @@ describe("Site clickthrough", () => {
         .then((href) => {
           cy.visit(`${href}`);
         });
-      cy.get(
-        "body > div.NavMain> main > div > div.Location> div.locationbox-acid-details-grid> div:nth-child(2)"
-      ).should("contain.text", area);
+      cy.get("div.locationbox-acid-details-grid > div:nth-child(2)").should(
+        "contain.text",
+        area
+      );
       cy.get("code").should("contain.text", area);
       cy.get("div.BackNext").should("not.exist");
     });
@@ -32,9 +33,10 @@ describe("Site clickthrough", () => {
         .then((href) => {
           cy.visit(`${href}`);
         });
-      cy.get(
-        "body > div.NavMain> main > div > div.Location> div.locationbox-acid-details-grid> div:nth-child(4)"
-      ).should("contain.text", category);
+      cy.get("div.locationbox-acid-details-grid > div:nth-child(4)").should(
+        "contain.text",
+        category
+      );
       cy.get("code").should("contain.text", category);
       cy.get("div.BackNext").should("not.exist");
     });
