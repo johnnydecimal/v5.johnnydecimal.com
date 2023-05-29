@@ -14,7 +14,7 @@
     "preview": "astro preview",
     "bp": "astro build && astro preview",
     "astro": "astro",
-    "links": "clear && muffet -b 10000 http://localhost:3000",
+    "links": "clear && muffet -b 10000 -e sitemap http://localhost:3000",
     "cyo": "npx cypress open --e2e",
     "cyr": "npx cypress run",
     "prodlike": "DEV=false npm run dev"
