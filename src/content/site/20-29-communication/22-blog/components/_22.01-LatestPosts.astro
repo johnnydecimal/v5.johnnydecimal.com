@@ -1,4 +1,5 @@
 ---
+import { pagesGlobToRssItems } from "@astrojs/rss";
 import { CollectionEntry, getCollection } from "astro:content";
 
 const blogPosts = await getCollection("blog", ({ data }) =>
@@ -30,11 +31,15 @@ type Props = CollectionEntry<"blog">;
                 <span class="blog-post-title-arrows">»</span>
               </h1>
             </a>
-            <p class="date">
-              <time datetime={post.data.pubDate.toDateString()}>
-                {post.data.pubDate.toDateString()}
-              </time>
-            </p>
+            <div class="below-title">
+              <span class="date">
+                <time datetime={post.data.pubDate.toDateString()}>
+                  {post.data.pubDate.toDateString()}
+                </time>
+              </span>
+              <span>/</span>
+              <span>[{post.data.number}]</span>
+            </div>
           </div>
           <Content />
           <div class="end-of-post">≡</div>
@@ -105,6 +110,12 @@ type Props = CollectionEntry<"blog">;
         font-size: 1.3rem;
         margin: $tiny 0;
       }
+    }
+
+    .below-title {
+      font-family: $monospace;
+      font-size: 1.4rem;
+      color: $colour-600;
     }
 
     .end-of-post {
