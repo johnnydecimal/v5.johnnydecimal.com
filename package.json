@@ -21,19 +21,17 @@
   },
   "dependencies": {
     "@astrojs/image": "^0.16.9",
-    "@astrojs/mdx": "^0.19.2",
-    "@astrojs/rss": "^2.4.2",
-    "@fontsource/ibm-plex-serif": "^4.5.12",
+    "@astrojs/mdx": "^0.19.4",
+    "@astrojs/rss": "^2.4.3",
     "@johnnydecimal/jdgetacidtypefromstring": "^0.0.4",
-    "astro": "^2.5.0"
+    "astro": "^2.5.5"
   },
   "devDependencies": {
-    "@simonsmith/cypress-image-snapshot": "^6.1.1",
-    "@types/simonsmith__cypress-image-snapshot": "npm:@types/cypress-image-snapshot@^3.1.6",
-    "cypress": "^12.12.0",
+    "@simonsmith/cypress-image-snapshot": "^7.0.0",
+    "cypress": "^12.13.0",
     "markdown-it": "^13.0.1",
     "prettier": "^2.8.8",
-    "prettier-plugin-astro": "^0.9.0",
+    "prettier-plugin-astro": "^0.9.1",
     "sanitize-html": "^2.10.0",
     "scss": "^0.2.4",
     "shx": "^0.3.4"
