@@ -13,13 +13,21 @@ import BracketsHorizontalBottom from "@components/BracketsHorizontal/BracketsHor
   <BracketsHorizontalTop label="Post" />
 
   <div class="details-grid" id="zero-zero-zero-zero">
-    <div class="margin-bottom">ID&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</div><div>
+    <div class="margin-bottom">
+      ID&nbsp;&nbsp;&nbsp;<span class="for-tablet-portrait-up"
+        >&nbsp;&nbsp;</span
+      >:
+    </div><div>
       {id}
     </div>
-    <div>Link&nbsp;&nbsp;&nbsp;:</div><div>
+    <div>
+      Link&nbsp;<span class="for-tablet-portrait-up">&nbsp;&nbsp;</span>:
+    </div><div>
       <a href=`https://jdcm.al/${id}`>jdcm.al/{id}</a>
     </div>
-    <div>Date&nbsp;&nbsp;&nbsp;:</div><div>{date}</div>
+    <div>
+      Date&nbsp;<span class="for-tablet-portrait-up">&nbsp;&nbsp;</span>:
+    </div><div>{date}</div>
     <div class="divider">
       ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
     </div>
@@ -95,8 +103,20 @@ import BracketsHorizontalBottom from "@components/BracketsHorizontal/BracketsHor
 
   .details-grid {
     display: grid;
-    grid-template-columns: 11ch 1fr;
+    grid-template-columns: 7ch 1fr;
     margin: 0 2ch;
+
+    @include for-tablet-portrait-up() {
+      grid-template-columns: 11ch 1fr;
+    }
+
+    // Hides a bunch of &nbsp; on mobile, otherwise the dingus is too wide
+    .for-tablet-portrait-up {
+      display: none;
+      @include for-tablet-portrait-up() {
+        display: inline;
+      }
+    }
   }
 
   .divider {
