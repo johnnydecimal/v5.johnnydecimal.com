@@ -1,0 +1,127 @@
+---
+type Props = {
+  text: string;
+  options?: {
+    project?: boolean;
+  };
+};
+
+/**
+ * Destructure all options.
+ */
+const { project = false } = Astro.props.options ?? {};
+
+/**
+ * Process the input string in to an array of strings.
+ *
+ * If the first or last elements are blank, remove them. Otherwise keep blanks,
+ * we render them.
+ */
+const { text } = Astro.props;
+const inputTextAsArrayOfStrings = text.split("\n");
+if (inputTextAsArrayOfStrings[0] === "") {
+  inputTextAsArrayOfStrings.shift();
+}
+if (inputTextAsArrayOfStrings[inputTextAsArrayOfStrings.length - 1] === "") {
+  inputTextAsArrayOfStrings.pop();
+}
+
+/**
+ * We're going to construct `arrayToRender` which looks like this:
+ * [
+ *   {
+ *     text: "10-19 Administration",
+ *     classes: ["a | ac | acid | proa | proac | proacid"]
+ *   },
+ * ]
+ *
+ * These get rendered out, with CSS taking care of all styling.
+ *
+ * Process:
+ * 1. For each line of our input text,
+ * 2. try to match it to be a PRO.AC.ID using the numbers at the front,
+ * 3. and apply the relevant class.
+ * 4. Then, if `project` is true, add "pro" to the start of each class.
+ */
+
+type Classes =
+  | "a"
+  | "ac"
+  | "acid"
+  | "nomatch"
+  | "proa"
+  | "proac"
+  | "proacid"
+  | "pronomatch";
+type TextAndClasses = { text: string; classes: Classes[] };
+type RenderArray = TextAndClasses[];
+
+const renderArray: RenderArray = [];
+
+// 1. For each line of our input text,
+inputTextAsArrayOfStrings.forEach((line) => {
+  let cssClass: Classes = "nomatch";
+
+  // 2. try to match it to be a PRO.AC.ID using the numbers at the front,
+  switch (true) {
+    case /^\d\d-\d\d /.test(line.trim()):
+      // 3. and apply the relevant class.
+      cssClass = "a";
+      break;
+    case /^\d\d /.test(line.trim()):
+      cssClass = "ac";
+      break;
+    case /^\d\d\.\d\d /.test(line.trim()):
+      cssClass = "acid";
+      break;
+    default:
+      cssClass = "nomatch";
+      break;
+  }
+
+  // 4. Then, if `project` is true, add "pro" to the start of each class.
+  if (project) {
+    // The simple way fails TS checking. Do it properly.
+    switch (cssClass) {
+      case "a":
+        cssClass = "proa";
+        break;
+      case "ac":
+        cssClass = "proac";
+        break;
+      case "acid":
+        cssClass = "proacid";
+        break;
+      default:
+        cssClass = "pronomatch";
+        break;
+    }
+  }
+
+  renderArray.push({
+    text: line,
+    classes: [cssClass],
+  });
+});
+
+console.log("🆚 JDB2.astro/renderArray:", renderArray);
+---
+
+<div class="JDB2">
+  {
+    renderArray.map((line) => {
+      return <div class:list={line.classes}>{line.text}</div>;
+    })
+  }
+</div>
+
+<style lang="scss" is:global>
+  @use "/src/styles/johnny" as *;
+
+  // TODO: lift this up to johnny.scss when finished
+
+  .JDB2 {
+    border: 5px dotted hotpink;
+    font-family: $monospace;
+  }
+</style>
