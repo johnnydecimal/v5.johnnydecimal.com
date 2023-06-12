@@ -1,5 +1,5 @@
 const version = {
-  number: "5.3.0",
+  number: "5.3.1",
   date: new Date().toISOString().split("T")[0],
 };
 

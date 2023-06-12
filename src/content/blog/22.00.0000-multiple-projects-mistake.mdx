@@ -1,0 +1,50 @@
+---
+title: Multiple projects mistake
+number: "22.00.0005"
+author: Johnny Noble
+
+publish: false
+pubDate: 2023-06-04T11:59:00
+---
+
+import JDBlock from "@components/JDBlock/JDBlock.astro";
+import JDB2 from "@components/JDBlock/JDB2.astro";
+
+I made a mistake at work recently. Here's what I learned.
+
+## The setup
+
+I started a new job and it looked like my job would be to migrate one large business system from its current location ('on-premises' as we say in the business) to 'the cloud'.
+
+<JDB2
+  text={`
+10-19 Administration
+   14 Timesheets & expenses
+      14.01 Timesheets for 2301
+      14.02 Timesheets for 2302
+      ...
+      14.19 Timesheets for 2319
+`}
+  options={{
+    classList: [undefined, undefined, undefined, undefined, "acid"],
+    project: false,
+  }}
+/>
+
+---
+
+<JDB2
+  text={`
+D01 My great project
+    10-19 Administration
+       14 Timesheets & expenses
+          14.01 Timesheets for 2301
+          14.02 Timesheets for 2302
+          ...
+          14.19 Timesheets for 2319
+`}
+  options={{
+    classList: [, , , , , "proacid"],
+    project: true,
+  }}
+/>
