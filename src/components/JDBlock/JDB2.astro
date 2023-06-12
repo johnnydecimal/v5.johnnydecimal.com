@@ -2,6 +2,7 @@
 type Props = {
   text: string;
   options?: {
+    classList: string[];
     project?: boolean;
   };
 };
@@ -9,7 +10,7 @@ type Props = {
 /**
  * Destructure all options.
  */
-const { project = false } = Astro.props.options ?? {};
+const { classList, project = false } = Astro.props.options ?? {};
 
 /**
  * Process the input string in to an array of strings.
@@ -45,13 +46,14 @@ if (inputTextAsArrayOfStrings[inputTextAsArrayOfStrings.length - 1] === "") {
  */
 
 type Classes =
+  | "pro"
   | "a"
   | "ac"
   | "acid"
-  | "nomatch"
   | "proa"
   | "proac"
   | "proacid"
+  | "nomatch"
   | "pronomatch";
 type TextAndClasses = { text: string; classes: Classes[] };
 type RenderArray = TextAndClasses[];
@@ -64,8 +66,11 @@ inputTextAsArrayOfStrings.forEach((line) => {
 
   // 2. try to match it to be a PRO.AC.ID using the numbers at the front,
   switch (true) {
+    // 3. and apply the relevant class.
+    case /^[A-Z]\d\d /.test(line.trim()):
+      cssClass = "pro";
+      break;
     case /^\d\d-\d\d /.test(line.trim()):
-      // 3. and apply the relevant class.
       cssClass = "a";
       break;
     case /^\d\d /.test(line.trim()):
@@ -83,6 +88,9 @@ inputTextAsArrayOfStrings.forEach((line) => {
   if (project) {
     // The simple way fails TS checking. Do it properly.
     switch (cssClass) {
+      case "pro":
+        cssClass = "pro";
+        break;
       case "a":
         cssClass = "proa";
         break;
@@ -104,13 +112,26 @@ inputTextAsArrayOfStrings.forEach((line) => {
   });
 });
 
-console.log("🆚 JDB2.astro/renderArray:", renderArray);
+/**
+ * If we received any classes via `classList`, add them to the array.
+ */
+if (classList) {
+  classList.forEach((classes, i) => {
+    // @ts-ignore it's done what we needed it to do; we're playing loose now
+    renderArray[i].classes += " " + classes;
+  });
+}
 ---
 
 <div class="JDB2">
   {
     renderArray.map((line) => {
-      return <div class:list={line.classes}>{line.text}</div>;
+      return (
+        <div class:list={line.classes}>
+          <span class="proacid-space" />
+          <span class="text">{line.text}</span>
+        </div>
+      );
     })
   }
 </div>
@@ -123,5 +144,53 @@ console.log("🆚 JDB2.astro/renderArray:", renderArray);
   .JDB2 {
     border: 5px dotted hotpink;
     font-family: $monospace;
+  }
+
+  // Not a project
+  .a {
+    font-weight: bold;
+  }
+  .ac {
+    text-decoration: underline;
+
+    display: grid;
+    grid-template-columns: 3ch 1fr;
+  }
+  .acid {
+    display: grid;
+    grid-template-columns: 3ch 1fr;
+    @include for-tablet-portrait-up() {
+      grid-template-columns: 6ch 1fr;
+    }
+  }
+
+  // A project
+  .pro {
+    font-weight: bold;
+    text-decoration: underline;
+  }
+  .proa {
+    font-weight: bold;
+
+    display: grid;
+    grid-template-columns: 4ch 1fr;
+  }
+  .proac {
+    text-decoration: underline;
+
+    display: grid;
+    grid-template-columns: 7ch 1fr;
+  }
+  .proacid {
+    display: grid;
+    grid-template-columns: 7ch 1fr;
+    @include for-tablet-portrait-up() {
+      grid-template-columns: 10ch 1fr;
+    }
+  }
+
+  // Classes passed in manually
+  .hotpink {
+    color: hotpink;
   }
 </style>
