@@ -21,19 +21,6 @@ export async function get(context) {
     return a.data.pubDate - b.data.pubDate;
   });
 
-  // The slug for blogPosts here looks like `2200BPID-the-post-title`
-  // Detect and fix those
-  // TODO probably hacky but I just noticed and want to fix asap
-  allPages.forEach((page, i) => {
-    if (page.slug.match(/2200\d\d\d\d/)) {
-      allPages[i].slug = page.slug.replace(
-        /2200(\d\d\d\d)(.*)/,
-        "/20-29-communication/22-blog/22.00.$1$2"
-      );
-      console.log("🆚 rss.xml.js/allPages[i].slug :", allPages[i].slug);
-    }
-  });
-
   return rss({
     title: "Johnny.Decimal",
     description: "A system to organise projects - full site feed",
@@ -49,7 +36,7 @@ export async function get(context) {
          * Create our link from `post.slug`. Again as at `JDNavigation` we need
          * to regex the decimal back in to our slug as Astro has removed it.
          */
-        link: `/${page.slug.replace(/(\/\d\d)(\d\d)/, "SHOES$1.$2")}/`,
+        link: `/${page.slug.replace(/(\/\d\d)(\d\d)/, "$1.$2")}/`,
         content: sanitizeHtml(
           parser.render(
             page.body
