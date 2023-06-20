@@ -33,7 +33,7 @@ import jdSort from "@js/jdSort.js";
  * our hidden pages at `90-99 Behind the scenes`.
  */
 const sitePages = await getCollection("site", ({ slug, data }) => {
-  return slug !== "index" && !data.excludeFromNav;
+  return slug !== "index" && !data.excludeFromNav && data.publish;
 });
 
 /**

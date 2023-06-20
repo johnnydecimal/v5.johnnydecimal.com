@@ -9,8 +9,7 @@ export async function get(context) {
    * As at `JDNavigation`, only get what we need to get.
    */
   const sitePages = await getCollection("site", ({ slug, data }) => {
-    console.log("🆚 rss.xml.js/data:", data);
-    return slug !== "index" && !data.excludeFromRss;
+    return slug !== "index" && !data.excludeFromRss && data.publish;
   });
 
   const blogPosts = await getCollection("blog", ({ data }) => {

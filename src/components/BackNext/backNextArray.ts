@@ -1,7 +1,7 @@
 import { getCollection } from "astro:content";
 
 const sitePages = await getCollection("site", ({ data }) => {
-  return !data.excludeFromNav;
+  return !data.excludeFromNav && data.publish;
 });
 
 interface BackNext {
