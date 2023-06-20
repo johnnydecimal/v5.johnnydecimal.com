@@ -1,0 +1,58 @@
+---
+number: "13.02"
+title: Deep dive
+area: 10-19 Concepts
+category: 13 Multiple projects
+
+publish: false
+pubDate: 2023-06-18T11:06:53
+---
+
+import JDBlock from "@components/JDBlock/JDBlock.astro";
+import Footnote from "@components/Footnote/Footnote.astro";
+import FootRef from "@components/Footnote/FootRef.astro";
+import Table from "./components/_13.01-Table.astro";
+
+# {frontmatter.title}
+
+The [previous page](/10-19-concepts/13-multiple-projects/13.01-introduction/) gave an overview of the concept of 'multiple projects'.
+
+It is the issue which seems to cause the most confusion, so I will deep dive it here.
+
+## Remind me what problem we're solving
+
+The Johnny.Decimal system is intentionally restrictive. By restricting what you can create, and how 'deep' you can create things, it prevents you from becoming disorganised. This limitation is fundamental to the system.
+
+But life isn't that simple. Work isn't that neat. Obviously we can't organise the entire world using a single Johnny.Decimal system from `00` through `99`.
+
+And so when we push up against the boundaries of our system, we need a way to expand. We do this by setting up another project. This project has its own index, its own use for those numbers `00` through `99`.
+
+At which point we have multiple projects. 'Multiple' may be as few as two or as many as hundreds. It doesn't matter: the pattern is the same. This is also crucial.
+
+## When should I use multiple projects?
+
+Sparingly! Please.
+
+The point of the system is to make your life simpler. We do this by introducing numbers, which is already additive: so we should strive to add as little _more_ as possible.
+
+Adding multiple projects adds complexity to your system.
+
+## When might I not need to use multiple projects?
+
+If you use Johnny.Decimal at home and at work, and those two 'domains' are forever and completely separated, you might want to record each separately.
+
+(I would probably recommend that you do.)
+
+In this case you _are_ managing 'multiple projects' but you don't really have to do anything about it. You've got one system at home, and one system at work. But they'll never meet, so when you're at one place you can just pretend like the other place doesn't exist.
+
+You don't need to worry about overlapping numbers. You don't need to assign a project-level identifier to each system.
+
+The only problem is that this will make it harder for your brain to remember the structure of each system. Because now you have two systems. But in reality I don't find this to be too difficult.
+
+Note that if the systems _ever_ overlap _even a tiny bit_, this starts to become a problem. In this case you should probably use multiple projects as described below.
+
+---
+
+# A reminder of the problem
+
+Johnny.Decimal enfo
