@@ -30,7 +30,6 @@ export async function get(context) {
         /2200(\d\d\d\d)(.*)/,
         "/20-29-communication/22-blog/22.00.$1$2"
       );
-      console.log("🆚 rss.xml.js/allPages[i].slug :", allPages[i].slug);
     }
   });
 
