@@ -13,6 +13,8 @@ import Footnote from "@components/Footnote/Footnote.astro";
 import FootRef from "@components/Footnote/FootRef.astro";
 import Table from "./components/_11.05-Table.astro";
 
+import JDImage from "@components/JDImage/JDImage.astro";
+
 # {frontmatter.title}
 
 In the simplest possible system, where all you store are files and you store them in a single file system, that file system can act as your index. You create new items by looking at your existing folders and using the next number.
@@ -96,24 +98,20 @@ To create a new ID, search your notes for the relevant category. Your app should
 
 Using Bear's search to narrow our index to category `17`.
 
-{/* 11.05-bear-searching-for-17-571w@2x.png */}
-
-<img
+<JDImage
+  alt="Screenshot of the application 'Bear'. In the left pane the search term '17.' has been entered. The main pane shows those notes that match this criteria."
   src="https://imagedelivery.net/2bVljGQL-hZadODS2HAZEw/5191a1df-549c-4696-ddd2-7c4690407d00/public"
   width="571"
-  alt="Screenshot of the application 'Bear'. In the left pane the search term '17.' has been entered. The main pane shows those notes that match this criteria."
 />
 
 By including the `.` in our search, we (usually) filter out other notes that just include the text '17'.
 
 We can see that `17.04` is the next available number, so we create a note and then use that number wherever it is required.
 
-{/* 11.05-bear-new-note-17.04-571w@2x.png */}
-
-<img
+<JDImage
+  alt="Bear again, and now we've created a new note using our next available ID, which is 17.04."
   src="https://imagedelivery.net/2bVljGQL-hZadODS2HAZEw/bc55c825-06d8-4aa9-ab9f-b1c15486a300/public"
   width="571"
-  alt="Bear again, and now we've created a new note using our next available ID, which is 17.04."
 />
 
 ## 2: One file with all of your IDs
@@ -122,13 +120,10 @@ This style of index is more suitable when you might want to programatically quer
 
 Use one note -- it's always `00.00` in my system, which of course needs its own index entry -- and record all of your numbers there.
 
-{/* 11.05-bear-index-as-file-00.00-603w@2x.png */}
-
-<img
-  src="https://imagedelivery.net/2bVljGQL-hZadODS2HAZEw/73525250-a310-47c5-08c8-e02575fd5f00/public"
-  loading="lazy"
-  width="603"
+<JDImage
   alt="Bear again, this time with a single note at 00.00 which contains one line for each of our index entries."
+  src="https://imagedelivery.net/2bVljGQL-hZadODS2HAZEw/73525250-a310-47c5-08c8-e02575fd5f00/public"
+  width="603"
 />
 
 I format mine as shown. Either use a fixed-width font in your notes app, or make it a 'code block'.
@@ -151,11 +146,10 @@ If your system also tells you where that item _is,_ then all the better. I recor
 
 {/* 11.05-bear-recording-item-location-571w@2x.png */}
 
-<img
+<JDImage
+  alt="You guessed it, Bear. This time we're showing one of our notes and in it we've written 'location: email' to indicate that this is where this item can be found."
   src="https://imagedelivery.net/2bVljGQL-hZadODS2HAZEw/048e56b0-2e85-4227-b1ab-5f8f43b3f800/public"
   width="571"
-  loading="lazy"
-  alt="You guessed it, Bear. This time we're showing one of our notes and in it we've written 'location: email' to indicate that this is where this item can be found."
 />
 
 ## More index tips
