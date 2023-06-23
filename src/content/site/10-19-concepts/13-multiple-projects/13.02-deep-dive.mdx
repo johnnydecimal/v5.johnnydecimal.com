@@ -11,54 +11,329 @@ pubDate: 2023-06-18T11:06:53
 import JDBlock from "@components/JDBlock/JDBlock.astro";
 import Footnote from "@components/Footnote/Footnote.astro";
 import FootRef from "@components/Footnote/FootRef.astro";
-import Table from "./components/_13.01-Table.astro";
+import JDB2 from "@components/JDBlock/JDB2.astro";
+import JDImage from "@components/JDImage/JDImage.astro";
 
 # {frontmatter.title}
 
 The [previous page](/10-19-concepts/13-multiple-projects/13.01-introduction/) gave an overview of the concept of 'multiple projects'.
 
-It is the issue which seems to cause the most confusion, so I will deep dive it here.
+It is the issue which causes the most confusion, so I will go in to a lot more detail here. This page is quite long, so here's a table of contents to help you get around.
 
-> Flowchart here so we know where we're going.
+If this is your first time here, just read it end-to-end.
 
-# Definitions
-
-## Domain
-
-## Remind me what problem we're solving
-
-The Johnny.Decimal system is intentionally restrictive. By restricting what you can create, and how 'deep' you can create things, it prevents you from becoming disorganised. This limitation is fundamental to the system.
-
-But life isn't that simple. Work isn't that neat. Obviously we can't organise the entire world using a single Johnny.Decimal system from `00` through `99`.
-
-And so when we push up against the boundaries of our system, we need a way to expand. We do this by setting up another project. This project has its own index, its own use for those numbers `00` through `99`.
-
-At which point we have multiple projects. 'Multiple' may be as few as two or as many as hundreds. It doesn't matter: the pattern is the same. This is also crucial.
-
-## When should I use multiple projects?
-
-Sparingly! Please.
-
-The point of the system is to make your life simpler. We do this by introducing numbers, which is already additive: so we should strive to add as little _more_ as possible.
-
-Adding multiple projects adds complexity to your system.
-
-## When might I not need to use multiple projects?
-
-If you use Johnny.Decimal at home and at work, and those two 'domains' are forever and completely separated, you might want to record each separately.
-
-(I would probably recommend that you do.)
-
-In this case you _are_ managing 'multiple projects' but you don't really have to do anything about it. You've got one system at home, and one system at work. But they'll never meet, so when you're at one place you can just pretend like the other place doesn't exist.
-
-You don't need to worry about overlapping numbers. You don't need to assign a project-level identifier to each system.
-
-The only problem is that this will make it harder for your brain to remember the structure of each system. Because now you have two systems. But in reality I don't find this to be too difficult.
-
-Note that if the systems _ever_ overlap _even a tiny bit_, this starts to become a problem. In this case you should probably use multiple projects as described below.
+- [Definitions](#definitions)
+  - [Project](#project)
+  - [System](#system)
+  - finish me when the article is reviewed
 
 ---
 
-# A reminder of the problem
+# Definitions
 
-Johnny.Decimal enfo
+I will use three terms and it is important that their meaning is clear. They are **project,** **system,** and **domain.**
+
+## Project
+
+A project is **any single collection of Johnny.Decimal numbers** from `00-09` through `90-99`.
+
+<JDImage
+  alt="MacOS Finder screenshot showing a small Johnny.Decimal folder structure"
+  caption="A tiny project"
+  noinvert
+  original="13.02-finder-tiny-project-2-border@2x.png"
+  src="https://imagedelivery.net/2bVljGQL-hZadODS2HAZEw/d60e6932-b5d1-4ad5-b979-714a8b521b00/public"
+  width="126"
+/>
+
+## System
+
+A Johnny.Decimal system is **one or more projects** that you manage.
+
+Systems never overlap: **all identifiers within a system are guaranteed to be unique.**
+
+<JDImage
+  alt="MacOS Finder screenshot showing a small Johnny.Decimal folder structure"
+  caption="A tiny system<br />with one project"
+  noinvert
+  original="13.02-finder-a-tiny-system-with-one-project@2x"
+  src="https://imagedelivery.net/2bVljGQL-hZadODS2HAZEw/4f56156c-5d19-49c8-b899-b5f4e72f7d00/public"
+  width="150"
+/>
+
+The multiple projects problem that we are addressing arises when we have **more than one project within a system.** We will get to this in a moment.
+
+You might have more than one Johnny.Decimal system in your life.
+
+## Domain
+
+A domain is a **completely isolated part of your life.**
+
+You might have two domains: home, and work.
+
+<JDImage
+  alt="Two emoji, home and work, with a thick border drawn around each to indicate their total separation"
+  caption="Two domains"
+  noinvert
+  original="13.02-home-and-work@2.png"
+  src="https://imagedelivery.net/2bVljGQL-hZadODS2HAZEw/42e68a31-ad68-4348-2f83-507bf3712400/public"
+  width="247"
+/>
+
+They are each their own domain if they **never, ever intersect.**
+
+If you use **any** of the same tools in both places, they are no longer isolated domains.
+
+For example, you might use the same notes application on your phone for both home and work. This makes them one domain from a Johnny.Decimal perspective.
+
+<JDImage
+  alt="Home and work again, but joined in the same box because they share a note icon in the middle"
+  caption="One domain"
+  noinvert
+  original="13.02-home-and-work-joined-with-a-note@2x"
+  src="https://imagedelivery.net/2bVljGQL-hZadODS2HAZEw/e40ade64-71ad-4f81-15b2-1a8b91643c00/public"
+  width="247"
+/>
+
+---
+
+# Problem statement
+
+If we find ourselves creating **more than one project within a system,** we have a problem which should be obvious.
+
+<JDImage
+  alt="MacOS Finder screenshot showing two small Johnny.Decimal folder structures, with overlapping numbers, side-by-side"
+  caption="Two projects within<br />the same system"
+  noinvert
+  original="13.02-two-projects-within-the-same-system@2x"
+  src="https://imagedelivery.net/2bVljGQL-hZadODS2HAZEw/675abd4c-f6a3-498f-90b8-020dfb7ed700/public"
+  width="306"
+/>
+
+Now we have ambiguity. If I refer to `11.01`, to which item in which project am I referring?
+
+In this situation we need to expand to a **multiple projects system.**
+
+## A warning
+
+Using multiple projects should be a last resort. They add complexity, which we seek to minimise. They are not an 'advanced feature' that you should aspire to use.
+
+For many years I had a [single project for my entire home life](https://forum.johnnydecimal.com/t/my-personal-system/412).
+
+There is a lot of room in a standard Johnny.Decimal project. You have a hundred categories to play with, each with a hundred IDs. That's **ten thousand individual items.**
+
+If you plan it well, a one-project system can take you a long way.
+
+I tell you this to save you time: **only use multiple projects if you need to.**
+
+---
+
+# The solution
+
+It should be clear that we require a further level of identification to allow us to differentiate projects.
+
+There are a number of solutions, which I'll address in the coming pages.
+
+The preferred solution for most cases is to add an identifier **above your areas.**
+
+<JDImage
+  alt="MacOS Finder screenshot showing two projects side-by-side. Each is now labelled with a project number at the top"
+  caption="Ambiguity removed"
+  noinvert
+  original="13.02-finder-two-projects-border@2x"
+  src="https://imagedelivery.net/2bVljGQL-hZadODS2HAZEw/7aae4b32-679e-418f-242f-653147218200/public"
+  width="306"
+/>
+
+## What should we call our projects?
+
+As with our existing areas, categories, and IDs, each project should have both a **short identifier** and a **full name.**
+
+The screenshots here don't have names just to keep them simple, but we know that actually category `11` isn't just `11`. It's something like `11 Book reports`.
+
+> On the [previous page](/10-19-concepts/13-multiple-projects/13.01-introduction/) I introduced the project identifier. Review that page now if you haven't already.
+
+The project identifier format is **letter-number-number.** This gives us project codes in the following range:
+
+- Start: `A00`
+- End: `Z99`
+
+We choose a project code, give our project a title, and that becomes the complete identifier:
+
+- `A00 My first project`
+- `M49 Some project in the middle`
+- `Z99 My last project`
+
+### Make your project IDs meaningful
+
+I've said that `A00` is the 'first project' here just to get the point across. You should be more imaginative with your project identifiers as it will help you to remember them.
+
+The letter-number-number scheme gives us twenty-six groupings of one hundred. I suggest using the letter to represent a very broad part of your life. (Think about your domains.<FootRef n={1} />)
+
+Some suggestions, which you should adapt to the way your own brain works.
+
+- `P` might be all of your personal projects.
+  - But this is kinda boring: if your name is Jill, why not go with `J`?
+- I have chosen `D` to represent my Johnny.Decimal projects.
+- `W` feels obvious for work, but if you're going to be at one company for a while perhaps use a letter that represents the company.
+
+Similarly, play with the numbers. Here are all of the current projects in my life and the rationale behind their identifiers.
+
+- `D01`: the Johnny.Decimal website
+  - Picked before I'd thought about this properly, hence the boring `01`.
+  - If I chose this today I might pick `D80` because 80 is the port that websites serve traffic on. 🤓
+- `D85`: the Johnny.Decimal business
+  - Because `85` _kinda_ looks like `BS` which _kinda_ sounds like '**B**u**S**iness'.
+  - But this works! I remember it.
+- `P01`: my [entire personal life](https://forum.johnnydecimal.com/t/my-personal-system/412) for a decade.
+  - For a long time this was my only project.
+  - I tested three digits as a project identifier, so this was `101` for a while.
+  - As with `D01`, this became `P01` because I hadn't thought this through at the time.
+- `P04`: our [Learn with Lucy](https://www.learnwithlucy.rocks/courses/excel) Excel course.
+  - A personal project, and in my old scheme (now defunct) this was the 4th project.
+  - (It's really good! You should learn Excel.)
+- `L43`: my previous job.
+  - Which I quit to focus on Johnny.Decimal! Please [support me](/00-09-site-administration/02-support-the-site/02.01-sponsor-me/). ;-)
+  - Because the company name looks a bit like that combination of letters and numbers.
+  - Now that I've chosen `L` to be my top-level identifier for 'work', I'll use it again if I need to.
+
+### Order is irrelevant here
+
+You **should not** consider order when choosing project identifiers: that is, `X02` need not come after `X01`. Prefer numbers with meaning over a numerical sequence.
+
+There is a caveat here which we will address on a future page: if you fit one of the patterns that requires more projects, it will likely be simpler to use identifiers in a sequence.
+
+### What if I already have a project code at work?
+
+Many of you will be using this scheme at work. In that case, you may already have a well-defined project code.
+
+This might be a job code, the cost code for the project, or some internal code used in another system.
+
+If you already have a code, you should consider using it. Why invent _another_ identifier if you already have one?
+
+Remember, all of this is guidance. Do what works for you. The thing that works is likely to be the thing that introduces the least friction: _especially_ at work where you need other people's buy-in.
+
+<hr class="half" />
+
+## The full Johnny.Decimal ID
+
+Whereas previously our IDs were of the form `11.01`, which we [refer to in the abstract](/10-19-concepts/12-advanced/12.05-acid-notation/) as `AC.ID`, they have now expanded and are now in the range:
+
+- `A00.00.00`
+- ...
+- `M23.45.67`
+- ...
+- `Z99.99.99`
+
+We refer to this as `PRO.AC.ID`.
+
+### Do I have to use the full ID everywhere?
+
+It depends.
+
+Is your reference unambiguous without it? Then prefer the short version.
+
+See [implementation details](#implementation-details) below for more detail.
+
+<hr class="half" />
+
+## How many projects should I have?
+
+It depends on your 'pattern', which we get to on the next page. But, as I have said above, you should prefer **as few projects as possible.**
+
+This is why we are free to choose project identifiers that 'make sense' to our brains. We don't need to start at `A01` because we have 2,600 identifiers to choose from.
+
+If you ever come close to 'using up' your project identifiers then I think you've probably done it wrong.
+
+---
+
+# Implementation details
+
+So how do I actually do this in real life?
+
+## File system
+
+Typically, I just use the project identifier to contain my project.
+
+<JDImage
+  alt="MacOS Finder screenshot showing two projects side-by-side. Each is now labelled with a project number and name at the top"
+  caption="The simplest implementation"
+  noinvert
+  original="13.02-finder-b00-s88-together-in-a-system@2x"
+  src="https://imagedelivery.net/2bVljGQL-hZadODS2HAZEw/60c63ed8-b8e9-4aeb-25b3-dd278aa84700/public"
+  width="416"
+/>
+
+I have tried and rejected using the project identifier in front of some or all of the subfolders within the project. I found no benefit to this approach.
+
+My email folder structure mirrors this technique.
+
+Where I _did_ find benefit was in using the full `PRO.AC.ID` identifier in a file name.
+
+<JDImage
+  alt="MacOS Finder screenshot showing a folder structure expanded to 11.01. Inside is a spreadsheet named 'S88.11.01 My spreadsheet.xlsx'"
+  caption="Using the full <code>PRO.AC.ID</code> in a file name"
+  noinvert
+  original="13.02-finder-s00.11.01-spreadsheet@2x"
+  src="https://imagedelivery.net/2bVljGQL-hZadODS2HAZEw/14e93352-2988-4dfd-b945-0451a0906400/public"
+  width="311"
+/>
+
+This might seem crazy, but it dramatically increases the usefulness of your 'recently opened files' list.
+
+This list, currently a garbled mess of document names, suddenly becomes organised according to your Johnny.Decimal system.
+
+And now any file that you have cause to email has its identifier embedded. I've used this to [find a five-year-old file in a matter of seconds](https://forum.johnnydecimal.com/t/numbers-in-file-names-now-officially-endorsed/398).
+
+I recommend at least trying this approach to see if it works for you.
+
+## Notes
+
+You **must** use the full `PRO.AC.ID` identifier in the title of your notes.
+
+The power of your [index](/10-19-concepts/11-core/11.05-the-index/), which for me is also my notes system, is its ability to instantly and without ambiguity find any item.
+
+With multiple projects, we will inevitably track multiple items with the number `11.01`. This leads to confusion and slows you down.
+
+<JDImage
+  alt="Screenshot of Bear showing three notes who all have the ID 11.01. Bear's search highlights them all."
+  noinvert
+  original="13.02-bear-11.01-three-results@2x"
+  src="https://imagedelivery.net/2bVljGQL-hZadODS2HAZEw/56724914-acfb-49be-4057-d874444c4400/public"
+  width="571"
+/>
+
+When we know what we want, we should be able to find it immediately.
+
+<JDImage
+  alt="Screenshot of Bear showing note 'M55.11.01' which is now the only one that Bear finds when we search for its full number."
+  noinvert
+  original="13.02-bear-m55.11.01-missile@2x"
+  src="https://imagedelivery.net/2bVljGQL-hZadODS2HAZEw/3a7e054f-e99c-4b44-a873-1ac9aa839700/public"
+  width="571"
+/>
+
+---
+
+# An exception: systems across domains
+
+When you have **single-project systems** each in their own domain, **you should not need to use a multiple project system.**
+
+<JDImage
+  alt="Home and work, divided by a thick box, each with one Johnny.Decimal project within their box"
+  caption="Two tiny systems, each in their own domain"
+  noinvert
+  original="13.02-finder-home-work-one-project-each@2x.png"
+  src="https://imagedelivery.net/2bVljGQL-hZadODS2HAZEw/7809f691-d29b-4cbb-6d03-ccf7452b2100/public"
+  width="387"
+/>
+
+Note that in this situation it is still the case that you will have overlapping numbers. `11.01` is likely to exist in both systems.
+
+But this isn't a problem because in either domain, when you refer to `11.01` it is always clear which one you are referring to. **Accessing or editing 'the wrong one' isn't possible.**
+
+<Footnote
+  footnotes={[
+    "To be clear, you <em>may</em> use any project code anywhere. Just because you use <code>L</code> for a project in one domain does not preclude you from also using it in another domain. But it might be neater to do so, and it will certainly help your brain.",
+  ]}
+/>

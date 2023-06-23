@@ -227,6 +227,10 @@ a {
     }
   }
 
+  & figure code {
+    font-size: inherit;
+  }
+
   & sup {
     font-size: 1rem;
     font-family: $monospace;
@@ -273,8 +277,14 @@ a {
   & hr {
     border: 0;
     border-top: 1px solid lightgray;
+    border-top: 1px solid $colour-300;
     box-shadow: $box-shadow;
     margin: 3rem auto;
+
+    &.half {
+      border-top: 1px dotted $colour-200;
+      width: 40%;
+    }
   }
 
   // Fixed-width, inline
@@ -292,25 +302,27 @@ a {
   // Images
   & img,
   video {
-    border: 1px solid $colour-300;
-    border-radius: 2px;
-    box-shadow: $box-shadow;
-    box-sizing: border-box; // stops the image shrinking when you specify a size
-    margin: $large 0 $xl 0;
-    padding: $tiny;
-    background-color: white;
+    &:not(.JDImage > img) {
+      border: 1px solid $colour-300;
+      border-radius: 2px;
+      box-shadow: $box-shadow;
+      box-sizing: border-box; // stops the image shrinking when you specify a size
+      margin: $large 0 $xl 0;
+      padding: $tiny;
+      // background-color: white;
 
-    @include for-tablet-portrait-up() {
-      padding: $small;
-    }
+      @include for-tablet-portrait-up() {
+        padding: $small;
+      }
 
-    @media (prefers-color-scheme: dark) {
-      filter: brightness(0.7) contrast(1.2);
-    }
-
-    &.no-invert {
       @media (prefers-color-scheme: dark) {
-        filter: brightness(0.7) contrast(1.2) invert(1) hue-rotate(180deg);
+        filter: brightness(0.7) contrast(1.2);
+      }
+
+      &.no-invert {
+        @media (prefers-color-scheme: dark) {
+          filter: brightness(0.7) contrast(1.2) invert(1) hue-rotate(180deg);
+        }
       }
     }
   }

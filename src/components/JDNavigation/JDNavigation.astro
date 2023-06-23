@@ -32,10 +32,16 @@ import jdSort from "@js/jdSort.js";
  * We also exclude pages where `!data.excludeFromNav`, which is typically
  * our hidden pages at `90-99 Behind the scenes`.
  */
-const sitePages = await getCollection("site", ({ slug, data }) => {
-  return slug !== "index" && !data.excludeFromNav && data.publish;
-});
-
+let sitePages;
+if (import.meta.env.DEV) {
+  sitePages = await getCollection("site", ({ slug, data }) => {
+    return slug !== "index" && !data.excludeFromNav;
+  });
+} else {
+  sitePages = await getCollection("site", ({ slug, data }) => {
+    return slug !== "index" && !data.excludeFromNav && data.publish;
+  });
+}
 /**
  * <JDNavItem> only needs a small subset of the information in `sitePages`.
  * - Number (for sorting and display)

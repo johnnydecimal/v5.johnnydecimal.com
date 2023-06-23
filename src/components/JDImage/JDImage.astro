@@ -1,0 +1,63 @@
+---
+type Props = {
+  alt: string;
+  caption?: string;
+  noinvert: boolean;
+  original: string; // For commenting the <JDImage /> call
+  src: string;
+  width: string;
+};
+
+const { alt, caption, noinvert, src, width } = Astro.props;
+---
+
+<figure class="JDImage">
+  <img
+    alt={alt}
+    class={noinvert ? "no-invert" : ""}
+    decoding="async"
+    loading="lazy"
+    src={src}
+    width={width}
+  />
+  {caption && <figcaption class="caption" set:html={caption} />}
+</figure>
+
+<style lang="scss">
+  @use "/src/styles/johnny" as *;
+
+  .JDImage {
+    border: 1px solid $colour-300;
+    border-radius: 2px;
+    box-shadow: $box-shadow;
+    display: inline-block;
+    margin: $large 0 $xl 0;
+
+    padding: $tiny;
+    @include for-tablet-portrait-up() {
+      padding: $small;
+    }
+
+    img {
+      margin: 0 auto;
+      @media (prefers-color-scheme: dark) {
+        filter: brightness(0.7) contrast(1.2);
+      }
+
+      &.no-invert {
+        @media (prefers-color-scheme: dark) {
+          filter: brightness(0.7) contrast(1.2) invert(1) hue-rotate(180deg);
+        }
+      }
+    }
+
+    figcaption {
+      color: $colour-600;
+      font-family: $monospace;
+      font-size: 1.4rem;
+      line-height: 1.4;
+      margin-top: $tiny;
+      text-align: center;
+    }
+  }
+</style>

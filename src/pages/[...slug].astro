@@ -3,7 +3,12 @@ import { CollectionEntry, getCollection } from "astro:content";
 import JDPage from "../layouts/JDPage.astro";
 
 export async function getStaticPaths() {
-  const pages = await getCollection("site", ({ data }) => data.publish);
+  let pages;
+  if (import.meta.env.DEV) {
+    pages = await getCollection("site");
+  } else {
+    pages = await getCollection("site", ({ data }) => data.publish);
+  }
 
   return pages.map((page) => {
     let modifiedSlug;

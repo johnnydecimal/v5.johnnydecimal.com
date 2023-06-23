@@ -1,8 +1,15 @@
 import { getCollection } from "astro:content";
 
-const sitePages = await getCollection("site", ({ data }) => {
-  return !data.excludeFromNav && data.publish;
-});
+let sitePages;
+if (import.meta.env.DEV) {
+  sitePages = await getCollection("site", ({ data }) => {
+    return !data.excludeFromNav;
+  });
+} else {
+  sitePages = await getCollection("site", ({ data }) => {
+    return !data.excludeFromNav && data.publish;
+  });
+}
 
 interface BackNext {
   pathname?: string;
