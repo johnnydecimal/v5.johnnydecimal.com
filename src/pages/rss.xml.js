@@ -26,13 +26,11 @@ export async function get(context) {
     description: "A system to organise projects - full site feed",
     site: context.site,
     items: allPages.map((page) => {
-      console.log("🆚 rss.xml.js/page.slug:", page.slug);
       const slug = page.slug
         // Put the decimals back in
         .replace(/(\/\d\d)(\d\d)/, "$1.$2")
         // Fix blog posts, redirect to the short link
         .replace(/2200(\d\d\d\d)(.*)/, "22.00.$1");
-      console.log("🆚 rss.xml.js/slug :", slug);
 
       return {
         title: `${page.data.number} ${page.data.title}`,
