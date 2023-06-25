@@ -6,7 +6,6 @@ const sitePages: CollectionEntry<"site">[] = await getCollection(
   "site",
   ({ data }) => !data.excludeFromNav
 );
-console.log("🆚 _00.00-Index.astro/sitePages:", sitePages);
 
 const index = sitePages.map((page) => {
   return {
@@ -14,34 +13,117 @@ const index = sitePages.map((page) => {
     title: page.data.title,
     area: page.data.area,
     category: page.data.category || "",
-    slug: page.slug,
+    slug: page.slug.replace(/\/(\d\d)(\d\d)-/, "/$1.$2-"),
   };
 });
 
 index.sort(jdSort);
 
 const index2 = index.map((page) => {
-  if (page.number.match(/\d\d-\d\d/)) {
+  if (page.number.match(/^\d\d-\d\d$/)) {
     return {
       ...page,
       type: "area",
     };
   }
 
-  return page;
+  if (page.number.match(/^\d\d$/)) {
+    return {
+      ...page,
+      type: "category",
+    };
+  }
+
+  if (page.number.match(/^\d\d\.\d\d$/)) {
+    return {
+      ...page,
+      type: "id",
+    };
+  }
+
+  throw new Error(
+    "🛑 _00.00-Index.astro: got a page.number that isn't an area, category, or id"
+  );
 });
 ---
 
-<div>
+<ol id="Index0000">
   {
     index2.map((entry) => {
       return (
-        <div>
-          <span class="number">{entry.number}</span>
-          <span class="title">{entry.title}</span>
-          <span class="type">{entry.type || "nah"}</span>
-        </div>
+        <li class={entry.type}>
+          <a class={entry.type} href={`/${entry.slug}/`}>
+            <div class="unread">•</div>
+            <div class="spacer" />
+            <div class="number">{entry.number}&nbsp;</div>
+            <div class="title">{entry.title}</div>
+          </a>
+        </li>
       );
     })
   }
-</div>
+</ol>
+
+<style lang="scss">
+  @use "/src/styles/johnny" as *;
+
+  #Index0000 {
+    font-family: $monospace;
+    font-size: 1.5rem;
+    list-style: none;
+    margin: $xl 0;
+    padding: 0;
+
+    li {
+      font-size: inherit;
+
+      a {
+        color: $colour-500;
+        display: grid;
+
+        &:hover {
+          background-color: $colour-500;
+          color: $colour-100;
+        }
+        &:visited {
+          color: $colour-700;
+
+          .unread {
+            color: $colour-50;
+          }
+        }
+        &:visited:hover {
+          background-color: $colour-600;
+          color: $colour-100;
+          .unread {
+            color: $colour-600;
+          }
+        }
+
+        &.area {
+          font-weight: bold;
+          grid-template-columns: 2ch 0 6ch auto;
+        }
+        &.category {
+          grid-template-columns: 2ch 3ch 3ch auto;
+          & .number,
+          .title {
+            text-decoration: underline;
+          }
+        }
+        &.id {
+          grid-template-columns: 2ch 3ch 6ch auto;
+          @include for-tablet-portrait-up() {
+            grid-template-columns: 2ch 6ch 6ch auto;
+          }
+        }
+      }
+    }
+
+    & .area {
+      &:not(:first-of-type) {
+        margin-top: $medium;
+      }
+    }
+  }
+</style>
