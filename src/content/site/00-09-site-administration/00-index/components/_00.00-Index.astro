@@ -1,0 +1,47 @@
+---
+import { CollectionEntry, getCollection } from "astro:content";
+import jdSort from "@js/jdSort";
+
+const sitePages: CollectionEntry<"site">[] = await getCollection(
+  "site",
+  ({ data }) => !data.excludeFromNav
+);
+console.log("🆚 _00.00-Index.astro/sitePages:", sitePages);
+
+const index = sitePages.map((page) => {
+  return {
+    number: page.data.number,
+    title: page.data.title,
+    area: page.data.area,
+    category: page.data.category || "",
+    slug: page.slug,
+  };
+});
+
+index.sort(jdSort);
+
+const index2 = index.map((page) => {
+  if (page.number.match(/\d\d-\d\d/)) {
+    return {
+      ...page,
+      type: "area",
+    };
+  }
+
+  return page;
+});
+---
+
+<div>
+  {
+    index2.map((entry) => {
+      return (
+        <div>
+          <span class="number">{entry.number}</span>
+          <span class="title">{entry.title}</span>
+          <span class="type">{entry.type || "nah"}</span>
+        </div>
+      );
+    })
+  }
+</div>
