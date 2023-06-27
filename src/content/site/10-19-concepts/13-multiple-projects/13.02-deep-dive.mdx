@@ -18,14 +18,29 @@ import JDImage from "@components/JDImage/JDImage.astro";
 
 The [previous page](/10-19-concepts/13-multiple-projects/13.01-introduction/) gave an overview of the concept of 'multiple projects'.
 
-It is the issue which causes the most confusion, so I will go in to a lot more detail here. This page is quite long, so here's a table of contents to help you get around.
+It is the issue which causes the most confusion, so I will go in to more detail here. This page is long, so here's a table of contents to help you get around.
 
 If this is your first time here, just read it end-to-end.
 
 - [Definitions](#definitions)
   - [Project](#project)
   - [System](#system)
-  - finish me when the article is reviewed
+  - [Domain](#domain)
+  - [System/domain relationship](#systemdomain-relationship)
+- [Problem statement](#problem-statement)
+  - [A warning](#a-warning)
+- [The solution](#the-solution)
+  - [What should we call our projects?](#what-should-we-call-our-projects)
+    - [Make your project IDs meaningful](#make-your-project-ids-meaningful)
+    - [Order is irrelevant here](#order-is-irrelevant-here)
+    - [What if I already have a project code at work?](#what-if-i-already-have-a-project-code-at-work)
+  - [The full Johnny.Decimal ID](#the-full-johnnydecimal-id)
+    - [Do I have to use the full ID everywhere?](#do-i-have-to-use-the-full-id-everywhere)
+  - [How many projects should I have?](#how-many-projects-should-i-have)
+- [Implementation details](#implementation-details)
+  - [File system](#file-system)
+  - [Notes](#notes)
+- [An exception](#an-exception)
 
 ---
 
@@ -40,6 +55,7 @@ A project is **any single collection of Johnny.Decimal numbers** from `00-09` th
 <JDImage
   alt="MacOS Finder screenshot showing a small Johnny.Decimal folder structure"
   caption="A tiny project"
+  height="134"
   noinvert
   original="13.02-finder-tiny-project-2-border@2x.png"
   src="https://imagedelivery.net/2bVljGQL-hZadODS2HAZEw/d60e6932-b5d1-4ad5-b979-714a8b521b00/public"
@@ -57,6 +73,7 @@ Systems never overlap: **all identifiers within a system are guaranteed to be un
 <JDImage
   alt="MacOS Finder screenshot showing a small Johnny.Decimal folder structure"
   caption="A tiny system<br />with one project"
+  height="161"
   noinvert
   original="13.02-finder-a-tiny-system-with-one-project@2x"
   src="https://imagedelivery.net/2bVljGQL-hZadODS2HAZEw/4f56156c-5d19-49c8-b899-b5f4e72f7d00/public"
@@ -74,6 +91,7 @@ You might have two domains: home, and work.
 <JDImage
   alt="Two emoji, home and work, with a thick border drawn around each to indicate their total separation"
   caption="Two domains"
+  height="115"
   noinvert
   original="13.02-home-and-work@2.png"
   src="https://imagedelivery.net/2bVljGQL-hZadODS2HAZEw/42e68a31-ad68-4348-2f83-507bf3712400/public"
@@ -89,6 +107,7 @@ For example, you might use the same notes application on your phone for both hom
 <JDImage
   alt="Home and work again, but joined in the same box because they share a note icon in the middle"
   caption="One domain"
+  height="115"
   noinvert
   original="13.02-home-and-work-joined-with-a-note@2x"
   src="https://imagedelivery.net/2bVljGQL-hZadODS2HAZEw/e40ade64-71ad-4f81-15b2-1a8b91643c00/public"
@@ -99,7 +118,7 @@ For example, you might use the same notes application on your phone for both hom
 
 It is _likely_ that you manage one system for each of your domains.
 
-I define them as separate terms as it makes for easier reading, and there is a particular exception which we address at the end of this page.
+I define them as separate terms for easier reading, and there is a particular exception which we address at the end of this page.
 
 ---
 
@@ -110,6 +129,7 @@ If we find ourselves creating **more than one project within a system,** we have
 <JDImage
   alt="MacOS Finder screenshot showing two small Johnny.Decimal folder structures, with overlapping numbers, side-by-side"
   caption="Two projects within<br />the same system"
+  height="162"
   noinvert
   original="13.02-two-projects-within-the-same-system@2x"
   src="https://imagedelivery.net/2bVljGQL-hZadODS2HAZEw/675abd4c-f6a3-498f-90b8-020dfb7ed700/public"
@@ -136,7 +156,7 @@ I tell you this to save you time: **only use multiple projects if you need to.**
 
 # The solution
 
-It should be clear that we require a further level of identification to allow us to differentiate projects.
+It should be clear that we require a further level of identification to differentiate projects.
 
 There are a number of solutions, which I'll address in the coming pages.
 
@@ -145,6 +165,7 @@ The preferred solution for most cases is to add an identifier **above your areas
 <JDImage
   alt="MacOS Finder screenshot showing two projects side-by-side. Each is now labelled with a project number at the top"
   caption="Ambiguity removed"
+  height="140"
   noinvert
   original="13.02-finder-two-projects-border@2x"
   src="https://imagedelivery.net/2bVljGQL-hZadODS2HAZEw/7aae4b32-679e-418f-242f-653147218200/public"
@@ -172,31 +193,34 @@ We choose a project code, give our project a title, and that becomes the complet
 
 ### Make your project IDs meaningful
 
-I've said that `A00` is the 'first project' here just to get the point across. You should be more imaginative with your project identifiers as it will help you to remember them.
+I've said that `A00` is the 'first project' here just to get the point across. You should be more imaginative with your project identifiers as it will help you remember them.
 
 The letter-number-number scheme gives us twenty-six groupings of one hundred. I suggest using the letter to represent a very broad part of your life. (Think about your domains.<FootRef n={1} />)
 
-Some suggestions, which you should adapt to the way your own brain works.
+#### Some suggestions
+
+Which you should adapt to the way your own brain works.
 
 - `P` might be all of your personal projects.
   - But this is kinda boring: if your name is Jill, why not go with `J`?
 - I have chosen `D` to represent my Johnny.Decimal projects.
 - `W` feels obvious for work, but if you're going to be at one company for a while perhaps use a letter that represents the company.
 
-Similarly, play with the numbers. Here are all of the current projects in my life and the rationale behind their identifiers.
+#### Play with the numbers
+
+Here are all of the current projects in my life and the rationale behind their identifiers.
 
 - `D01`: the Johnny.Decimal website
   - Picked before I'd thought about this properly, hence the boring `01`.
   - If I chose this today I might pick `D80` because 80 is the port that websites serve traffic on. 🤓
 - `D85`: the Johnny.Decimal business
-  - Because `85` _kinda_ looks like `BS` which _kinda_ sounds like '**B**u**S**iness'.
+  - Because `85` _kinda_ looks like `BS` which _kinda_ sounds like **'B**u**S**iness'.
   - But this works! I remember it.
 - `P01`: my [entire personal life](https://forum.johnnydecimal.com/t/my-personal-system/412) for a decade.
   - For a long time this was my only project.
-  - I tested three digits as a project identifier, so this was `101` for a while.
   - As with `D01`, this became `P01` because I hadn't thought this through at the time.
 - `P04`: our [Learn with Lucy](https://www.learnwithlucy.rocks/courses/excel) Excel course.
-  - A personal project, and in my old scheme (now defunct) this was the 4th project.
+  - A personal project, and in my old scheme (now defunct) this was the fourth project.
   - (It's really good! You should learn Excel.)
 - `L43`: my previous job.
   - Which I quit to focus on Johnny.Decimal! Please [support me](/00-09-site-administration/02-support-the-site/02.01-sponsor-me/). ;-)
@@ -223,7 +247,7 @@ Remember, all of this is guidance. Do what works for you. The thing that works i
 
 ## The full Johnny.Decimal ID
 
-Whereas previously our IDs were of the form `11.01`, which we [refer to in the abstract](/10-19-concepts/12-advanced/12.05-acid-notation/) as `AC.ID`, they have now expanded and are now in the range:
+Whereas previously our IDs were of the form `11.01`, which we [refer to in the abstract](/10-19-concepts/12-advanced/12.05-acid-notation/) as `AC.ID`, they have now expanded and are in the range:
 
 - `A00.00.00`
 - ...
@@ -264,6 +288,7 @@ Typically, I just use the project identifier to contain my project.
 <JDImage
   alt="MacOS Finder screenshot showing two projects side-by-side. Each is now labelled with a project number and name at the top"
   caption="The simplest implementation"
+  height="159"
   noinvert
   original="13.02-finder-b00-s88-together-in-a-system@2x"
   src="https://imagedelivery.net/2bVljGQL-hZadODS2HAZEw/60c63ed8-b8e9-4aeb-25b3-dd278aa84700/public"
@@ -279,6 +304,7 @@ Where I _did_ find benefit was in using the full `PRO.AC.ID` identifier in a fil
 <JDImage
   alt="MacOS Finder screenshot showing a folder structure expanded to 11.01. Inside is a spreadsheet named 'S88.11.01 My spreadsheet.xlsx'"
   caption="Using the full <code>PRO.AC.ID</code> in a file name"
+  height="141"
   noinvert
   original="13.02-finder-s00.11.01-spreadsheet@2x"
   src="https://imagedelivery.net/2bVljGQL-hZadODS2HAZEw/14e93352-2988-4dfd-b945-0451a0906400/public"
@@ -289,7 +315,7 @@ This might seem crazy, but it dramatically increases the usefulness of your 'rec
 
 This list, currently a garbled mess of document names, suddenly becomes organised according to your Johnny.Decimal system.
 
-And now any file that you have cause to email has its identifier embedded. I've used this to [find a five-year-old file in a matter of seconds](https://forum.johnnydecimal.com/t/numbers-in-file-names-now-officially-endorsed/398).
+And now any file that you need to email has its identifier embedded. I've used this to [find a five-year-old file in a matter of seconds](https://forum.johnnydecimal.com/t/numbers-in-file-names-now-officially-endorsed/398).
 
 I recommend at least trying this approach to see if it works for you.
 
@@ -303,6 +329,7 @@ With multiple projects, we will inevitably track multiple items with the number 
 
 <JDImage
   alt="Screenshot of Bear showing three notes who all have the ID 11.01. Bear's search highlights them all."
+  height="370"
   noinvert
   original="13.02-bear-11.01-three-results@2x"
   src="https://imagedelivery.net/2bVljGQL-hZadODS2HAZEw/56724914-acfb-49be-4057-d874444c4400/public"
@@ -313,6 +340,7 @@ When we know what we want, we should be able to find it immediately.
 
 <JDImage
   alt="Screenshot of Bear showing note 'M55.11.01' which is now the only one that Bear finds when we search for its full number."
+  height="370"
   noinvert
   original="13.02-bear-m55.11.01-missile@2x"
   src="https://imagedelivery.net/2bVljGQL-hZadODS2HAZEw/3a7e054f-e99c-4b44-a873-1ac9aa839700/public"
@@ -321,13 +349,14 @@ When we know what we want, we should be able to find it immediately.
 
 ---
 
-# An exception: systems across domains
+# An exception
 
 When you have **single-project systems** each in their own domain, **you should not need to use a multiple project system in that domain.**
 
 <JDImage
   alt="Home and work, divided by a thick box, each with one Johnny.Decimal project within their box"
   caption="Two tiny systems, each in their own domain"
+  height="267"
   noinvert
   original="13.02-finder-home-work-one-project-each@2x.png"
   src="https://imagedelivery.net/2bVljGQL-hZadODS2HAZEw/7809f691-d29b-4cbb-6d03-ccf7452b2100/public"
@@ -340,6 +369,6 @@ But this isn't a problem because in either domain, when you refer to `11.01` it 
 
 <Footnote
   footnotes={[
-    "To be clear, you <em>may</em> use any project code anywhere. Just because you use <code>L</code> for a project in one domain does not preclude you from also using it in another domain. But it might be neater to do so, and it will certainly help your brain.",
+    "To be clear, you <em>may</em> use any project code anywhere. Just because you use <code>L</code> for a project in one domain does not preclude you from also using it in another domain.<br /><br />But it might be neater to keep the letter-domain relationship, and it will certainly help your brain.",
   ]}
 />
