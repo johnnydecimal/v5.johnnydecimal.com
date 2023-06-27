@@ -11,8 +11,6 @@ type Props = {
 
 const { alt, caption, height, noinvert = false, src, width } = Astro.props;
 
-console.log(Astro.props);
-
 if (!(alt && height && src && width)) {
   throw new Error(
     `JDImage.astro: alt, height, src, width are all required for ${Astro.props.src}`
