@@ -15,6 +15,9 @@ export default defineConfig({
         page !== "https://johnnydecimal.com/test/style-guide/",
     }),
   ],
+  markdown: {
+    syntaxHighlight: false,
+  },
   scopedStyleStrategy: "class",
   site: "https://johnnydecimal.com",
   trailingSlash: "always",
