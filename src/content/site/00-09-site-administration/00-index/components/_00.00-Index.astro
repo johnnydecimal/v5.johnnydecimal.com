@@ -4,7 +4,7 @@ import jdSort from "@js/jdSort";
 
 const sitePages: CollectionEntry<"site">[] = await getCollection(
   "site",
-  ({ data }) => !data.excludeFromNav
+  ({ data }) => !data.excludeFromNav && data.publish
 );
 
 const index = sitePages.map((page) => {
