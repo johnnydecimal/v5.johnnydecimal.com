@@ -53,7 +53,7 @@ export async function get(context) {
               // Replace all <Components />
               .replaceAll(
                 /<.* \/>/g,
-                " {{ see [the note at 02.03 RSS feed](https://johnnydecimal.com/00-09-site-administration/02-send-and-receive/02.03-rss-feed/) regarding the display of additional components in this feed }} "
+                ` [ see [the note at 02.03 RSS feed](https://johnnydecimal.com/00-09-site-administration/02-send-and-receive/02.03-rss-feed/) regarding the display of additional components in this feed - you need to [view this page on the site](https://johnnydecimal.com/${slug}/) for the best experience - sorry! ]`
               )
           )
         ),
