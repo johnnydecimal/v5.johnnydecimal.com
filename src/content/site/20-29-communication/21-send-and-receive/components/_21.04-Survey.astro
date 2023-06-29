@@ -5,6 +5,7 @@
   action="/90-99-behind-the-scenes/98-hidden-website-pages/98.12-survey-thanks/"
   id="Survey2104"
   name="survey"
+  netlify-honeypot="bramwells"
   method="POST"
   data-netlify="true"
 >
@@ -64,6 +65,7 @@
         rows="5"></textarea>
     </li>
   </ul>
+  <!-- <input type="text" id="bramwells" name="bramwells" /> -->
   <button type="submit">Send!</button>
 </form>
 
@@ -73,6 +75,11 @@
   form#Survey2104 {
     color: $colour-800;
     font-family: $monospace;
+
+    // Honeypot; currently disabled
+    input#bramwells {
+      display: none;
+    }
 
     ul {
       list-style: none;
