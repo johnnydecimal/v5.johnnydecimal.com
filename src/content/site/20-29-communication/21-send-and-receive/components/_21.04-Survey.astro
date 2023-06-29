@@ -1,0 +1,130 @@
+---
+---
+
+<form
+  action="/90-99-behind-the-scenes/98-hidden-website-pages/98.12-survey-thanks/"
+  id="Survey2104"
+  name="contact"
+  method="POST"
+  data-netlify="true"
+>
+  <h4>The survey</h4>
+  <ul>
+    <li>
+      <label for="name">Name</label>
+      <input type="text" id="name" name="user__name" />
+    </li>
+    <li>
+      <label for="mail">Email</label>
+      <input type="email" id="mail" name="user__email" placeholder="Optional" />
+    </li>
+    <li>
+      <label for="location">Location</label>
+      <input
+        type="text"
+        id="location"
+        name="user__location"
+        placeholder="City, country, whatever"
+      />
+    </li>
+    <li>
+      <label for="how_did_you_find">How did you find Johnny.Decimal?</label>
+      <textarea id="how_did_you_find" name="why__how_did_you_find" rows="2"
+      ></textarea>
+    </li>
+    <li>
+      <label for="why_are_you_here"
+        >Why are you here? What are you hoping to achieve?</label
+      >
+      <textarea id="why_are_you_here" name="why_are_you_here" rows="5"
+      ></textarea>
+    </li>
+    <li>
+      <label for="how_good_are_you"
+        >What's your experience with this sort of thing? Johnny.Decimal
+        specifically, and 'being organised' generally?</label
+      >
+      <textarea id="how_good_are_you" name="how_good_are_you" rows="5"
+      ></textarea>
+    </li>
+    <li>
+      <label for="home_or_work"
+        >Will you be using these skills at home, work, or somewhere else?</label
+      >
+      <textarea id="home_or_work" name="home_or_work" rows="5"></textarea>
+    </li>
+    <li>
+      <label for="what_do_you_need"
+        >What additional tools or services might help you achieve your goal?</label
+      >
+      <textarea
+        id="what_do_you_need"
+        name="what_do_you_need"
+        placeholder="Software? / Online courses? / More online support? / Better forums? / Consultancy? / Other?"
+        rows="5"></textarea>
+    </li>
+  </ul>
+  <button type="submit">Send!</button>
+</form>
+
+<style lang="scss">
+  @use "/src/styles/johnny" as *;
+
+  form#Survey2104 {
+    color: $colour-800;
+    font-family: $monospace;
+
+    ul {
+      list-style: none;
+      padding: 0;
+
+      li {
+        font-size: 1.6rem;
+        margin: $small auto;
+        display: grid;
+
+        grid-template-columns: 1fr;
+        @include for-tablet-portrait-up() {
+          grid-template-columns: 2fr 3fr;
+        }
+
+        label {
+          align-self: center;
+          margin-right: 1ch;
+        }
+      }
+    }
+
+    input,
+    textarea {
+      border: none;
+      border-radius: 2px;
+      color: $colour-700;
+      outline: 1px solid $colour-500;
+      padding: $small;
+
+      &:focus {
+        outline: 2px dashed $colour-500;
+      }
+    }
+
+    button {
+      color: $colour-100;
+      background-color: $colour-500;
+      border: 2px solid $colour-900;
+      border-radius: 2px;
+      cursor: pointer;
+      font-family: $monospace;
+      margin: $medium auto;
+      padding: $medium;
+      width: 100%;
+      -webkit-appearance: none; // stops horrrible rounded button
+
+      &:hover {
+        background-color: $colour-100;
+        border: 2px solid $colour-500;
+        color: $colour-500;
+      }
+    }
+  }
+</style>
