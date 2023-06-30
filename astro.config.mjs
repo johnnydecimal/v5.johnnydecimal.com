@@ -25,8 +25,8 @@ export default defineConfig({
       [
         rehypeAutolinkHeadings,
         {
-          behaviour: "wrap",
-          // content: h("span.header-link-icon", { ariaHidden: "true" }),
+          behaviour: "append",
+          content: h("span.header-link-icon", { ariaHidden: "true" }),
         },
       ],
     ],
