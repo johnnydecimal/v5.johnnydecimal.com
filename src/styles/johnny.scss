@@ -193,10 +193,11 @@ a {
     margin-top: $large;
   }
 
-  // Style rehype-generated header links - not bothering with h4
+  // Style rehype-generated header links
   h1,
   h2,
-  h3 {
+  h3,
+  h4 {
     display: grid;
     column-gap: 1rem;
     grid-template-columns: auto min-content;
@@ -213,6 +214,14 @@ a {
         content: "#";
         font-size: 1.6rem;
         vertical-align: top;
+      }
+    }
+  }
+  // Override for h4, it's a bit busy
+  h4 {
+    a {
+      .header-link-icon:after {
+        content: " ";
       }
     }
   }
