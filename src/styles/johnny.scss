@@ -202,18 +202,18 @@ a {
     column-gap: 1rem;
     grid-template-columns: auto min-content;
     a {
+      color: $highlight-200;
+      font-size: 1.6rem;
       text-decoration: none;
+      vertical-align: top;
       &:hover,
       &:hover:visited {
-        background-color: $highlight-500;
-        color: $highlight-900;
+        background-color: $colour-100;
+        color: $highlight-700;
         cursor: alias;
       }
       .header-link-icon:after {
-        color: $highlight-200;
         content: "#";
-        font-size: 1.6rem;
-        vertical-align: top;
       }
     }
   }
