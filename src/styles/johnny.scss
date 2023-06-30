@@ -193,6 +193,25 @@ a {
     margin-top: $large;
   }
 
+  // Prevent underlining of rehype-generated links
+  h1,
+  h2,
+  h3,
+  h4 {
+    a {
+      background-color: inherit;
+      color: inherit;
+      text-decoration: none;
+      &:hover,
+      &:visited,
+      &:hover:visited {
+        background-color: inherit;
+        color: inherit;
+        cursor: alias;
+      }
+    }
+  }
+
   // Body text
   p {
     margin: 1.75rem 0;
