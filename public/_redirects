@@ -19,21 +19,23 @@
 /blog/                                    /90-99-behind-the-scenes/98-hidden-website-pages/98.11-in-a-future-post/
 /blog/*                                   /90-99-behind-the-scenes/98-hidden-website-pages/98.11-in-a-future-post/
 
-# Pages you moved 2023-05-19
+# Pages that have been moved
+## 2023-05-19
 /00-09-site-administration/02-send-and-receive/02.01-contact-me/   /20-29-communication/21-send-and-receive/21.01-contact-me/
 /00-09-site-administration/02-send-and-receive/02.02-mailing-list/ /20-29-communication/21-send-and-receive/21.02-mailing-list/
 /00-09-site-administration/02-send-and-receive/02.03-rss-feed/     /20-29-communication/21-send-and-receive/21.03-rss-feed/
 /00-09-site-administration/02-send-and-receive/02.04-github/       /00-09-site-administration/01-about/01.04-version/
-/00-09-site-administration/04-give-me-money/04.01-support-me/      /00-09-site-administration/02-support-the-site/02.01-sponsor-me/
+/00-09-site-administration/04-give-me-money/04.01-support-me/      /00-09-site-administration/02-support-the-site/02.01-support-me/
 /00-09-site-administration/04-give-me-money/04.02-consulting/      /00-09-site-administration/02-support-the-site/02.02-consulting/
 /10-19-concepts/13-multiple-projects/13.01-introduction/           /10-19-concepts/13-multiple-projects/13.01-introduction/
 /10-19-concepts/14-build-your-system/14.01-introduction/           /10-19-concepts/14-build-your-system/14.01-introduction/
 /20-29-community/21-forums-and-chat/21.01-the-forum/               /20-29-communication/23-forums-and-chat/23.01-the-forum/
 /20-29-community/21-forums-and-chat/21.02-discord/                 /20-29-communication/23-forums-and-chat/23.02-discord/
+## 2023-07-11
+/00-09-site-administration/02-support-the-site/02.01-sponsor-me/   /00-09-site-administration/02-support-the-site/02.01-support-me/
 
 # Specials
-
-# Fixing a bad URL you mailed out
+## Fixing a bad URL you mailed out
 /20-29-communication/22-blog/22.01-all-entries/ /20-29-communication/22-blog/22.01-latest-posts/
 
 # jdcm.al short links
@@ -42,7 +44,6 @@
 # Blog short links -- they don't work like this because each also has a title
 # that won't be in the short-splat.
 # /22.00.*   /20-29-communication/22-blog/22.00.:splat/
-
 /22.00.0001/ /20-29-communication/22-blog/22.00.0001-hello-world/
 /22.00.0002/ /20-29-communication/22-blog/22.00.0002-business-knowledge-management/
 /22.00.0003/ /20-29-communication/22-blog/22.00.0003-i-quit-my-job/
