@@ -1,10 +1,6 @@
 import { defineConfig } from "astro/config";
 import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
-import { h } from "hastscript";
-
-import rehypeSlug from "rehype-slug";
-import rehypeAutolinkHeadings from "rehype-autolink-headings";
 
 // https://astro.build/config
 export default defineConfig({
@@ -20,16 +16,6 @@ export default defineConfig({
     }),
   ],
   markdown: {
-    rehypePlugins: [
-      rehypeSlug,
-      [
-        rehypeAutolinkHeadings,
-        {
-          behaviour: "append",
-          content: h("span.header-link-icon", { ariaHidden: "true" }),
-        },
-      ],
-    ],
     syntaxHighlight: false,
   },
   scopedStyleStrategy: "class",
