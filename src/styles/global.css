@@ -13,7 +13,9 @@
  */
 @font-face {
   font-family: "Berkeley Mono";
-  src: local("Berkeley Mono"), local("BerkeleyMono"),
+  src:
+    local("Berkeley Mono"),
+    local("BerkeleyMono"),
     url("/fonts/BerkeleyMono/BerkeleyMono-Regular.woff2") format("woff2");
   font-weight: normal;
   font-style: normal;
@@ -21,7 +23,9 @@
 }
 @font-face {
   font-family: "Berkeley Mono";
-  src: local("Berkeley Mono"), local("BerkeleyMono"),
+  src:
+    local("Berkeley Mono"),
+    local("BerkeleyMono"),
     url("/fonts/BerkeleyMono/BerkeleyMono-Bold.woff2") format("woff2");
   font-weight: bold;
   font-style: normal;
@@ -29,7 +33,9 @@
 }
 @font-face {
   font-family: "Berkeley Mono";
-  src: local("Berkeley Mono"), local("BerkeleyMono"),
+  src:
+    local("Berkeley Mono"),
+    local("BerkeleyMono"),
     url("/fonts/BerkeleyMono/BerkeleyMono-Italic.woff2") format("woff2");
   font-weight: normal;
   font-style: italic;
@@ -37,7 +43,9 @@
 }
 @font-face {
   font-family: "Berkeley Mono";
-  src: local("Berkeley Mono"), local("BerkeleyMono"),
+  src:
+    local("Berkeley Mono"),
+    local("BerkeleyMono"),
     url("/fonts/BerkeleyMono/BerkeleyMono-BoldItalic.woff2") format("woff2");
   font-weight: bold;
   font-style: italic;
@@ -52,7 +60,9 @@ Don't forget to modify the path if you update.
   font-style: normal;
   font-weight: 400;
   font-display: fallback;
-  src: local("IBM Plex Serif"), local("IBMPlexSerif"),
+  src:
+    local("IBM Plex Serif"),
+    local("IBMPlexSerif"),
     url("/fonts/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Regular-Latin1.woff2")
       format("woff2");
   unicode-range: U+0000, U+000D, U+0020-007E, U+00A0-00A3, U+00A4-00FF, U+0131,
@@ -65,7 +75,9 @@ Don't forget to modify the path if you update.
   font-style: italic;
   font-weight: 400;
   font-display: fallback;
-  src: local("IBM Plex Serif Italic"), local("IBMPlexSerif-Italic"),
+  src:
+    local("IBM Plex Serif Italic"),
+    local("IBMPlexSerif-Italic"),
     url("/fonts/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Italic-Latin1.woff2")
       format("woff2");
   unicode-range: U+0000, U+000D, U+0020-007E, U+00A0-00A3, U+00A4-00FF, U+0131,
@@ -78,7 +90,9 @@ Don't forget to modify the path if you update.
   font-style: normal;
   font-weight: 700;
   font-display: fallback;
-  src: local("IBM Plex Serif Bold"), local("IBMPlexSerif-Bold"),
+  src:
+    local("IBM Plex Serif Bold"),
+    local("IBMPlexSerif-Bold"),
     url("/fonts/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-Bold-Latin1.woff2")
       format("woff2");
   unicode-range: U+0000, U+000D, U+0020-007E, U+00A0-00A3, U+00A4-00FF, U+0131,
@@ -91,7 +105,9 @@ Don't forget to modify the path if you update.
   font-style: italic;
   font-weight: 500;
   font-display: fallback;
-  src: local("IBM Plex Serif Medium Italic"), local("IBMPlexSerif-MediumItalic"),
+  src:
+    local("IBM Plex Serif Medium Italic"),
+    local("IBMPlexSerif-MediumItalic"),
     url("/fonts/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-MediumItalic-Latin1.woff2")
       format("woff2");
   unicode-range: U+0000, U+000D, U+0020-007E, U+00A0-00A3, U+00A4-00FF, U+0131,
@@ -104,7 +120,9 @@ Don't forget to modify the path if you update.
   font-style: italic;
   font-weight: 700;
   font-display: fallback;
-  src: local("IBM Plex Serif Bold Italic"), local("IBMPlexSerif-BoldItalic"),
+  src:
+    local("IBM Plex Serif Bold Italic"),
+    local("IBMPlexSerif-BoldItalic"),
     url("/fonts/IBM-Plex-Serif/fonts/split/woff2/IBMPlexSerif-BoldItalic-Latin1.woff2")
       format("woff2");
   unicode-range: U+0000, U+000D, U+0020-007E, U+00A0-00A3, U+00A4-00FF, U+0131,
