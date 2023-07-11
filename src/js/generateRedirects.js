@@ -50,6 +50,8 @@ fs.readdir(blogPath, (err, files) => {
       blogPostFileNamesWithoutMdxOrSlashes.pop() +
       "/";
     fs.appendFileSync("public/_redirects", lineToAddToRedirects);
+  } else {
+    console.log("📪 generateRedirects.js: nothing to do");
   }
 });
 /*
